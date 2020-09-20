@@ -5,7 +5,7 @@
  */
 
 import app from "../app";
-const debug = require("debug")("cart:server");
+const debug = require("debug")("Backend:server");
 import http from "http";
 
 /**

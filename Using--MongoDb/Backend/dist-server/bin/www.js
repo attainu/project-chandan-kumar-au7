@@ -11,7 +11,7 @@ var _http = _interopRequireDefault(require("http"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var debug = require("debug")("cart:server");
+var debug = require("debug")("Backend:server");
 
 /**
  * Get port from environment and store in Express.

@@ -5,29 +5,39 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _index = _interopRequireDefault(require("./routes/index"));
+var _express = _interopRequireDefault(require("express"));
 
-var _users = _interopRequireDefault(require("./routes/users"));
+var _path = _interopRequireDefault(require("path"));
+
+var _dotenv = _interopRequireDefault(require("dotenv"));
+
+var _cookieParser = _interopRequireDefault(require("cookie-parser"));
+
+var _morgan = _interopRequireDefault(require("morgan"));
+
+var _IndexRoutes = _interopRequireDefault(require("./Routes/IndexRoutes"));
+
+var _UserRoutes = _interopRequireDefault(require("./Routes/UserRoutes"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var express = require("express");
+// -----------------Secret File -------------|
+_dotenv["default"].config(); // ---------------Database Instances Imported--------------------|
 
-var path = require("path");
 
-var cookieParser = require("cookie-parser");
+require("./Dbconnectors/database"); // ------------------------All Routes Imported Here From All ROUTES Folder--------------------------|
 
-var logger = require("morgan");
 
-var app = express();
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({
+var app = (0, _express["default"])();
+app.use((0, _morgan["default"])("dev"));
+app.use(_express["default"].json());
+app.use(_express["default"].urlencoded({
   extended: false
 }));
-app.use(cookieParser());
-app.use(express["static"](path.join(__dirname, "../public")));
-app.use("/", _index["default"]);
-app.use("/users", _users["default"]);
+app.use((0, _cookieParser["default"])());
+app.use(_express["default"]["static"](_path["default"].join(__dirname, "../public"))); // ------------------------Imported Routes In Use--------------------------|
+
+app.use("/", _IndexRoutes["default"]);
+app.use("/users", _UserRoutes["default"]);
 var _default = app;
 exports["default"] = _default;
