@@ -38,6 +38,13 @@ app.use((0, _cookieParser["default"])());
 app.use(_express["default"]["static"](_path["default"].join(__dirname, "../public"))); // ------------------------Imported Routes In Use--------------------------|
 
 app.use("/", _IndexRoutes["default"]);
-app.use("/users", _UserRoutes["default"]);
+app.use("/users", _UserRoutes["default"]); // unknown error handling
+
+app.use(function (req, res, next) {
+  res.json({
+    status_code: 404,
+    error: "!!!!!  YOU did Something WRONG! Sorry, Try Again  !!!!!"
+  });
+});
 var _default = app;
 exports["default"] = _default;

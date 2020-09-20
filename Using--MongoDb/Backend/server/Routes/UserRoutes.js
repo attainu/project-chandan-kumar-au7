@@ -8,6 +8,6 @@ const { Register, Login } = require("../Controllers/UserControllers");
 
 router.post("/register", Register);
 
-// router.post("/login", Login);
+router.post("/login", Login);
 
 export default router;

@@ -3,81 +3,16 @@ import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-export function Login(req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  if (!email && !password) {
-    res.json({
-      message: "PLease provide all input fields...",
-    });
-  } else {
-    USERMODEL.find({ email: email })
-      .exec()
-      .then(async (user) => {
-        if (user.length < 1) {
-          res.status(404).json({
-            message: "Auth Failed",
-          });
-        } else {
-          bcrypt.compare(req.body.password, user[0].password, function (
-            err,
-            result
-          ) {
-            if (err) {
-              res.json({
-                message: "Auth Failed",
-              });
-            }
-            if (result) {
-              const token = jwt.sign(
-                {
-                  username: user[0].username,
-                  userid: user[0]._id,
-                },
-                "userToPagalhaibhai",
-                {
-                  expiresIn: "2h",
-                }
-              );
-
-              res.status(201).json({
-                message: "SuccessFully LOGGED in For 2 HOUR  , congratulations",
-                token: token,
-              });
-            } else {
-              res.json({
-                message: "Auth Failed",
-              });
-            }
-          });
-        }
-      })
-      .catch((err) => {
-        res.json({
-          error: err,
-        });
-      });
-  }
-}
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
 
-//====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
-
-export function SIGNUP(req, res, next) {
-  const username = req.body.username;
-  const email = req.body.email;
-  const password = req.body.password;
-  const confirmPassword = req.body.confirmpassword;
-  const profileimage = null;
+export const Register = (req, res, next) => {
+  const { username, email, password, confirmPassword } = req.body;
 
   if (!username && !email && !password && !confirmPassword) {
     res.json({
       message: "PLease provide all input fields...",
     });
-  }
-
-  if (password !== confirmPassword) {
+  } else if (password !== confirmPassword) {
     res.json({
       message: "Password Not Matched!",
     });
@@ -95,10 +30,9 @@ export function SIGNUP(req, res, next) {
           username: username,
           email: email,
           password: hash,
-          profileimage: profileimage,
         });
         USERMODEL.findOne({ email: email }).then((user) => {
-          console.log(user);
+          // console.log(user);
 
           if (user) {
             res.json({
@@ -119,9 +53,61 @@ export function SIGNUP(req, res, next) {
               });
           }
         });
-        // const user = JSON.stringify(userFromdatabase);
-        // console.log(userFromdatabase);
       }
     });
   }
-}
+};
+
+export const Login = (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email && !password) {
+    res.json({
+      message: "PLease provide all input fields...",
+    });
+  } else {
+    USERMODEL.findOne({ email: email })
+      .exec()
+      .then((user) => {
+        if (!user) {
+          res.status(404).json({
+            message: "Auth Failed",
+          });
+        } else {
+          bcrypt.compare(password, user.password, function (err, result) {
+            if (err) {
+              res.json({
+                message: "Auth Failed",
+              });
+            } else if (result) {
+              const token = jwt.sign(
+                {
+                  username: user.username,
+                  userid: user._id,
+                },
+                "userToPagalhaibhai",
+                {
+                  expiresIn: "1h",
+                }
+              );
+
+              res.status(201).json({
+                message: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
+                token: token,
+              });
+            } else {
+              res.json({
+                message: "Auth Failed",
+              });
+            }
+          });
+        }
+      })
+      .catch((err) => {
+        res.json({
+          error: err,
+        });
+      });
+  }
+};
+//====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

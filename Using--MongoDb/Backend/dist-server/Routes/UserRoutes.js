@@ -16,7 +16,7 @@ var _require = require("../Controllers/UserControllers"),
     Login = _require.Login; // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
 
 
-router.post("/register", Register); // router.post("/login", Login);
-
+router.post("/register", Register);
+router.post("/login", Login);
 var _default = router;
 exports["default"] = _default;

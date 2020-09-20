@@ -28,4 +28,13 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+// unknown error handling
+
+app.use((req, res, next) => {
+  res.json({
+    status_code: 404,
+    error: `!!!!!  YOU did Something WRONG! Sorry, Try Again  !!!!!`,
+  });
+});
+
 export default app;
