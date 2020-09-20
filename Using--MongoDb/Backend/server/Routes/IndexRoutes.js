@@ -1,9 +1,10 @@
 import { Router } from "express";
+import { middlewarefunc } from "../Middleware/auth";
+import { Index } from "../Controllers/IndexControllers";
+
 const router = Router();
 
-const { Index } = require("../Controllers/IndexControllers");
-
 //  ------------ All Routes -------------- |
-router.get("/", Index);
+router.get("/", middlewarefunc, Index);
 
 export default router;
