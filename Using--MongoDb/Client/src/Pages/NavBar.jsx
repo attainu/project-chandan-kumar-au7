@@ -65,12 +65,12 @@ function NavBar() {
               <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'>
                 <Link to='!#' class='dropdown-item'>
                   {/* <!-- Message Start --> */}
+                  <img
+                    src='./Images/user.jpg'
+                    alt='User'
+                    class='img-size-50 mr-3 img-circle'
+                  />
                   <div class='media'>
-                    <img
-                      src='dist/img/user1-128x128.jpg'
-                      alt='User Avatar'
-                      class='img-size-50 mr-3 img-circle'
-                    />
                     <div class='media-body'>
                       <h3 class='dropdown-item-title'>
                         Brad Diesel
@@ -91,9 +91,9 @@ function NavBar() {
                   {/* <!-- Message Start --> */}
                   <div class='media'>
                     <img
-                      src='dist/img/user8-128x128.jpg'
-                      alt='User Avatar'
-                      class='img-size-50 img-circle mr-3'
+                      src='./Images/user.jpg'
+                      alt='User'
+                      class='img-size-50 mr-3 img-circle'
                     />
                     <div class='media-body'>
                       <h3 class='dropdown-item-title'>
@@ -115,7 +115,7 @@ function NavBar() {
                   {/* <!-- Message Start --> */}
                   <div class='media'>
                     <img
-                      src='dist/img/user3-128x128.jpg'
+                      src='./Images/user.jpg'
                       alt='User Avatar'
                       class='img-size-50 img-circle mr-3'
                     />
@@ -144,6 +144,7 @@ function NavBar() {
             <li class='nav-item dropdown'>
               <Link class='nav-link' data-toggle='dropdown' to='!#'>
                 <i class='far fa-bell' />
+
                 <span class='badge badge-warning navbar-badge'>15</span>
               </Link>
               <div class='dropdown-menu dropdown-menu-lg dropdown-menu-right'>
@@ -197,9 +198,9 @@ function NavBar() {
             <div class='user-panel mt-3 pb-3 mb-3 d-flex'>
               <div class='image'>
                 <img
-                  src='./dist/img/user2-160x160.jpg'
+                  src='./Images/user.jpg'
                   class='img-circle elevation-2'
-                  alt='UserImage'
+                  alt='UserImg'
                 />
               </div>
               <div class='info'>
