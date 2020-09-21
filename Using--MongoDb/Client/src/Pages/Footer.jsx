@@ -4,8 +4,8 @@ import React from "react";
 function Footer() {
   return (
     <>
-      <div class='wrapper'>
-        <footer class='main-footer'>
+      <div className='wrapper'>
+        <footer className='main-footer'>
           <strong>
             &copy; Copyright 2020
             <a
