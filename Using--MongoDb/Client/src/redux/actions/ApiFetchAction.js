@@ -12,7 +12,7 @@ export const getAllFetchedData = () => {
     try {
       const { data } = await axios({
         method: "Get",
-        url: "https://jsonplaceholder.typicode.com/todos",
+        url: "https://robin--project-mern-backend.herokuapp.com/",
       });
       // console.log(data);
       dispatch(fetchFuncInAction(data));
@@ -21,3 +21,5 @@ export const getAllFetchedData = () => {
     }
   };
 };
+
+// https://robin--project-mern-backend.herokuapp.com/

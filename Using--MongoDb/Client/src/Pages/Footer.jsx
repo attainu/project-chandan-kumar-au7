@@ -1,13 +1,22 @@
 import React from "react";
+// import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <>
-      <footer style={{ marginTop: "100vh" }} className="page-footer">
-        <div className="footer-copyright">
-          <div className="container">© 2020 Copyright To CK...</div>
-        </div>
-      </footer>
+      <div class='wrapper'>
+        <footer class='main-footer'>
+          <strong>
+            &copy; Copyright 2020
+            <a
+              href='https://www.facebook.com/profile.php?id=100030287472330'
+              target='_'>
+              Ck...
+            </a>
+          </strong>
+          All rights reserved.
+        </footer>
+      </div>
     </>
   );
 }
