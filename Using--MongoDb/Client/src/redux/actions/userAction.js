@@ -22,7 +22,7 @@ export const userRegisterfuncfromUserAction = (
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/register",
+        url: "https://robin--project-mern-backend.herokuapp.com/users/register",
         data: userRegisterCredentials,
       });
       // dispatch(registerLoaderFlagHelper(true));
