@@ -21,7 +21,9 @@ var _UserRoutes = _interopRequireDefault(require("./Routes/UserRoutes"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// -----------------Secret File -------------|
+var cors = require("cors"); // -----------------Secret File -------------|
+
+
 _dotenv["default"].config(); // ---------------Database Instances Imported--------------------|
 
 
@@ -35,7 +37,15 @@ app.use(_express["default"].urlencoded({
   extended: false
 }));
 app.use((0, _cookieParser["default"])());
-app.use(_express["default"]["static"](_path["default"].join(__dirname, "../public"))); // ------------------------Imported Routes In Use--------------------------|
+app.use(_express["default"]["static"](_path["default"].join(__dirname, "../public")));
+app.use(cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin,X-Requested-With,Content-Type,Accept,content-type,application/json");
+  next();
+}); // ------------------------Imported Routes In Use--------------------------|
 
 app.use("/", _IndexRoutes["default"]);
 app.use("/users", _UserRoutes["default"]); // unknown error handling

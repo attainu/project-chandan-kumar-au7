@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { userRegisterfuncfromUserAction } from "../redux/actions/userAction";
+
 const Register = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [RegisteredData, setRegisteredData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    agreeTerm: "",
+  });
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    // console.log(RegisteredData);
+    dispatch(userRegisterfuncfromUserAction(RegisteredData, history));
+  };
+
   return (
     <>
       <div className='register-page' style={{ minHeight: "586.391px" }}>
@@ -14,9 +36,15 @@ const Register = () => {
             <div className='card-body register-card-body'>
               <p className='login-box-msg'>Register a new membership</p>
 
-              <form method='post'>
+              <form onSubmit={formSubmitHandler}>
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) =>
+                      setRegisteredData({
+                        ...RegisteredData,
+                        username: e.target.value,
+                      })
+                    }
                     type='text'
                     className='form-control'
                     placeholder='Full name'
@@ -29,6 +57,12 @@ const Register = () => {
                 </div>
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) =>
+                      setRegisteredData({
+                        ...RegisteredData,
+                        email: e.target.value,
+                      })
+                    }
                     type='email'
                     className='form-control'
                     placeholder='Email'
@@ -41,6 +75,12 @@ const Register = () => {
                 </div>
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) =>
+                      setRegisteredData({
+                        ...RegisteredData,
+                        password: e.target.value,
+                      })
+                    }
                     type='password'
                     className='form-control'
                     placeholder='Password'
@@ -53,6 +93,12 @@ const Register = () => {
                 </div>
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) =>
+                      setRegisteredData({
+                        ...RegisteredData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
                     type='password'
                     className='form-control'
                     placeholder='Retype password'
@@ -67,6 +113,12 @@ const Register = () => {
                   <div className='col-8'>
                     <div className='icheck-primary'>
                       <input
+                        onChange={(e) =>
+                          setRegisteredData({
+                            ...RegisteredData,
+                            agreeTerm: e.target.value,
+                          })
+                        }
                         type='checkbox'
                         id='agreeTerms'
                         name='terms'
