@@ -7,7 +7,12 @@ export const middlewarefunc = (req, res, next) => {
 
   //check if not token
   if (!token) {
-    return res.status(401).json({ msg: "No token,authorization denied" });
+    return res
+      .status(401)
+      .json({
+        msg:
+          "No token,authorization denied, sorry but you are now allowed to go further, just pass VAlid credientials",
+      });
   }
   //verify token
   try {
