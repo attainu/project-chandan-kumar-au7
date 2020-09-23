@@ -1,7 +1,48 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { userLoginFuncFromUserAction } from "../redux/actions/userAction";
+import { userLoginErrorAction } from "../redux/actions/errorAction";
+import { userLoginAction } from "../redux/actions/userAction";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const userLoginDatafromstore = useSelector(
+    (store) => store.userDataFromStore
+  );
+  const errordatafromstore = useSelector((store) => store.errorDatafromStore);
+
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  var [EmError, setEmError] = useState("");
+  var [PassError, setPassError] = useState("");
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+
+    if (!email) {
+      setEmError("You Can't Skip email");
+    }
+    if (!password) {
+      setPassError("You Can't Skip password");
+    } else {
+      if (
+        Object.keys(userLoginDatafromstore.user).length !== 0 ||
+        Object.keys(errordatafromstore.loginErrors).length !== 0
+      ) {
+        dispatch(userLoginErrorAction({}));
+        dispatch(userLoginAction({}));
+      }
+      dispatch(userLoginFuncFromUserAction({ email, password }, history));
+      // console.log(userLoginDatafromstore);
+      // if () {
+
+      // }
+    }
+  };
+
   return (
     <>
       <div className='hold-transition login-page'>
@@ -14,9 +55,13 @@ const Login = () => {
             <div className='card-body login-card-body'>
               <p className='login-box-msg'>Sign in to start your session</p>
 
-              <form action='../../index3.html' method='post'>
+              <form onSubmit={formSubmitHandler}>
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                      setEmError("");
+                    }}
                     type='email'
                     className='form-control'
                     placeholder='Email'
@@ -27,8 +72,15 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
+
+                <h6 style={{ color: "red", textAlign: "left" }}>{EmError}</h6>
+
                 <div className='input-group mb-3'>
                   <input
+                    onChange={(e) => {
+                      setpassword(e.target.value);
+                      setPassError("");
+                    }}
                     type='password'
                     className='form-control'
                     placeholder='Password'
@@ -39,23 +91,32 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
-                <div className='row'>
-                  <div className='col-8'>
-                    <div className='icheck-primary'>
-                      <input type='checkbox' id='remember' />
-                      <label htmlFor='remember'>Remember Me</label>
-                    </div>
-                  </div>
-                  {/* <!-- /.col --> */}
-                  <div className='col-4'>
-                    <button type='submit' className='btn btn-primary btn-block'>
-                      Sign In
-                    </button>
-                  </div>
-                  {/* <!-- /.col --> */}
-                </div>
-              </form>
 
+                <h6 style={{ color: "red", textAlign: "left" }}>{PassError}</h6>
+
+                <div className='col-sm-8 mx-auto'>
+                  <button
+                    type='submit'
+                    className='btn btn-block btn-outline-success btn-sm'>
+                    Sign In
+                  </button>
+                </div>
+                {/* <!-- /.col --> */}
+              </form>
+              {Object.keys(errordatafromstore.loginErrors).length === 0 ? (
+                <></>
+              ) : (
+                <h6 style={{ color: "red" }}>
+                  {JSON.stringify(errordatafromstore.loginErrors.error)}
+                </h6>
+              )}
+              {Object.keys(userLoginDatafromstore.user).length === 0 ? (
+                <></>
+              ) : (
+                <h6 style={{ color: "red" }}>
+                  {JSON.stringify(userLoginDatafromstore.user.success)}
+                </h6>
+              )}
               <div className='social-auth-links text-center mb-3'>
                 <p>- OR -</p>
                 <Link to='#!' className='btn btn-block btn-primary'>
@@ -69,11 +130,11 @@ const Login = () => {
               {/* <!-- /.social-auth-links --> */}
 
               <p className='mb-1'>
-                <Link to='forgot-password.html'>I forgot my password</Link>
+                <Link to='/users/forgotpass'>I forgot my password</Link>
               </p>
               <p className='mb-0'>
-                <Link to='register.html' className='text-center'>
-                  Register a new membership
+                <Link to='/register' className='text-center'>
+                  Don't have a account !
                 </Link>
               </p>
             </div>

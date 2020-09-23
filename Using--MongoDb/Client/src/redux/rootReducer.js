@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
 import userReducer from "../redux/reducers/userReducer";
-import ApiFetchReducer from "../redux/reducers/ApiFetchReducer";
+import errorReducer from "../redux/reducers/errorReducer";
 
 export default combineReducers({
-  userRegisterDataFromStore: userReducer,
-  todoDataFromStore: ApiFetchReducer,
+  userDataFromStore: userReducer,
+  errorDatafromStore: errorReducer,
 });

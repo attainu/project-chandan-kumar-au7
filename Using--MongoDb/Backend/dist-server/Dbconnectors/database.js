@@ -21,8 +21,11 @@ var db = function db() {
       useUnifiedTopology: true,
       useFindAndModify: false
     }, function (err) {
-      if (!err) return console.log("MongoDB Connection Succeeded.");
-      console.log("Error in DB connection  : ", err.message);
+      if (!err) {
+        console.log("MongoDB Connection Succeeded.");
+      } else {
+        console.log("Error in DB connection  : ", err.message);
+      }
     });
   } catch (error) {
     console.log("Error in DB connnection ");

@@ -10,17 +10,17 @@ export const Register = (req, res, next) => {
 
   if (!username && !email && !password && !confirmPassword) {
     res.json({
-      message: "PLease provide all input fields...",
+      error: "PLease provide all input fields...",
     });
   } else if (password !== confirmPassword) {
     res.json({
-      message: "Password Not Matched!",
+      error: "Password Not Matched!",
     });
   } else {
     bcrypt.hash(password, 10, function (err, hash) {
       if (err) {
         return res.json({
-          message: "Something Wrong, Try Later!",
+          error: "Something Wrong, Try Later!",
           error: err,
         });
       } else {
@@ -31,28 +31,47 @@ export const Register = (req, res, next) => {
           email: email,
           password: hash,
         });
-        USERMODEL.findOne({ email: email }).then((user) => {
-          // console.log(user);
+        try {
+          USERMODEL.findOne({ email: email })
+            .exec()
+            .then((user) => {
+              // console.log(user);
 
-          if (user) {
-            res.json({
-              message: "already have a account",
-              userid: user._id,
-            });
-          } else {
-            userDetails
-              .save()
-              .then((doc) => {
-                res.status(201).json({
-                  message: "User Registered Successfully",
-                  results: doc,
+              if (user) {
+                res.json({
+                  error: "already have a account",
+                  userid: user._id,
                 });
-              })
-              .catch((err) => {
-                res.json(err);
+              } else {
+                userDetails
+                  .save()
+                  .then((doc) => {
+                    res.status(201).json({
+                      success: "User Registered Successfully",
+                      results: doc,
+                    });
+                  })
+                  .catch((err) => {
+                    res.status(500).json({
+                      error: err,
+                      errormsg:
+                        "cant register right now, please try again later",
+                    });
+                  });
+              }
+            })
+            .catch((err) => {
+              res.status(500).json({
+                error: err.message,
+                errormsg: "server error,,  please check your connection",
               });
-          }
-        });
+            });
+        } catch (error) {
+          res.status(500).json({
+            error: error.message,
+            errormsg: "server error,,  please check your connection",
+          });
+        }
       }
     });
   }
@@ -63,7 +82,7 @@ export const Login = (req, res) => {
 
   if (!email && !password) {
     res.json({
-      message: "PLease provide all input fields...",
+      error: "PLease provide all input fields...",
     });
   } else {
     USERMODEL.findOne({ email: email })
@@ -71,13 +90,13 @@ export const Login = (req, res) => {
       .then((user) => {
         if (!user) {
           res.status(404).json({
-            message: "Auth Failed",
+            error: "Auth Failed",
           });
         } else {
           bcrypt.compare(password, user.password, function (err, result) {
             if (err) {
               res.json({
-                message: "Auth Failed",
+                error: "Auth Failed",
               });
             } else if (result) {
               const token = jwt.sign(
@@ -92,12 +111,12 @@ export const Login = (req, res) => {
               );
 
               res.status(201).json({
-                message: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
+                success: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
                 token: token,
               });
             } else {
               res.json({
-                message: "Auth Failed",
+                error: "Auth Failed",
               });
             }
           });

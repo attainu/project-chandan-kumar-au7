@@ -1,53 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { userRegisterfuncfromUserAction } from "../redux/actions/userAction";
+import { userRegisterFuncFromUserAction } from "../redux/actions/userAction";
+import { userRegisterAction } from "../redux/actions/userAction";
+import { userRegisterErrorAction } from "../redux/actions/errorAction";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const errordatafromstore = useSelector((store) => store.errorDatafromStore);
+  const userdatafromstore = useSelector((store) => store.userDataFromStore);
+
   const history = useHistory();
 
-  const [RegisteredData, setRegisteredData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeTerm: "",
-  });
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+  var [UsError, setUsError] = useState("");
+  var [EmError, setEmError] = useState("");
+  var [PassError, setPassError] = useState("");
+  var [ConPassError, setConPassError] = useState("");
+  // var [SuccessFromDb, setSuccessFromDb] = useState({});
+  // var [ErrorFromDb, setErrorFromDb] = useState({});
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
     // console.log(RegisteredData);
-    dispatch(userRegisterfuncfromUserAction(RegisteredData, history));
+
+    // console.log("error from error root store ", errorRoot);
+    // console.log(typeof errorRoot);
+
+    if (username.length < 6) {
+      setUsError("username must have more than 6 char.");
+    }
+    if (!email) {
+      setEmError("You Can't Skip email");
+    }
+    if (!password) {
+      setPassError("You Can't Skip password");
+    } else if (password !== confirmPassword) {
+      setConPassError("ConfirmPassword must be same as password ");
+    } else {
+      // console.log("line 44 ErrorFromDb ", ErrorFromDb);
+
+      if (
+        Object.keys(userdatafromstore.user).length !== 0 ||
+        Object.keys(errordatafromstore.registerErrors).length !== 0
+      ) {
+        dispatch(userRegisterErrorAction({}));
+        dispatch(userRegisterAction({}));
+      }
+      dispatch(
+        userRegisterFuncFromUserAction(
+          { username, email, password, confirmPassword },
+          history
+        )
+      );
+    }
   };
+
+  useEffect(() => {
+    // const sefd = Object.keys(userdatafromstore.user).length > 0;
+    // console.log(!sefd);
+    // if (sefd) {
+    //   setSuccessFromDb(userdatafromstore.user);
+    // setErrorFromDb({});
+    // console.log("line 60 ErrorFromDb ", ErrorFromDb);
+    // console.log("line 61 SuccessFromDb ", SuccessFromDb);
+    // } else if (sefd) {
+    //   setErrorFromDb(errordatafromstore.registerErrors);
+    // console.log("line 65 ErrorFromDb ", ErrorFromDb);
+    // console.log("line 66 SuccessFromDb ", SuccessFromDb);
+    // }
+  }, [errordatafromstore, userdatafromstore]);
 
   return (
     <>
-      <div className='register-page' style={{ minHeight: "586.391px" }}>
+      <div className='register-page' style={{ minHeight: "700px" }}>
         <div className='register-box'>
           <div className='register-logo'>
-            <b>Register</b>Here
+            <b>Register</b> Here
           </div>
 
-          <div className='card'>
+          <div className='card' style={{ width: "450px" }}>
             <div className='card-body register-card-body'>
-              <p className='login-box-msg'>Register a new membership</p>
+              <p className='login-box-msg'>*NOTE : All filds are mandatory</p>
 
               <form onSubmit={formSubmitHandler}>
                 <div className='input-group mb-3'>
                   <input
-                    onChange={(e) =>
-                      setRegisteredData({
-                        ...RegisteredData,
-                        username: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      setusername(e.target.value);
+                      setUsError("");
+                    }}
                     type='text'
                     className='form-control'
-                    placeholder='Full name'
+                    placeholder='User Name'
                   />
                   <div className='input-group-append'>
                     <div className='input-group-text'>
@@ -55,14 +106,13 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
+                <h6 style={{ color: "red", textAlign: "left" }}>{UsError}</h6>
                 <div className='input-group mb-3'>
                   <input
-                    onChange={(e) =>
-                      setRegisteredData({
-                        ...RegisteredData,
-                        email: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                      setEmError("");
+                    }}
                     type='email'
                     className='form-control'
                     placeholder='Email'
@@ -73,14 +123,13 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
+                <h6 style={{ color: "red", textAlign: "left" }}>{EmError}</h6>
                 <div className='input-group mb-3'>
                   <input
-                    onChange={(e) =>
-                      setRegisteredData({
-                        ...RegisteredData,
-                        password: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      setpassword(e.target.value);
+                      setPassError("");
+                    }}
                     type='password'
                     className='form-control'
                     placeholder='Password'
@@ -91,14 +140,13 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
+                <h6 style={{ color: "red", textAlign: "left" }}>{PassError}</h6>
                 <div className='input-group mb-3'>
                   <input
-                    onChange={(e) =>
-                      setRegisteredData({
-                        ...RegisteredData,
-                        confirmPassword: e.target.value,
-                      })
-                    }
+                    onChange={(e) => {
+                      setconfirmPassword(e.target.value);
+                      setConPassError("");
+                    }}
                     type='password'
                     className='form-control'
                     placeholder='Retype password'
@@ -109,27 +157,16 @@ const Register = () => {
                     </div>
                   </div>
                 </div>
+                <h6 style={{ color: "red", textAlign: "left" }}>
+                  {ConPassError}
+                </h6>
                 <div className='row'>
                   <div className='col-8'>
-                    <div className='icheck-primary'>
-                      <input
-                        onChange={(e) =>
-                          setRegisteredData({
-                            ...RegisteredData,
-                            agreeTerm: e.target.value,
-                          })
-                        }
-                        type='checkbox'
-                        id='agreeTerms'
-                        name='terms'
-                        value='agree'
-                      />
-                      <label htmlFor='agreeTerms'>
-                        I agree to the <Link to='#!'>terms</Link>
-                      </label>
-                    </div>
+                    <label htmlFor='agreeTerms'>
+                      * you will be agreed to our <Link to='#!'>terms .</Link>
+                    </label>
                   </div>
-                  {/* <!-- /.col --> */}
+
                   <div className='col-4'>
                     <button type='submit' className='btn btn-primary btn-block'>
                       Register
@@ -140,6 +177,20 @@ const Register = () => {
               </form>
 
               <div className='social-auth-links text-center'>
+                {Object.keys(errordatafromstore.registerErrors).length === 0 ? (
+                  <></>
+                ) : (
+                  <h6 style={{ color: "red" }}>
+                    {JSON.stringify(errordatafromstore.registerErrors.error)}
+                  </h6>
+                )}
+                {Object.keys(userdatafromstore.user).length === 0 ? (
+                  <></>
+                ) : (
+                  <h6 style={{ color: "red" }}>
+                    {JSON.stringify(userdatafromstore.user.success)}
+                  </h6>
+                )}
                 <p>- OR -</p>
                 <Link to='!#' className='btn btn-block btn-primary'>
                   <i className='fab fa-facebook mr-2'></i>

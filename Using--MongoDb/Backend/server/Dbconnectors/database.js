@@ -13,8 +13,11 @@ const db = () => {
         useFindAndModify: false,
       },
       (err) => {
-        if (!err) return console.log("MongoDB Connection Succeeded.");
-        console.log("Error in DB connection  : ", err.message);
+        if (!err) {
+          console.log("MongoDB Connection Succeeded.");
+        } else {
+          console.log("Error in DB connection  : ", err.message);
+        }
       }
     );
   } catch (error) {

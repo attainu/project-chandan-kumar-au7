@@ -1,22 +1,91 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 function Home() {
-  const store = useSelector((store) => store.userRegisterDataFromStore);
-  useEffect(() => {
-    console.log("store ", store);
-  }, [store]);
   return (
     <>
-      <div className='hold-transition login-page'>
-        <h1>This is Home Page</h1>
-        <p>Welcomw From Depth Of My Heart</p>
+      <div className='main-header content' style={{ minHeight: "700px" }}>
+        <div className='container-fluid'>
+          <div className='row'>
+            <div className='col-lg-3 col-6'>
+              {/* <!-- small card --> */}
+              <div className='small-box bg-info'>
+                <div className='inner'>
+                  <h3>150</h3>
 
-        <h1>EMAIL : {store.user.email} </h1>
-        <h1>FULLNAME : {store.user.fullName} </h1>
-        <h1>PASSWORD : {store.user.password} </h1>
-        <h1>RETYPEPASSWORD : {store.user.retypePassword} </h1>
-        <h1>AGREETERM : {store.user.agreeTerm} </h1>
+                  <p>New Orders</p>
+                </div>
+                <div className='icon'>
+                  <i className='fas fa-shopping-cart'></i>
+                </div>
+                <a href='#!' className='small-box-footer'>
+                  More info <i className='fas fa-arrow-circle-right'></i>
+                </a>
+              </div>
+            </div>
+            {/* <!-- ./col --> */}
+            <div className='col-lg-3 col-6'>
+              {/* <!-- small card --> */}
+              <div className='small-box bg-success'>
+                <div className='inner'>
+                  <h3>
+                    53<sup style={{ fontSize: "20px" }}>%</sup>
+                  </h3>
+
+                  <p>Bounce Rate</p>
+                </div>
+                <div className='icon'>
+                  <i className='ion ion-stats-bars'></i>
+                </div>
+                <a href='#!' className='small-box-footer'>
+                  More info <i className='fas fa-arrow-circle-right'></i>
+                </a>
+              </div>
+            </div>
+            {/* <!-- ./col --> */}
+            <div className='col-lg-3 col-6'>
+              {/* <!-- small card --> */}
+              <div className='small-box bg-warning'>
+                <div className='inner'>
+                  <h3>44</h3>
+
+                  <p>User Registrations</p>
+                </div>
+                <div className='icon'>
+                  <i className='fas fa-user-plus'></i>
+                </div>
+                <a href='#!' className='small-box-footer'>
+                  More info <i className='fas fa-arrow-circle-right'></i>
+                </a>
+              </div>
+            </div>
+            {/* <!-- ./col --> */}
+            <div className='col-lg-3 col-6'>
+              {/* <!-- small card --> */}
+              <div className='small-box bg-danger'>
+                <div className='inner'>
+                  <h3>65</h3>
+
+                  <p>Unique Visitors</p>
+                </div>
+                <div className='icon'>
+                  <i className='fas fa-chart-pie'></i>
+                </div>
+                <a href='#!' className='small-box-footer'>
+                  More info <i className='fas fa-arrow-circle-right'></i>
+                </a>
+              </div>
+            </div>
+            {/* <!-- ./col --> */}
+          </div>
+        </div>
+        <a
+          id='back-to-top'
+          href='#!'
+          className='btn btn-primary back-to-top'
+          role='button'
+          aria-label='Scroll to top'>
+          <i className='fas fa-chevron-up'></i>
+        </a>
       </div>
     </>
   );

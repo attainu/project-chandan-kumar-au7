@@ -15,6 +15,8 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
 var Register = function Register(req, res, next) {
   var _req$body = req.body,
@@ -25,19 +27,18 @@ var Register = function Register(req, res, next) {
 
   if (!username && !email && !password && !confirmPassword) {
     res.json({
-      message: "PLease provide all input fields..."
+      error: "PLease provide all input fields..."
     });
   } else if (password !== confirmPassword) {
     res.json({
-      message: "Password Not Matched!"
+      error: "Password Not Matched!"
     });
   } else {
     _bcrypt["default"].hash(password, 10, function (err, hash) {
       if (err) {
-        return res.json({
-          message: "Something Wrong, Try Later!",
-          error: err
-        });
+        return res.json(_defineProperty({
+          error: "Something Wrong, Try Later!"
+        }, "error", err));
       } else {
         // console.log(hash);
         var userDetails = new _UserModels["default"]({
@@ -47,26 +48,41 @@ var Register = function Register(req, res, next) {
           password: hash
         });
 
-        _UserModels["default"].findOne({
-          email: email
-        }).then(function (user) {
-          // console.log(user);
-          if (user) {
-            res.json({
-              message: "already have a account",
-              userid: user._id
-            });
-          } else {
-            userDetails.save().then(function (doc) {
-              res.status(201).json({
-                message: "User Registered Successfully",
-                results: doc
+        try {
+          _UserModels["default"].findOne({
+            email: email
+          }).exec().then(function (user) {
+            // console.log(user);
+            if (user) {
+              res.json({
+                error: "already have a account",
+                userid: user._id
               });
-            })["catch"](function (err) {
-              res.json(err);
+            } else {
+              userDetails.save().then(function (doc) {
+                res.status(201).json({
+                  success: "User Registered Successfully",
+                  results: doc
+                });
+              })["catch"](function (err) {
+                res.status(500).json({
+                  error: err,
+                  errormsg: "cant register right now, please try again later"
+                });
+              });
+            }
+          })["catch"](function (err) {
+            res.status(500).json({
+              error: err.message,
+              errormsg: "server error,,  please check your connection"
             });
-          }
-        });
+          });
+        } catch (error) {
+          res.status(500).json({
+            error: error.message,
+            errormsg: "server error,,  please check your connection"
+          });
+        }
       }
     });
   }
@@ -81,7 +97,7 @@ var Login = function Login(req, res) {
 
   if (!email && !password) {
     res.json({
-      message: "PLease provide all input fields..."
+      error: "PLease provide all input fields..."
     });
   } else {
     _UserModels["default"].findOne({
@@ -89,13 +105,13 @@ var Login = function Login(req, res) {
     }).exec().then(function (user) {
       if (!user) {
         res.status(404).json({
-          message: "Auth Failed"
+          error: "Auth Failed"
         });
       } else {
         _bcrypt["default"].compare(password, user.password, function (err, result) {
           if (err) {
             res.json({
-              message: "Auth Failed"
+              error: "Auth Failed"
             });
           } else if (result) {
             var token = _jsonwebtoken["default"].sign({
@@ -106,12 +122,12 @@ var Login = function Login(req, res) {
             });
 
             res.status(201).json({
-              message: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
+              success: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
               token: token
             });
           } else {
             res.json({
-              message: "Auth Failed"
+              error: "Auth Failed"
             });
           }
         });
