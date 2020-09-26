@@ -11,3 +11,10 @@ export const userLoginErrorAction = (data) => {
     payload: data,
   };
 };
+
+export const userForgotPassErrorAction = (data) => {
+  return {
+    type: "SET_CHANGE_PASSWORD_ERRORS",
+    payload: data,
+  };
+};

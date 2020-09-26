@@ -3,8 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { userLoginFuncFromUserAction } from "../redux/actions/userAction";
-import { userLoginErrorAction } from "../redux/actions/errorAction";
 import { userLoginAction } from "../redux/actions/userAction";
+
+import { userLoginErrorAction } from "../redux/actions/errorAction";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -37,9 +38,6 @@ const Login = () => {
       }
       dispatch(userLoginFuncFromUserAction({ email, password }, history));
       // console.log(userLoginDatafromstore);
-      // if () {
-
-      // }
     }
   };
 
@@ -53,7 +51,7 @@ const Login = () => {
           {/* <!-- /.login-logo --> */}
           <div className='card'>
             <div className='card-body login-card-body'>
-              <p className='login-box-msg'>Sign in to start your session</p>
+              <p className='login-box-msg'>*NOTE : All filds are mandatory</p>
 
               <form onSubmit={formSubmitHandler}>
                 <div className='input-group mb-3'>
@@ -130,7 +128,7 @@ const Login = () => {
               {/* <!-- /.social-auth-links --> */}
 
               <p className='mb-1'>
-                <Link to='/users/forgotpass'>I forgot my password</Link>
+                <Link to='/forgot'>I forgot my password</Link>
               </p>
               <p className='mb-0'>
                 <Link to='/register' className='text-center'>

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// =========== It will be imported inside the { PAGES folder } where ever we will be needing {  USER REGISTERATION [ BACKEND ] DATA } =========//
 export const userRegisterAction = (data) => {
   return {
     type: "REGISTER_DATA_INTO_REDUX_STORE",
@@ -7,6 +8,7 @@ export const userRegisterAction = (data) => {
   };
 };
 
+// =========== It will be imported inside the { PAGES folder } where ever we will be needing {  USER LOGIN [ BACKEND ] DATA } =========//
 export const userLoginAction = (data) => {
   return {
     type: "LOGIN_DATA_INTO_REDUX_STORE",
@@ -14,6 +16,15 @@ export const userLoginAction = (data) => {
   };
 };
 
+// =========== It will be imported inside the { PAGES folder } where ever we will be needing {  USER USERFORGOTPASSWORD [ BACKEND ] DATA } =========//
+export const userForgotPassAction = (data) => {
+  return {
+    type: "FORGOTPASSWORD_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+
+// =========================================== This is for HITTING [BACKEND] end point =====================================//
 export const userRegisterFuncFromUserAction = (
   userRegisterCredentials,
   history
@@ -47,19 +58,27 @@ export const userRegisterFuncFromUserAction = (
   };
 };
 
+// =========================================== This is for HITTING [BACKEND] end point =====================================//
 export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
         method: "Post",
-        // url: "http://localhost:5000/users/login",
-        url: "https://robin--project-mern-backend.herokuapp.com/users/login",
+        url: "http://localhost:5000/users/login",
+        // url: "https://robin--project-mern-backend.herokuapp.com/users/login",
         data: userLoginCredentials,
       });
       console.log("data from user action FILE : ", data);
       if (data.success) {
         dispatch(userLoginAction(data));
-        history.push("/login");
+        localStorage.setItem("userLoginToken", data.token);
+
+        history.push("/");
+
+        setTimeout(() => {
+          dispatch(userLoginAction({}));
+          localStorage.removeItem("userLoginToken");
+        }, 600000);
       } else {
         dispatch({
           type: "SET_LOGIN_ERRORS",
@@ -70,9 +89,39 @@ export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
       console.log("from catch block");
       dispatch({
         type: "SET_LOGIN_ERRORS",
-        payload: err.message,
+        payload: err,
       });
       console.log("Error in userLogin Action file ", err.message);
+    }
+  };
+};
+
+// =========================================== This is for HITTING [BACKEND] end point =====================================//
+export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "Post",
+        url: "http://localhost:5000/users/forgotpassword",
+        // url: "https://robin--project-mern-backend.herokuapp.com/users/login",
+        data: userForgotpassCredentials,
+      });
+      console.log("ForgotPAss data from user action FILE : ", data);
+      if (data.success) {
+        dispatch(userForgotPassAction(data));
+      } else {
+        dispatch({
+          type: "SET_FORGOTPASSWORD_ERRORS",
+          payload: data,
+        });
+      }
+    } catch (err) {
+      console.log("from catch block");
+      dispatch({
+        type: "SET_FORGOTPASSWORD_ERRORS",
+        payload: err.message,
+      });
+      console.log("Error in USERPASSWORD Action file ", err.message);
     }
   };
 };

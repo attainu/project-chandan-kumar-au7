@@ -14,6 +14,10 @@ const schema = new Schema({
     type: String,
     required: true,
   },
+  otp: {
+    type: String,
+    default: "",
+  },
 });
 
 export default model("UserModel", schema); //accessing a model

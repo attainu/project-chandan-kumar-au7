@@ -1,6 +1,7 @@
 const initialState = {
   registerErrors: {},
   loginErrors: {},
+  passwordChangingErrors: {},
 };
 
 const errorReducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ const errorReducer = (state = initialState, action) => {
       return {
         ...state,
         loginErrors: action.payload,
+      };
+    case "SET_PASSWORD_CHANGE_ERRORS":
+      return {
+        ...state,
+        passwordChangingErrors: action.payload,
       };
 
     default:

@@ -1,4 +1,6 @@
+// @ts-nocheck
 import USERMODEL from "../Models/UserModels";
+import { SEND_EMAIL_FOR_FORGOT_PASSWORD } from "../Utils/generateEmail";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
@@ -35,7 +37,7 @@ export const Register = (req, res, next) => {
           USERMODEL.findOne({ email: email })
             .exec()
             .then((user) => {
-              // console.log(user);
+              console.log(user);
 
               if (user) {
                 res.json({
@@ -89,13 +91,13 @@ export const Login = (req, res) => {
       .exec()
       .then((user) => {
         if (!user) {
-          res.status(404).json({
+          return res.json({
             error: "Auth Failed",
           });
         } else {
           bcrypt.compare(password, user.password, function (err, result) {
             if (err) {
-              res.json({
+              return res.json({
                 error: "Auth Failed",
               });
             } else if (result) {
@@ -110,12 +112,12 @@ export const Login = (req, res) => {
                 }
               );
 
-              res.status(201).json({
+              return res.status(201).json({
                 success: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
                 token: token,
               });
             } else {
-              res.json({
+              return res.json({
                 error: "Auth Failed",
               });
             }
@@ -123,10 +125,158 @@ export const Login = (req, res) => {
         }
       })
       .catch((err) => {
-        res.json({
+        return res.json({
           error: err,
         });
       });
+  }
+};
+
+export const ForgotPassword = (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.json({
+      error: "PLease provide email from input fields...",
+    });
+  } else {
+    USERMODEL.findOne({ email: email })
+      .exec()
+      .then((user) => {
+        if (!user) {
+          return res.json({
+            error: "Either you are not OUR User OR try again with valid email",
+          });
+        } else {
+          //   console.log("else block run");
+          const generateOTP = () => {
+            // console.log("generateOTP func run");
+            const digits = "0123456789";
+            let OTP = "";
+
+            for (let i = 0; i < 6; i++) {
+              OTP += digits[Math.floor(Math.random() * 10)];
+            }
+            return OTP;
+          };
+
+          const OTP = generateOTP();
+          user.otp = OTP;
+          user
+            .save()
+            .then(() => {
+              const { email, username } = user;
+              //   console.log("email : ", email, "username : ", username);
+              SEND_EMAIL_FOR_FORGOT_PASSWORD(email, "success", username, OTP);
+
+              const helper = () => {
+                user.otp = "";
+                user.save();
+              };
+              setTimeout(function () {
+                helper();
+              }, 180000);
+
+              return res.json({
+                success: `check your ${email} email for OTP, You have 3 min. of time only , so hurry up`,
+              });
+            })
+            .catch((err) => {
+              return res.json({
+                error: "error while saving And" + err.message,
+              });
+            });
+        }
+      })
+      .catch((err) => {
+        return res.json({
+          error: err.message,
+        });
+      });
+  }
+};
+
+export const VarifyOTP = (req, res) => {
+  try {
+    const { otp, email } = req.body;
+
+    if (!otp || !email) {
+      res.json({
+        error: "PLease provide all input fields...",
+      });
+    } else {
+      USERMODEL.findOne({ email: email })
+        .exec()
+        .then((user) => {
+          // console.log(user);
+          if (!user) {
+            res.status(404).json({
+              error: "Auth Failed",
+            });
+          } else {
+            if (user.otp === "") {
+              return res.status(400).json({
+                error: "OTP has expired",
+              });
+            }
+            if (user.otp === otp) {
+              return res.status(200).json({ success: "OTP Varified" });
+            } else {
+              // console.log(user.otp);
+              // console.log(otp);
+              return res.status(400).json({
+                error: "Invalid OTP, check your email again",
+              });
+            }
+          }
+        });
+    }
+  } catch (err) {
+    console.log("Error in submitting otp", err.message);
+    return res.status(400).json({ error: `Error in postOTP${err.message}` });
+  }
+};
+
+export const ChangePassword = (req, res, next) => {
+  try {
+    const { email, NewPassword, confirmNewPassword } = req.body;
+
+    if (!NewPassword || !confirmNewPassword || !email) {
+      return res.status(400).json({
+        error: "Please provide all the required details",
+      });
+    }
+    if (NewPassword !== confirmNewPassword) {
+      return res.status(400).json({
+        error: "Password Not Matched!",
+      });
+    } else {
+      let hashedPassword;
+
+      bcrypt.hash(NewPassword, 10, function (err, hash) {
+        if (err) {
+          return res.json({
+            error: "Something Wrong, Try Later!",
+            error: err,
+          });
+        } else {
+          // console.log(hash);
+          hashedPassword = hash;
+          USERMODEL.findOne({ email: email })
+            .exec()
+            .then((user) => {
+              // console.log(user);
+              user.password = hashedPassword;
+              user.save();
+
+              return res.status(200).json({ success: "Password Changed" });
+            });
+        }
+      });
+    }
+  } catch (err) {
+    console.log("Error in submitting otp", err.message);
+    return res.status(400).json({ error: `Error in postOTP${err.message}` });
   }
 };
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
