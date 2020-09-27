@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { userForgotpassFuncFromUserAction } from "../redux/actions/userAction";
-import { userForgotPassErrorAction } from "../redux/actions/errorAction";
-import { userForgotPassAction } from "../redux/actions/userAction";
+import {
+  userForgotpassFuncFromUserAction,
+  userForgotPassOtpVarifyFuncFromUserAction,
+  userForgotPassAction,
+} from "../redux/actions/userAction";
+import {
+  userForgotPassErrorAction,
+  userForgotPassOtpVarifyErrorAction,
+} from "../redux/actions/errorAction";
 
 function Forgot() {
   const dispatch = useDispatch();
@@ -21,7 +27,7 @@ function Forgot() {
   const [isVarifiedOTP, setisVarifiedOTP] = useState(false);
 
   const [email, setemail] = useState("");
-  const [OtpSend, setOtpSend] = useState("");
+  const [otp, setotp] = useState("");
   const [password, setpassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
 
@@ -37,10 +43,6 @@ function Forgot() {
   const EmailSendSubmitHandler = (e) => {
     e.preventDefault();
     if (email) {
-      // console.log(
-      //   "forgotPasswordDataFromStore ",
-      //   SuccessOfforgotPasswordDataFromStore
-      // );
       if (
         Object.keys(SuccessOfforgotPasswordDataFromStore.user).length !== 0 ||
         Object.keys(ErrorOfforgotPasswordDataFromStore.passwordChangingErrors)
@@ -50,17 +52,8 @@ function Forgot() {
         dispatch(userForgotPassErrorAction({}));
       }
       dispatch(userForgotpassFuncFromUserAction({ email }));
-      if (SuccessOfforgotPasswordDataFromStore.user.success) {
-        console.log(
-          "FORGOT.JSX forgotPasswordDataFromStore ",
-          SuccessOfforgotPasswordDataFromStore
-        );
-        console.log("EmailSendSubmitHandler invoked");
-        console.log("email : ", email);
-        setTimeout(() => {
-          setisSentEmail(true);
-        }, 5000);
-      }
+
+      console.log("email : ", email);
     } else {
       setEmError("* This Field Is Reqired");
     }
@@ -72,10 +65,21 @@ function Forgot() {
 
   const OtpVarifySubmitHandler = (e) => {
     e.preventDefault();
-    setisVarifiedOTP(true);
 
-    console.log("OtpVarifySubmitHandler invoked");
-    console.log("OtpSend : ", OtpSend);
+    if (otp) {
+      if (
+        Object.keys(SuccessOfforgotPasswordDataFromStore.user).length !== 0 ||
+        Object.keys(
+          ErrorOfforgotPasswordDataFromStore.userForgotPassOtpVarifyErrors
+        ).length !== 0
+      ) {
+        dispatch(userForgotPassAction({}));
+        dispatch(userForgotPassOtpVarifyErrorAction({}));
+      }
+      dispatch(userForgotPassOtpVarifyFuncFromUserAction({ email, otp }));
+    } else {
+      setEmError("* This Field Is Reqired");
+    }
   };
 
   //=================== OtpVarifySubmitHandler with just two field END =====================//
@@ -93,6 +97,23 @@ function Forgot() {
 
   //=================== ForgotFormSubmitHandler with all field END =====================//
 
+  //=================== UseEffect =====================//
+
+  useEffect(() => {
+    if (SuccessOfforgotPasswordDataFromStore.user.success) {
+      setTimeout(() => {
+        setisSentEmail(true);
+      }, 5000);
+    } else if (SuccessOfforgotPasswordDataFromStore.user.OTPVARIFYsuccess) {
+      setTimeout(() => {
+        setisVarifiedOTP(true);
+      }, 5000);
+    }
+  }, [
+    SuccessOfforgotPasswordDataFromStore.user.success,
+    SuccessOfforgotPasswordDataFromStore.user.OTPVARIFYsuccess,
+  ]);
+
   return (
     <div className='hold-transition login-page'>
       <div className='register-box'>
@@ -103,7 +124,6 @@ function Forgot() {
         <div className='card'>
           <div className='card-body register-card-body'>
             <p className='login-box-msg'>*NOTE : All filds are mandatory</p>
-
             <form onSubmit={ForgotFormSubmitHandler}>
               {/* ============== Start Email Div =========== */}
 
@@ -141,7 +161,7 @@ function Forgot() {
                       <div className='input-group mb-3'>
                         <input
                           onChange={(e) => {
-                            setOtpSend(e.target.value);
+                            setotp(e.target.value);
                             setOtpSendError("");
                           }}
                           type='test'
@@ -234,7 +254,6 @@ function Forgot() {
                 <></>
               )}
             </form>
-
             {Object.keys(
               ErrorOfforgotPasswordDataFromStore.passwordChangingErrors
             ).length === 0 ? (
@@ -247,6 +266,18 @@ function Forgot() {
                 )}
               </h6>
             )}
+            {Object.keys(
+              ErrorOfforgotPasswordDataFromStore.userForgotPassOtpVarifyErrors
+            ).length === 0 ? (
+              <></>
+            ) : (
+              <h6 style={{ color: "red" }}>
+                {JSON.stringify(
+                  ErrorOfforgotPasswordDataFromStore
+                    .userForgotPassOtpVarifyErrors.error
+                )}
+              </h6>
+            )}
             {Object.keys(SuccessOfforgotPasswordDataFromStore.user).length ===
             0 ? (
               <></>
@@ -254,6 +285,16 @@ function Forgot() {
               <h6 style={{ color: "red" }}>
                 {JSON.stringify(
                   SuccessOfforgotPasswordDataFromStore.user.success
+                )}
+              </h6>
+            )}
+            {Object.keys(SuccessOfforgotPasswordDataFromStore.user).length ===
+            0 ? (
+              <></>
+            ) : (
+              <h6 style={{ color: "red" }}>
+                {JSON.stringify(
+                  SuccessOfforgotPasswordDataFromStore.user.OTPVARIFYsuccess
                 )}
               </h6>
             )}

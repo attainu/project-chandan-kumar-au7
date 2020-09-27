@@ -2,6 +2,7 @@ const initialState = {
   registerErrors: {},
   loginErrors: {},
   passwordChangingErrors: {},
+  userForgotPassOtpVarifyErrors: {},
 };
 
 const errorReducer = (state = initialState, action) => {
@@ -16,10 +17,15 @@ const errorReducer = (state = initialState, action) => {
         ...state,
         loginErrors: action.payload,
       };
-    case "SET_PASSWORD_CHANGE_ERRORS":
+    case "SET_CHANGE_PASSWORD_ERRORS":
       return {
         ...state,
         passwordChangingErrors: action.payload,
+      };
+    case "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS":
+      return {
+        ...state,
+        userForgotPassOtpVarifyErrors: action.payload,
       };
 
     default:

@@ -225,24 +225,24 @@ var VarifyOTP = function VarifyOTP(req, res) {
       }).exec().then(function (user) {
         // console.log(user);
         if (!user) {
-          res.status(404).json({
+          res.json({
             error: "Auth Failed"
           });
         } else {
           if (user.otp === "") {
-            return res.status(400).json({
+            return res.json({
               error: "OTP has expired"
             });
           }
 
           if (user.otp === otp) {
             return res.status(200).json({
-              success: "OTP Varified"
+              OTPVARIFYsuccess: "OTP Varified"
             });
           } else {
             // console.log(user.otp);
             // console.log(otp);
-            return res.status(400).json({
+            return res.json({
               error: "Invalid OTP, check your email again"
             });
           }

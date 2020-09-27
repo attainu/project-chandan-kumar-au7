@@ -18,3 +18,10 @@ export const userForgotPassErrorAction = (data) => {
     payload: data,
   };
 };
+
+export const userForgotPassOtpVarifyErrorAction = (data) => {
+  return {
+    type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+    payload: data,
+  };
+};

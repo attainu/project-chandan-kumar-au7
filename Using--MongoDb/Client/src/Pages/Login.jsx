@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { userLoginFuncFromUserAction } from "../redux/actions/userAction";
 import { userLoginAction } from "../redux/actions/userAction";
-
 import { userLoginErrorAction } from "../redux/actions/errorAction";
 
 const Login = () => {
@@ -37,6 +36,9 @@ const Login = () => {
         dispatch(userLoginAction({}));
       }
       dispatch(userLoginFuncFromUserAction({ email, password }, history));
+      dispatch({
+        type: "SET_HAVE_TO_DSPLAY_NOTIFIER",
+      });
       // console.log(userLoginDatafromstore);
     }
   };
@@ -101,20 +103,7 @@ const Login = () => {
                 </div>
                 {/* <!-- /.col --> */}
               </form>
-              {Object.keys(errordatafromstore.loginErrors).length === 0 ? (
-                <></>
-              ) : (
-                <h6 style={{ color: "red" }}>
-                  {JSON.stringify(errordatafromstore.loginErrors.error)}
-                </h6>
-              )}
-              {Object.keys(userLoginDatafromstore.user).length === 0 ? (
-                <></>
-              ) : (
-                <h6 style={{ color: "red" }}>
-                  {JSON.stringify(userLoginDatafromstore.user.success)}
-                </h6>
-              )}
+
               <div className='social-auth-links text-center mb-3'>
                 <p>- OR -</p>
                 <Link to='#!' className='btn btn-block btn-primary'>
