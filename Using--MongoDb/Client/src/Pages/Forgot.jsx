@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
   userForgotpassFuncFromUserAction,
   userForgotPassOtpVarifyFuncFromUserAction,
   userForgotPassAction,
+  userForgotPassNEWCredentialsFromUserAction,
 } from "../redux/actions/userAction";
 import {
   userForgotPassErrorAction,
@@ -14,6 +15,7 @@ import {
 
 function Forgot() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const SuccessOfforgotPasswordDataFromStore = useSelector(
     (store) => store.userDataFromStore
   );
@@ -28,8 +30,8 @@ function Forgot() {
 
   const [email, setemail] = useState("");
   const [otp, setotp] = useState("");
-  const [password, setpassword] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
+  const [NewPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setconfirmNewPassword] = useState("");
 
   var [EmError, setEmError] = useState("");
   var [OtpSendError, setOtpSendError] = useState("");
@@ -88,11 +90,29 @@ function Forgot() {
 
   const ForgotFormSubmitHandler = (e) => {
     e.preventDefault();
-
-    console.log("ForgotFormSubmitHandler invoked");
-    console.log("email : ", email);
-    console.log("password : ", password);
-    console.log("confirmPassword : ", confirmPassword);
+    if (email && NewPassword && confirmNewPassword) {
+      if (
+        Object.keys(SuccessOfforgotPasswordDataFromStore.user).length !== 0 ||
+        Object.keys(
+          ErrorOfforgotPasswordDataFromStore.userForgotPassOtpVarifyErrors
+        ).length !== 0
+      ) {
+        dispatch(userForgotPassAction({}));
+        dispatch(userForgotPassOtpVarifyErrorAction({}));
+      }
+      dispatch(
+        userForgotPassNEWCredentialsFromUserAction(
+          {
+            email,
+            NewPassword,
+            confirmNewPassword,
+          },
+          history
+        )
+      );
+    } else {
+      setEmError("* ALL Field Are Reqired");
+    }
   };
 
   //=================== ForgotFormSubmitHandler with all field END =====================//
@@ -191,7 +211,7 @@ function Forgot() {
                       <div className='input-group mb-3'>
                         <input
                           onChange={(e) => {
-                            setpassword(e.target.value);
+                            setNewPassword(e.target.value);
                             setPassError("");
                           }}
                           type='password'
@@ -215,7 +235,7 @@ function Forgot() {
                       <div className='input-group mb-3'>
                         <input
                           onChange={(e) => {
-                            setconfirmPassword(e.target.value);
+                            setconfirmNewPassword(e.target.value);
                             setConPassError("");
                           }}
                           type='password'
