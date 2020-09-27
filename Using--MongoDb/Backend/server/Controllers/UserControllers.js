@@ -242,12 +242,12 @@ export const ChangePassword = (req, res, next) => {
     const { email, NewPassword, confirmNewPassword } = req.body;
 
     if (!NewPassword || !confirmNewPassword || !email) {
-      return res.status(400).json({
+      return res.json({
         error: "Please provide all the required details",
       });
     }
     if (NewPassword !== confirmNewPassword) {
-      return res.status(400).json({
+      return res.json({
         error: "Password Not Matched!",
       });
     } else {
@@ -276,7 +276,7 @@ export const ChangePassword = (req, res, next) => {
     }
   } catch (err) {
     console.log("Error in submitting otp", err.message);
-    return res.status(400).json({ error: `Error in postOTP${err.message}` });
+    return res.json({ error: `Error in postOTP${err.message}` });
   }
 };
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

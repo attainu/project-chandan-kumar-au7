@@ -24,6 +24,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case "FORGOTPASSWORD_NEW CREDIENTIALS_DATA_INTO_REDUX_STORE":
+      return {
+        ...state,
+        user: action.payload,
+      };
 
     default:
       return state;

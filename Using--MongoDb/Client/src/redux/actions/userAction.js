@@ -31,6 +31,13 @@ export const userForgotPassOtpVarifyAction = (data) => {
   };
 };
 
+export const userForgotpassNEWCredentialsAction = (data) => {
+  return {
+    type: "FORGOTPASSWORD_NEW CREDIENTIALS_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+
 // =========================================== [ REGISTER ] This is for HITTING [BACKEND] end point =====================================//
 export const userRegisterFuncFromUserAction = (
   userRegisterCredentials,
@@ -152,6 +159,49 @@ export const userForgotPassOtpVarifyFuncFromUserAction = (
       console.log("OTPVarify data from user action FILE : ", data);
       if (data.OTPVARIFYsuccess) {
         dispatch(userForgotPassOtpVarifyAction(data));
+      } else {
+        dispatch({
+          type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+          payload: data,
+        });
+      }
+    } catch (err) {
+      // console.log("from catch block");
+      dispatch({
+        type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+        payload: err.message,
+      });
+      // console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
+    }
+  };
+};
+
+// =========================================== [ NEW CREDIENTIALS ] This is for HITTING [BACKEND] end point =====================================//
+export const userForgotPassNEWCredentialsFromUserAction = (
+  userForgotpassNEWCredentials,
+  history
+) => {
+  // console.log(
+  //   "userForgotpassNEWCredentials ",
+  //   userForgotpassNEWCredentials
+  // );
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "Post",
+        url: "http://localhost:5000/users/changepassword",
+        // url: "https://robin--project-mern-backend.herokuapp.com/users/changepassword",
+        data: userForgotpassNEWCredentials,
+      });
+      console.log(
+        "userForgotpassNEWCredentials data from user action FILE : ",
+        data
+      );
+      if (data.success) {
+        dispatch(userForgotpassNEWCredentialsAction(data));
+        setTimeout(() => {
+          history.push("/login");
+        });
       } else {
         dispatch({
           type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
