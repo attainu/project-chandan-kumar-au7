@@ -71,8 +71,8 @@ export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/login",
-        // url: "https://robin--project-mern-backend.herokuapp.com/users/login",
+        // url: "http://localhost:5000/users/login",
+        url: "https://robin--project-mern-backend.herokuapp.com/users/login",
         data: userLoginCredentials,
       });
       console.log("data from user action FILE : ", data);
@@ -109,8 +109,8 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/forgotpassword",
-        // url: "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
+        // url: "http://localhost:5000/users/forgotpassword",
+        url: "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
         data: userForgotpassCredentials,
       });
       console.log("ForgotPAss data from user action FILE : ", data);
@@ -145,8 +145,8 @@ export const userForgotPassOtpVarifyFuncFromUserAction = (
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/varifyotp",
-        // url: "https://robin--project-mern-backend.herokuapp.com/users/varifyotp",
+        // url: "http://localhost:5000/users/varifyotp",
+        url: "https://robin--project-mern-backend.herokuapp.com/users/varifyotp",
         data: userForgotpassOTPAsCredentials,
       });
       console.log("OTPVarify data from user action FILE : ", data);

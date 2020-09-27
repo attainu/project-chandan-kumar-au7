@@ -22,4 +22,11 @@ router.post("/varifyotp", VarifyOTP);
 
 router.post("/changepassword", ChangePassword);
 
+router.get('/:id/delete', function(req, res){
+  UserModel.remove({id: req.params.id}, function(err){
+    if(err) res.json(err);
+    else res.redirect('/').json("successfuly deleted")
+  })
+})
+
 export default router;
