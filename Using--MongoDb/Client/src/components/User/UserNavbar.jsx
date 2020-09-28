@@ -32,31 +32,6 @@ function NavBar() {
               <i className='fas fa-bars' />
             </Link>
           </li>
-<<<<<<< HEAD
-          <li className='nav-item d-none d-sm-inline-block'>
-            <Link to='/' className='nav-link'>
-              Home
-            </Link>
-          </li>
-          <li className='nav-item d-none d-sm-inline-block'>
-            <Link to='/login' className='nav-link'>
-              Login
-            </Link>
-          </li>
-          <li className='nav-item d-none d-sm-inline-block'>
-            <Link to='/register' className='nav-link'>
-              Register
-            </Link>
-          </li>
-
-          <li className='nav-item d-none d-sm-inline-block'>
-            <Link to='/Invest' className='nav-link'>
-              Invest
-            </Link>
-          </li>
-
-=======
->>>>>>> 30d875493aa151924528f2fc030f851253200f74
         </ul>
 
         {/* <!-- Right navbar links --> */}
