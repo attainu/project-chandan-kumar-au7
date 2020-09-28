@@ -8,6 +8,7 @@ import Forgot from "./Pages/Forgot";
 import NavBar from "./Pages/NavBar";
 import Error from "./Pages/Error";
 import Footer from "./Pages/Footer";
+import Invest from "./Pages/Invest"
 import Notifier from "./components/Notificiation/Notifier";
 
 import "./App.css";
@@ -24,6 +25,7 @@ function App() {
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <Route exact path='/forgot' component={Forgot} />
+          <Route exact path='/Invest' component={Invest} />
           <Route to='/error' component={Error} />
 
           <Redirect to='/error' />

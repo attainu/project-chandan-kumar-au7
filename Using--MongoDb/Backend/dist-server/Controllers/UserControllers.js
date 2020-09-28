@@ -267,13 +267,13 @@ var ChangePassword = function ChangePassword(req, res, next) {
         confirmNewPassword = _req$body4.confirmNewPassword;
 
     if (!NewPassword || !confirmNewPassword || !email) {
-      return res.status(400).json({
+      return res.json({
         error: "Please provide all the required details"
       });
     }
 
     if (NewPassword !== confirmNewPassword) {
-      return res.status(400).json({
+      return res.json({
         error: "Password Not Matched!"
       });
     } else {
@@ -303,7 +303,7 @@ var ChangePassword = function ChangePassword(req, res, next) {
     }
   } catch (err) {
     console.log("Error in submitting otp", err.message);
-    return res.status(400).json({
+    return res.json({
       error: "Error in postOTP".concat(err.message)
     });
   }

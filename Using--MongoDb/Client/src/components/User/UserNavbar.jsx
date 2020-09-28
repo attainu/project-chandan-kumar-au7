@@ -32,6 +32,13 @@ function NavBar() {
               Register
             </Link>
           </li>
+
+          <li className='nav-item d-none d-sm-inline-block'>
+            <Link to='/Invest' className='nav-link'>
+              Invest
+            </Link>
+          </li>
+
         </ul>
 
         {/* <!-- SEARCH FORM --> */}
