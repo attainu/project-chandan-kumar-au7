@@ -53,12 +53,16 @@ const Register = () => {
         dispatch(userRegisterErrorAction({}));
         dispatch(userRegisterAction({}));
       }
+
       dispatch(
         userRegisterFuncFromUserAction(
           { username, email, password, confirmPassword },
           history
         )
       );
+      dispatch({
+        type: "HAVE_TO_LOAD_SPINNER",
+      });
     }
   };
 
@@ -85,7 +89,7 @@ const Register = () => {
             <b>Register</b> Here
           </div>
 
-          <div className='card' style={{ width: "450px" }}>
+          <div className='card'>
             <div className='card-body register-card-body'>
               <p className='login-box-msg'>*NOTE : All filds are mandatory</p>
 
@@ -191,7 +195,7 @@ const Register = () => {
                     {JSON.stringify(userdatafromstore.user.success)}
                   </h6>
                 )}
-                <p>- OR -</p>
+                {/* <p>- OR -</p>
                 <Link to='!#' className='btn btn-block btn-primary'>
                   <i className='fab fa-facebook mr-2'></i>
                   Sign up using Facebook
@@ -199,7 +203,7 @@ const Register = () => {
                 <Link to='!#' className='btn btn-block btn-danger'>
                   <i className='fab fa-google-plus mr-2'></i>
                   Sign up using Google+
-                </Link>
+                </Link> */}
               </div>
 
               <Link to='/login' className='text-center'>

@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
     <>
-      <div className='main-header content' style={{ minHeight: "700px" }}>
+      <div className='main-header content' style={{ minHeight: "100vh" }}>
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-lg-3 col-6'>
@@ -78,14 +79,13 @@ function Home() {
             {/* <!-- ./col --> */}
           </div>
         </div>
-        <a
+        <Link
           id='back-to-top'
-          href='#!'
+          to='/'
           className='btn btn-primary back-to-top'
-          role='button'
           aria-label='Scroll to top'>
           <i className='fas fa-chevron-up'></i>
-        </a>
+        </Link>
       </div>
     </>
   );

@@ -14,6 +14,10 @@ export const Register = (req, res, next) => {
     res.json({
       error: "PLease provide all input fields...",
     });
+  } else if (username.length >= 6) {
+    res.json({
+      error: "username must have min 6 charactor...!",
+    });
   } else if (password !== confirmPassword) {
     res.json({
       error: "Password Not Matched!",

@@ -1,5 +1,9 @@
+import isEmpty from "../validation/is-empty";
+
 const initialState = {
   user: {},
+  loginsuccess: {},
+  isAuthenticated: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -13,6 +17,18 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+        isAuthenticated: true,
+      };
+    case "SET_USER_LOGGED_IN":
+      return {
+        ...state,
+        isAuthenticated: !isEmpty(action.payload),
+        user: action.payload,
+      };
+    case "LOGIN_SUCCESS_DATA_INTO_REDUX_STORE":
+      return {
+        ...state,
+        loginsuccess: action.payload,
       };
     case "FORGOTPASSWORD_DATA_INTO_REDUX_STORE":
       return {

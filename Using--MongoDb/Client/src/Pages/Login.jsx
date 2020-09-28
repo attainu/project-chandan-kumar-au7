@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { userLoginFuncFromUserAction } from "../redux/actions/userAction";
-import { userLoginAction } from "../redux/actions/userAction";
+import { userLoginSuccessAction } from "../redux/actions/userAction";
 import { userLoginErrorAction } from "../redux/actions/errorAction";
 
 const Login = () => {
@@ -29,13 +29,17 @@ const Login = () => {
       setPassError("You Can't Skip password");
     } else {
       if (
-        Object.keys(userLoginDatafromstore.user).length !== 0 ||
+        Object.keys(userLoginDatafromstore.loginsuccess).length !== 0 ||
         Object.keys(errordatafromstore.loginErrors).length !== 0
       ) {
         dispatch(userLoginErrorAction({}));
-        dispatch(userLoginAction({}));
+        dispatch(userLoginSuccessAction({}));
       }
+
       dispatch(userLoginFuncFromUserAction({ email, password }, history));
+      dispatch({
+        type: "HAVE_TO_LOAD_SPINNER",
+      });
       dispatch({
         type: "SET_HAVE_TO_DSPLAY_NOTIFIER",
       });
@@ -103,7 +107,7 @@ const Login = () => {
                 </div>
                 {/* <!-- /.col --> */}
               </form>
-
+              {/* 
               <div className='social-auth-links text-center mb-3'>
                 <p>- OR -</p>
                 <Link to='#!' className='btn btn-block btn-primary'>
@@ -113,11 +117,11 @@ const Login = () => {
                   <i className='fab fa-google-plus mr-2' /> Sign in using
                   Google+
                 </Link>
-              </div>
+              </div> */}
               {/* <!-- /.social-auth-links --> */}
-
+              <br />
               <p className='mb-1'>
-                <Link to='/forgot'>I forgot my password</Link>
+                <Link to='/forgot'>I Have forgot my password</Link>
               </p>
               <p className='mb-0'>
                 <Link to='/register' className='text-center'>
