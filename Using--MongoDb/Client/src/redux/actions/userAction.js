@@ -1,4 +1,7 @@
 import axios from "axios";
+import setAuthToken from "../helper/setAuthToken";
+import jwt_decode from "jwt-decode";
+import { SET_USER_LOGGED_IN } from "../actionType";
 
 // =========== It will be imported inside the { PAGES folder } where ever we will be needing {  USER REGISTERATION [ BACKEND ] DATA } =========//
 export const userRegisterAction = (data) => {
@@ -12,6 +15,20 @@ export const userRegisterAction = (data) => {
 export const userLoginAction = (data) => {
   return {
     type: "LOGIN_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+// =========== It will be imported inside the { PAGES folder } where ever we will be needing {  USER LOGIN [ BACKEND ] DATA } =========//
+export const userLoginSuccessAction = (data) => {
+  return {
+    type: "LOGIN_SUCCESS_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+
+const userLogoutAction = (data) => {
+  return {
+    type: "SET_USER_LOGGED_IN",
     payload: data,
   };
 };
@@ -51,23 +68,31 @@ export const userRegisterFuncFromUserAction = (
         url: "https://robin--project-mern-backend.herokuapp.com/users/register",
         data: userRegisterCredentials,
       });
-      // console.log("data from user action FILE : ", data);
+      console.log("data from user action FILE : ", data);
       if (data.success) {
         dispatch(userRegisterAction(data));
+
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
+
         history.push("/login");
       } else {
         dispatch({
           type: "SET_REGISTER_ERRORS",
           payload: data,
         });
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_REGISTER_ERRORS",
         payload: err.message,
       });
-      console.log("Error in userRegister Action file ", err.message);
+      // console.log("Error in userRegister Action file ", err.message);
     }
   };
 };
@@ -75,6 +100,9 @@ export const userRegisterFuncFromUserAction = (
 // =========================================== [ LOGIN ]This is for HITTING [BACKEND] end point =====================================//
 export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
   return async (dispatch) => {
+    dispatch({
+      type: "HAVE_TO_LOAD_SPINNER",
+    });
     try {
       const { data } = await axios({
         method: "Post",
@@ -82,30 +110,49 @@ export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
         url: "https://robin--project-mern-backend.herokuapp.com/users/login",
         data: userLoginCredentials,
       });
-      console.log("data from user action FILE : ", data);
+      // console.log("data from user action FILE : ", data);
       if (data.success) {
-        dispatch(userLoginAction(data));
-        localStorage.setItem("userLoginToken", data.token);
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
 
+        const { token } = data;
+        localStorage.setItem("userJwtToken", token);
+
+        setAuthToken(token);
+        const decoded = jwt_decode(token);
+
+        dispatch(userLoginAction(decoded.user));
+        dispatch(userLoginSuccessAction(data));
         history.push("/");
 
         setTimeout(() => {
-          dispatch(userLoginAction({}));
-          localStorage.removeItem("userLoginToken");
-        }, 600000);
+          dispatch(userLoginSuccessAction({}));
+        }, 6000);
       } else {
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
+
         dispatch({
           type: "SET_LOGIN_ERRORS",
           payload: data,
         });
+
+        setTimeout(() => {
+          dispatch({
+            type: "SET_LOGIN_ERRORS",
+            payload: {},
+          });
+        }, 6000);
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_LOGIN_ERRORS",
         payload: err,
       });
-      console.log("Error in userLogin Action file ", err.message);
+      // console.log("Error in userLogin Action file ", err.message);
     }
   };
 };
@@ -117,10 +164,11 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
       const { data } = await axios({
         method: "Post",
         // url: "http://localhost:5000/users/forgotpassword",
-        url: "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
+        url:
+          "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
         data: userForgotpassCredentials,
       });
-      console.log("ForgotPAss data from user action FILE : ", data);
+      // console.log("ForgotPAss data from user action FILE : ", data);
       if (data.success) {
         dispatch(userForgotPassAction(data));
       } else {
@@ -130,12 +178,12 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
         });
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_CHANGE_PASSWORD_ERRORS",
         payload: err,
       });
-      console.log("Error in USERPASSWORD Action file ", err.message);
+      // console.log("Error in USERPASSWORD Action file ", err.message);
     }
   };
 };
@@ -144,19 +192,20 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
 export const userForgotPassOtpVarifyFuncFromUserAction = (
   userForgotpassOTPAsCredentials
 ) => {
-  console.log(
-    "userForgotpassOTPAsCredentials ",
-    userForgotpassOTPAsCredentials
-  );
+  //  console.log(
+  //   "userForgotpassOTPAsCredentials ",
+  //   userForgotpassOTPAsCredentials
+  // );
   return async (dispatch) => {
     try {
       const { data } = await axios({
         method: "Post",
         // url: "http://localhost:5000/users/varifyotp",
-        url: "https://robin--project-mern-backend.herokuapp.com/users/varifyotp",
+        url:
+          "https://robin--project-mern-backend.herokuapp.com/users/varifyotp",
         data: userForgotpassOTPAsCredentials,
       });
-      console.log("OTPVarify data from user action FILE : ", data);
+      // console.log("OTPVarify data from user action FILE : ", data);
       if (data.OTPVARIFYsuccess) {
         dispatch(userForgotPassOtpVarifyAction(data));
       } else {
@@ -166,12 +215,12 @@ export const userForgotPassOtpVarifyFuncFromUserAction = (
         });
       }
     } catch (err) {
-      // console.log("from catch block");
+      console.log("from catch block");
       dispatch({
         type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
         payload: err.message,
       });
-      // console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
+      console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
     }
   };
 };
@@ -189,14 +238,15 @@ export const userForgotPassNEWCredentialsFromUserAction = (
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/changepassword",
-        // url: "https://robin--project-mern-backend.herokuapp.com/users/changepassword",
+        // url: "http://localhost:5000/users/changepassword",
+        url:
+          "https://robin--project-mern-backend.herokuapp.com/users/changepassword",
         data: userForgotpassNEWCredentials,
       });
-      console.log(
-        "userForgotpassNEWCredentials data from user action FILE : ",
-        data
-      );
+      //  console.log(
+      //   "userForgotpassNEWCredentials data from user action FILE : ",
+      //   data
+      // );
       if (data.success) {
         dispatch(userForgotpassNEWCredentialsAction(data));
         setTimeout(() => {
@@ -209,12 +259,27 @@ export const userForgotPassNEWCredentialsFromUserAction = (
         });
       }
     } catch (err) {
-      // console.log("from catch block");
+      console.log("from catch block");
       dispatch({
         type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
         payload: err.message,
       });
-      // console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
+      console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
     }
+  };
+};
+
+export const setUserLoggedIn = (data) => {
+  return {
+    type: SET_USER_LOGGED_IN,
+    payload: data,
+  };
+};
+
+export const userLogout = () => {
+  return (dispatch) => {
+    localStorage.removeItem("userJwtToken");
+    setAuthToken(false);
+    dispatch(userLogoutAction({}));
   };
 };
