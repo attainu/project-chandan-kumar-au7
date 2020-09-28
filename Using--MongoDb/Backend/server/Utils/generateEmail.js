@@ -11,8 +11,8 @@ const transportOptions = {
   port: 465,
   secure: true,
   auth: {
-    user: process.env.MAIL_SENDING_E_MAIL,
-    pass: process.env.MAIL_SENDING_MAIL_PASSOWRD,
+    user: "chandankr.js.dev@gmail.com",
+    pass: "chandankrpass91101",
   },
 };
 
@@ -45,7 +45,7 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
   }
   try {
     var mailOptions = {
-      from: process.env.MAIL_SENDING_E_MAIL,
+      from: "chandankr.js.dev@gmail.com",
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html,
