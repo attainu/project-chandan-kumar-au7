@@ -171,10 +171,17 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
       // console.log("ForgotPAss data from user action FILE : ", data);
       if (data.success) {
         dispatch(userForgotPassAction(data));
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
       } else {
         dispatch({
           type: "SET_CHANGE_PASSWORD_ERRORS",
           payload: data,
+        });
+
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
         });
       }
     } catch (err) {
@@ -208,10 +215,16 @@ export const userForgotPassOtpVarifyFuncFromUserAction = (
       // console.log("OTPVarify data from user action FILE : ", data);
       if (data.OTPVARIFYsuccess) {
         dispatch(userForgotPassOtpVarifyAction(data));
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
       } else {
         dispatch({
           type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
           payload: data,
+        });
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
         });
       }
     } catch (err) {
@@ -249,6 +262,9 @@ export const userForgotPassNEWCredentialsFromUserAction = (
       // );
       if (data.success) {
         dispatch(userForgotpassNEWCredentialsAction(data));
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
+        });
         setTimeout(() => {
           history.push("/login");
         });
@@ -256,6 +272,9 @@ export const userForgotPassNEWCredentialsFromUserAction = (
         dispatch({
           type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
           payload: data,
+        });
+        dispatch({
+          type: "HAVE_TO_STOP_SPINNER",
         });
       }
     } catch (err) {

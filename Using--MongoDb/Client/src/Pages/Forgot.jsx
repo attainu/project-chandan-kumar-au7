@@ -54,8 +54,11 @@ function Forgot() {
         dispatch(userForgotPassErrorAction({}));
       }
       dispatch(userForgotpassFuncFromUserAction({ email }));
+      dispatch({
+        type: "HAVE_TO_LOAD_SPINNER",
+      });
 
-      console.log("email : ", email);
+      // console.log("email : ", email);
     } else {
       setEmError("* This Field Is Reqired");
     }
@@ -79,6 +82,9 @@ function Forgot() {
         dispatch(userForgotPassOtpVarifyErrorAction({}));
       }
       dispatch(userForgotPassOtpVarifyFuncFromUserAction({ email, otp }));
+      dispatch({
+        type: "HAVE_TO_LOAD_SPINNER",
+      });
     } else {
       setEmError("* This Field Is Reqired");
     }
@@ -110,6 +116,9 @@ function Forgot() {
           history
         )
       );
+      dispatch({
+        type: "HAVE_TO_LOAD_SPINNER",
+      });
     } else {
       setEmError("* ALL Field Are Reqired");
     }
