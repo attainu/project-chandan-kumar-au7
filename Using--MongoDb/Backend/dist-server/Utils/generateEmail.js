@@ -5,39 +5,26 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SEND_EMAIL_FOR_FORGOT_PASSWORD = void 0;
 
-var _nodemailer = _interopRequireDefault(require("nodemailer"));
+var _nodemailer = require("nodemailer");
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// -----------------Secret File -------------//
-_dotenv["default"].config();
+// -----------------Secret File -------------|
+_dotenv["default"].config(); // const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSWORD } = process.env;
 
-var _process$env = process.env,
-    MAIL_SENDING_E_MAIL = _process$env.MAIL_SENDING_E_MAIL,
-    MAIL_SENDING_MAIL_PASSWORD = _process$env.MAIL_SENDING_MAIL_PASSWORD;
 
-var mailTransport = _nodemailer["default"].createTransport({
+var transportOptions = {
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
-  debug: process.env.NODE_ENV === "develop",
   auth: {
-    user: MAIL_SENDING_E_MAIL,
-    pass: MAIL_SENDING_MAIL_PASSWORD
-  }
-});
-
-var verify = function verify() {
-  try {
-    var status = mailTransport.verify(); //true is printing don't know why should be removed?????
-  } catch (err) {
-    console.log(err);
+    user: process.env.MAIL_SENDING_E_MAIL,
+    pass: process.env.MAIL_SENDING_MAIL_PASSWORD
   }
 };
-
-verify();
+var mailTransport = (0, _nodemailer.createTransport)(transportOptions);
 
 var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(email, status, username, otp) {
   // console.log("forgot pass for email sender called");
@@ -49,7 +36,7 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
 
   try {
     var mailOptions = {
-      from: MAIL_SENDING_E_MAIL,
+      from: process.env.MAIL_SENDING_E_MAIL,
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html: html,
@@ -62,9 +49,9 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
     mailTransport.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
+      } else {
+        console.log("Message sent to : ", info.envelope.to);
       }
-
-      console.log("Message sent to : ", info.envelope.to);
     });
   } catch (err) {
     console.log(err);
