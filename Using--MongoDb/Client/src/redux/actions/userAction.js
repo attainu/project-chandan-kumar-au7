@@ -163,9 +163,9 @@ export const userForgotpassFuncFromUserAction = (userForgotpassCredentials) => {
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/forgotpassword",
-        // url:
-        //   "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
+        // url: "http://localhost:5000/users/forgotpassword",
+        url:
+          "https://robin--project-mern-backend.herokuapp.com/users/forgotpassword",
         data: userForgotpassCredentials,
       });
       // console.log("ForgotPAss data from user action FILE : ", data);
