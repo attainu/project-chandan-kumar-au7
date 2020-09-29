@@ -5,19 +5,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.SEND_EMAIL_FOR_FORGOT_PASSWORD = void 0;
 
-var _nodemailer = require("nodemailer");
+var _nodemailer = _interopRequireDefault(require("nodemailer"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// -----------------Secret File -------------|
+// -----------------Secret File -------------//
 _dotenv["default"].config();
 
 var _process$env = process.env,
     MAIL_SENDING_E_MAIL = _process$env.MAIL_SENDING_E_MAIL,
     MAIL_SENDING_MAIL_PASSWORD = _process$env.MAIL_SENDING_MAIL_PASSWORD;
-var transportOptions = {
+
+var mailTransport = _nodemailer["default"].createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
@@ -26,8 +27,17 @@ var transportOptions = {
     user: MAIL_SENDING_E_MAIL,
     pass: MAIL_SENDING_MAIL_PASSWORD
   }
+});
+
+var verify = function verify() {
+  try {
+    var status = mailTransport.verify(); //true is printing don't know why should be removed?????
+  } catch (err) {
+    console.log(err);
+  }
 };
-var mailTransport = (0, _nodemailer.createTransport)(transportOptions);
+
+verify();
 
 var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(email, status, username, otp) {
   // console.log("forgot pass for email sender called");
@@ -54,7 +64,7 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
         console.log(error);
       }
 
-      console.log("Message sent: %s", info);
+      console.log("Message sent to : ", info.envelope.to);
     });
   } catch (err) {
     console.log(err);
