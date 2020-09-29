@@ -12,18 +12,17 @@ var _dotenv = _interopRequireDefault(require("dotenv"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // -----------------Secret File -------------|
-_dotenv["default"].config();
+_dotenv["default"].config(); // const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSOWRD } = process.env;
 
-var _process$env = process.env,
-    MAIL_SENDING_E_MAIL = _process$env.MAIL_SENDING_E_MAIL,
-    MAIL_SENDING_MAIL_PASSOWRD = _process$env.MAIL_SENDING_MAIL_PASSOWRD;
+
 var transportOptions = {
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
+  debug: process.env.NODE_ENV === "develop",
   auth: {
-    user: MAIL_SENDING_E_MAIL,
-    pass: MAIL_SENDING_MAIL_PASSOWRD
+    user: "chandankr.js.dev@gmail.com",
+    pass: "chandankrpass91101"
   }
 };
 var mailTransport = (0, _nodemailer.createTransport)(transportOptions);
@@ -38,7 +37,7 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
 
   try {
     var mailOptions = {
-      from: MAIL_SENDING_E_MAIL,
+      from: "chandankr.js.dev@gmail.com",
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html: html,

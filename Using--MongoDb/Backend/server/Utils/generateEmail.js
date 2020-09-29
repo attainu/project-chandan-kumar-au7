@@ -10,6 +10,8 @@ const transportOptions = {
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
+  debug: process.env.NODE_ENV === "develop",
+
   auth: {
     user: "chandankr.js.dev@gmail.com",
     pass: "chandankrpass91101",

@@ -17,7 +17,7 @@ var middlewarefunc = function middlewarefunc(req, res, next) {
 
   if (!token) {
     return res.status(401).json({
-      msg: "No token,authorization denied, sorry but you are now allowed to go further, just pass VAlid credientials"
+      msg: "Hey , No token,authorization denied, sorry but you are now allowed to go further, just pass VAlid credientials"
     });
   } //verify token
 
