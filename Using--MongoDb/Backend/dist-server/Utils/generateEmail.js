@@ -21,8 +21,8 @@ var transportOptions = {
   secure: true,
   debug: process.env.NODE_ENV === "develop",
   auth: {
-    user: "chandankr.js.dev@gmail.com",
-    pass: "chandankrpass91101"
+    user: process.env.MAIL_SENDING_E_MAIL,
+    pass: process.env.MAIL_SENDING_MAIL_PASSOWRD
   }
 };
 var mailTransport = (0, _nodemailer.createTransport)(transportOptions);
@@ -37,7 +37,7 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
 
   try {
     var mailOptions = {
-      from: "chandankr.js.dev@gmail.com",
+      from: process.env.MAIL_SENDING_E_MAIL,
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html: html,
@@ -49,13 +49,13 @@ var SEND_EMAIL_FOR_FORGOT_PASSWORD = function SEND_EMAIL_FOR_FORGOT_PASSWORD(ema
     };
     mailTransport.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error.message);
+        console.log(error);
       }
 
-      console.log("Message sent: %s", info.messageId);
+      console.log("Message sent: %s", info);
     });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 

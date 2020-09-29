@@ -13,8 +13,8 @@ const transportOptions = {
   debug: process.env.NODE_ENV === "develop",
 
   auth: {
-    user: "chandankr.js.dev@gmail.com",
-    pass: "chandankrpass91101",
+    user: process.env.MAIL_SENDING_E_MAIL,
+    pass: process.env.MAIL_SENDING_MAIL_PASSOWRD,
   },
 };
 
@@ -47,7 +47,7 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
   }
   try {
     var mailOptions = {
-      from: "chandankr.js.dev@gmail.com",
+      from: process.env.MAIL_SENDING_E_MAIL,
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html,
@@ -62,11 +62,11 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
 
     mailTransport.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error.message);
+        console.log(error);
       }
-      console.log("Message sent: %s", info.messageId);
+      console.log("Message sent: %s", info);
     });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
