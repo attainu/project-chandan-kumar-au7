@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 // -----------------Secret File -------------|
 dotenv.config();
 
-// const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSOWRD } = process.env;
+const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSWORD } = process.env;
 
 const transportOptions = {
   host: "smtp.gmail.com",
@@ -13,8 +13,8 @@ const transportOptions = {
   debug: process.env.NODE_ENV === "develop",
 
   auth: {
-    user: process.env.MAIL_SENDING_E_MAIL,
-    pass: process.env.MAIL_SENDING_MAIL_PASSOWRD,
+    user: MAIL_SENDING_E_MAIL,
+    pass: MAIL_SENDING_MAIL_PASSWORD,
   },
 };
 
@@ -47,7 +47,7 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
   }
   try {
     var mailOptions = {
-      from: process.env.MAIL_SENDING_E_MAIL,
+      from: MAIL_SENDING_E_MAIL,
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html,
