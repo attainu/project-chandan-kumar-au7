@@ -4,7 +4,19 @@ import dotenv from "dotenv";
 // -----------------Secret File -------------|
 dotenv.config();
 
-// const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSWORD } = process.env;
+const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSWORD } = process.env;
+
+console.log(MAIL_SENDING_E_MAIL);
+console.log(MAIL_SENDING_MAIL_PASSWORD);
+
+console.log(
+  "process.env.MAIL_SENDING_E_MAIL ",
+  process.env.MAIL_SENDING_E_MAIL
+);
+console.log(
+  "process.env.MAIL_SENDING_MAIL_PASSWORD ",
+  process.env.MAIL_SENDING_MAIL_PASSWORD
+);
 
 const transportOptions = {
   host: "smtp.gmail.com",

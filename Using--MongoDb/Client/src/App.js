@@ -17,9 +17,11 @@ import Forgot from "./Pages/Forgot";
 import NavBar from "./Pages/NavBar";
 import Error from "./Pages/Error";
 import Footer from "./Pages/Footer";
-import Invest from "./Pages/Invest"
+import Invest from "./Pages/Invest";
 import Notifier from "./components/Notificiation/Notifier";
 import { css } from "@emotion/core";
+
+import Getloan from "./components/User/Getloan/Getloan";
 
 // =============== Spinner ============ //
 // Can be a string as well. Need to ensure each key-value pair ends with ;
@@ -71,6 +73,7 @@ function App() {
           <Route exact path='/register' component={Register} />
           <Route exact path='/forgot' component={Forgot} />
           <Route exact path='/Invest' component={Invest} />
+          <Route exact path='/getloan' component={Getloan} />
           <Route to='/error' component={Error} />
 
           <Redirect to='/error' />
