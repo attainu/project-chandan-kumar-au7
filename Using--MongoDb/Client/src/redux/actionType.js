@@ -1,2 +1,3 @@
 //User
 export const SET_USER_LOGGED_IN = "SET_USER_LOGGED_IN";
+export const SET_ADMIN_LOGGED_IN = "SET_ADMIN_LOGGED_IN";

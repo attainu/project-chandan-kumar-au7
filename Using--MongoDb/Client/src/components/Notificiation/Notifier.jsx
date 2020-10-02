@@ -7,9 +7,13 @@ function Notifier() {
   const userLoginDatafromstore = useSelector(
     (store) => store.userDataFromStore
   );
+  const adminDataFromStore = useSelector((store) => store.adminDataFromStore);
 
   useEffect(() => {
-    // console.log("errordatafromstore =====>>>>  ", userLoginDatafromstore);
+    console.log("ErrorDataFromNotifier =====>>>>  ", errordatafromstore);
+
+    console.log("AdminDataFromNotifier =====>>>>  ", adminDataFromStore);
+    console.log("UserDataFromNotifier =====>>>>  ", userLoginDatafromstore);
   });
 
   return (

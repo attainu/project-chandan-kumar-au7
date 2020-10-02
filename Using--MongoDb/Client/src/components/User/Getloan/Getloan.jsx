@@ -4,10 +4,10 @@ import React from "react";
 function Getloan() {
   return (
     <>
-      <div class='bd-example'>
+      <div class='bd-example container'>
         <div
           id='carouselExampleCaptions'
-          class='carousel slide'
+          class='carousel slide '
           data-ride='carousel'>
           <ol class='carousel-indicators'>
             <li
@@ -17,7 +17,9 @@ function Getloan() {
             <li data-target='#carouselExampleCaptions' data-slide-to='1'></li>
             <li data-target='#carouselExampleCaptions' data-slide-to='2'></li>
           </ol>
-          <div class='carousel-inner'>
+          <div
+            class='carousel-inner'
+            style={{ height: "500px", margin: "30px 0 30px 0" }}>
             <div class='carousel-item active'>
               <img
                 src='https://cdn.pixabay.com/photo/2018/09/22/11/43/application-3695107__340.jpg'

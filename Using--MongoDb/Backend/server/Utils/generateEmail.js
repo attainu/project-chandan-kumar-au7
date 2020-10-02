@@ -6,30 +6,19 @@ dotenv.config();
 
 const { MAIL_SENDING_E_MAIL, MAIL_SENDING_MAIL_PASSWORD } = process.env;
 
-console.log(MAIL_SENDING_E_MAIL);
-console.log(MAIL_SENDING_MAIL_PASSWORD);
-
-console.log(
-  "process.env.MAIL_SENDING_E_MAIL ",
-  process.env.MAIL_SENDING_E_MAIL
-);
-console.log(
-  "process.env.MAIL_SENDING_MAIL_PASSWORD ",
-  process.env.MAIL_SENDING_MAIL_PASSWORD
-);
-
 const transportOptions = {
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
 
   auth: {
-    user: process.env.MAIL_SENDING_E_MAIL,
-    pass: process.env.MAIL_SENDING_MAIL_PASSWORD,
+    user: MAIL_SENDING_E_MAIL,
+    pass: MAIL_SENDING_MAIL_PASSWORD,
   },
 };
 
 const mailTransport = createTransport(transportOptions);
+
 export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
   email,
   status,
@@ -58,7 +47,7 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
   }
   try {
     var mailOptions = {
-      from: process.env.MAIL_SENDING_E_MAIL,
+      from: MAIL_SENDING_E_MAIL,
       to: email,
       subject: "FORGOT_PASSWORD request from you...",
       html,
@@ -82,3 +71,63 @@ export const SEND_EMAIL_FOR_FORGOT_PASSWORD = (
     console.log(err);
   }
 };
+
+export const SEND_EMAIL_FOR_ADMIN_APPROVAl = (
+  email,
+  status,
+  username,
+  secretForApproval
+) => {
+  // console.log("forgot pass for email sender called");
+  let html = null;
+
+  if (status === "success") {
+    html = `
+    <div style="background: #fab1a0">
+      <center>
+          <h1>Welcome to EASY__MONEY </h1>
+
+          <img src="cid:unique@kreata.ee" alt="Approvin_you_image" width="600" height="400">
+
+          <h4>Hey ${username} we are Approving you as a admin , keep maintaining loyalty with us And you  will be good to go, </h4>
+          <h5> OTP for ${email} is ${secretForApproval} </h5>
+          <h6> If This Is Not Done By You , Let US Know </h6>
+
+          <h1> THANK YOU ONCE AGAIN FOR BEING WITH US </h1>
+
+    </center> 
+    </div>
+      `;
+  }
+  try {
+    var mailOptions = {
+      from: MAIL_SENDING_E_MAIL,
+      to: email,
+      subject: "Approval as a admin...",
+      html,
+      attachments: [
+        {
+          filename: "approvingYou.JPG",
+          path: "public/images/approvingYou.jpg",
+          cid: "unique@kreata.ee",
+        },
+      ],
+    };
+
+    mailTransport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Message sent to : ", info.envelope.to);
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// SEND_EMAIL_FOR_ADMIN_APPROVAl(
+//   "chandankr.pra930@gmail.com",
+//   "success",
+//   "chandan"
+// );

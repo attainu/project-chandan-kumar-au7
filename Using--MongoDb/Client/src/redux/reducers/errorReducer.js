@@ -3,6 +3,8 @@ const initialState = {
   loginErrors: {},
   passwordChangingErrors: {},
   userForgotPassOtpVarifyErrors: {},
+
+  adminEmailSendingErrors: {},
 };
 
 const errorReducer = (state = initialState, action) => {
@@ -16,6 +18,16 @@ const errorReducer = (state = initialState, action) => {
       return {
         ...state,
         loginErrors: action.payload,
+      };
+    case "SET_ADMIN_LOGIN_ERRORS":
+      return {
+        ...state,
+        loginErrors: action.payload,
+      };
+    case "SET_ADMIN_EMAIL_SENDING_ERRORS":
+      return {
+        ...state,
+        adminEmailSendingErrors: action.payload,
       };
     case "SET_CHANGE_PASSWORD_ERRORS":
       return {

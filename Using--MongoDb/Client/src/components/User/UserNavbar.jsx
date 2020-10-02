@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../../redux/actions/userAction";
+import { adminLogout } from "../../redux/actions/adminAction";
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -11,9 +12,13 @@ function NavBar() {
   const userLoginDatafromstore = useSelector(
     (store) => store.userDataFromStore
   );
+  const adminLoginDatafromstore = useSelector(
+    (store) => store.adminDataFromStore
+  );
 
-  const logoutHandler = () => {
+  const UserlogoutHandler = () => {
     dispatch(userLogout());
+    dispatch(adminLogout());
     history.push("/");
   };
 
@@ -36,8 +41,9 @@ function NavBar() {
 
         {/* <!-- Right navbar links --> */}
         <ul className='navbar-nav ml-auto'>
-          {userLoginDatafromstore.isAuthenticated === true ? (
-            <Link to='/' className='nav-link' onClick={logoutHandler}>
+          {userLoginDatafromstore.isAuthenticated === true ||
+          adminLoginDatafromstore.isAuthenticated === true ? (
+            <Link to='/' className='nav-link' onClick={UserlogoutHandler}>
               LogOut
             </Link>
           ) : (

@@ -19,6 +19,8 @@ var _IndexRoutes = _interopRequireDefault(require("./Routes/IndexRoutes"));
 
 var _UserRoutes = _interopRequireDefault(require("./Routes/UserRoutes"));
 
+var _AdminRoutes = _interopRequireDefault(require("./Routes/AdminRoutes"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var cors = require("cors"); // -----------------Secret File -------------|
@@ -49,7 +51,8 @@ app.use(function (req, res, next) {
 }); // ------------------------Imported Routes In Use--------------------------|
 
 app.use("/", _IndexRoutes["default"]);
-app.use("/users", _UserRoutes["default"]); // unknown error handling
+app.use("/users", _UserRoutes["default"]);
+app.use("/admins", _AdminRoutes["default"]); // unknown error handling
 
 app.use(function (req, res, next) {
   res.json({

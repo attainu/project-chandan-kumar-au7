@@ -15,6 +15,7 @@ require("./Dbconnectors/database");
 
 import indexRouter from "./Routes/IndexRoutes";
 import usersRouter from "./Routes/UserRoutes";
+import adminRouter from "./Routes/AdminRoutes";
 
 const app = express();
 
@@ -42,7 +43,7 @@ app.use(function (req, res, next) {
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
+app.use("/admins", adminRouter);
 
 // unknown error handling
 
@@ -54,4 +55,3 @@ app.use((req, res, next) => {
 });
 
 export default app;
-

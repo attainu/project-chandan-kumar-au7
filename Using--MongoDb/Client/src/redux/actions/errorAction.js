@@ -12,6 +12,20 @@ export const userLoginErrorAction = (data) => {
   };
 };
 
+export const adminLoginErrorAction = (data) => {
+  return {
+    type: "SET_ADMIN_LOGIN_ERRORS",
+    payload: data,
+  };
+};
+
+export const adminEmailSendingErrors = (data) => {
+  return {
+    type: "SET_ADMIN_EMAIL_SENDING_ERRORS",
+    payload: data,
+  };
+};
+
 export const userForgotPassErrorAction = (data) => {
   return {
     type: "SET_CHANGE_PASSWORD_ERRORS",
