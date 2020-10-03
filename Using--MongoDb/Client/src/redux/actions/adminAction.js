@@ -135,9 +135,9 @@ export const adminAssignSecretTokenFuncFromadminAction = (email) => {
     try {
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/admins/assignsecrettoken",
-        // url:
-        //   "https://robin--project-mern-backend.herokuapp.com/admins/assignsecrettoken",
+        // url: "http://localhost:5000/admins/assignsecrettoken",
+        url:
+          "https://robin--project-mern-backend.herokuapp.com/admins/assignsecrettoken",
         data: email,
       });
       // console.log("assigned secretToken from AdminAction FILE :::: : ", data);
