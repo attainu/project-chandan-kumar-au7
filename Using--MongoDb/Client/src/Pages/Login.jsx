@@ -15,7 +15,7 @@ import {
   adminSecretTokenVarifyFuncFromAdminAction,
   adminLoginFuncFromadminAction,
   adminAssignSecretTokenVarifyAction,
-  adminAssignSecretTokenAction,
+  // adminAssignSecretTokenAction,
 } from "../redux/actions/adminAction";
 
 const Login = () => {
@@ -52,7 +52,7 @@ const Login = () => {
     } else {
       if (
         Object.keys(userLoginDatafromstore.loginsuccess).length !== 0 ||
-        Object.keys(errordatafromstore.loginErrors).length !== 0
+        Object.keys(errordatafromstore.error).length !== 0
       ) {
         dispatch(userLoginErrorAction({}));
         dispatch(userLoginSuccessAction({}));
@@ -76,12 +76,12 @@ const Login = () => {
     if (!email) {
       setEmError("* This Field Is Reqired");
     } else {
-      if (
-        Object.keys(admindatafromstore.admin).length !== 0 ||
-        Object.keys(errordatafromstore.loginErrors).length !== 0
-      ) {
-        dispatch(adminAssignSecretTokenAction({}));
-      }
+      // if (
+      //   // Object.keys(admindatafromstore).length !== 0 ||
+      //   Object.keys(errordatafromstore.error).length !== 0
+      // ) {
+      //   dispatch(adminAssignSecretTokenAction({}));
+      // }
       dispatch(adminAssignSecretTokenFuncFromadminAction({ email }));
 
       dispatch({
@@ -96,7 +96,7 @@ const Login = () => {
     if (secret) {
       if (
         Object.keys(admindatafromstore.admin).length !== 0 ||
-        Object.keys(errordatafromstore.loginErrors).length !== 0
+        Object.keys(errordatafromstore.error).length !== 0
       ) {
         dispatch(adminAssignSecretTokenVarifyAction({}));
       }
@@ -121,7 +121,7 @@ const Login = () => {
     } else {
       if (
         Object.keys(admindatafromstore.admin).length !== 0 ||
-        Object.keys(errordatafromstore.loginErrors).length !== 0
+        Object.keys(errordatafromstore.error).length !== 0
       ) {
         dispatch(adminLoginErrorAction({}));
       }
@@ -139,18 +139,18 @@ const Login = () => {
   // =========================== End of form submit handler ================================= //
 
   useEffect(() => {
-    // console.log("ADMINSTORE : =====> : ", admindatafromstore);
-    if (admindatafromstore.loginsuccess.success) {
+    console.log("ADMINSTORE : =====> : ", admindatafromstore);
+    if (admindatafromstore.adminloginsuccess.success) {
       setisSentEmail(true);
       setisVarifiedOTP(true);
       // console.log("inside ", isVarifiedOTP);
     } else {
       if (isVarifiedOTP === false) {
-        if (admindatafromstore.loginsuccess.EMAILSENDsuccess) {
+        if (admindatafromstore.adminloginsuccess.EMAILSENDsuccess) {
           setTimeout(() => {
             setisSentEmail(true);
           }, 5000);
-        } else if (admindatafromstore.loginsuccess.OTPVARIFYsuccess) {
+        } else if (admindatafromstore.adminloginsuccess.OTPVARIFYsuccess) {
           setTimeout(() => {
             setisVarifiedOTP(true);
           }, 5000);

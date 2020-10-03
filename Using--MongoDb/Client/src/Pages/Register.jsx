@@ -69,7 +69,7 @@ const Register = () => {
 
       if (
         Object.keys(userdatafromstore.user).length !== 0 ||
-        Object.keys(errordatafromstore.registerErrors).length !== 0
+        Object.keys(errordatafromstore.error).length !== 0
       ) {
         dispatch(userRegisterErrorAction({}));
         dispatch(userRegisterAction({}));
@@ -121,7 +121,7 @@ const Register = () => {
 
       if (
         Object.keys(admindatafromstore.admin).length !== 0 ||
-        Object.keys(errordatafromstore.registerErrors).length !== 0
+        Object.keys(errordatafromstore.error).length !== 0
       ) {
         dispatch(userRegisterErrorAction({}));
         dispatch(adminRegisterAction({}));
@@ -338,11 +338,11 @@ const Register = () => {
               </form>
 
               <div className='social-auth-links text-center'>
-                {Object.keys(errordatafromstore.registerErrors).length === 0 ? (
+                {Object.keys(errordatafromstore.error).length === 0 ? (
                   <></>
                 ) : (
                   <h6 style={{ color: "red" }}>
-                    {JSON.stringify(errordatafromstore.registerErrors.error)}
+                    {JSON.stringify(errordatafromstore.error.error)}
                   </h6>
                 )}
                 {Object.keys(userdatafromstore.user).length === 0 ? (

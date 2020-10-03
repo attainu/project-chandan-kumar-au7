@@ -2,46 +2,72 @@ import React, { useEffect } from "react";
 import "./Notifier.css";
 import { useSelector } from "react-redux";
 
+// import { userRegisterErrorAction } from "../../redux/actions/errorAction";
+
 function Notifier() {
+  // const dispatch = useDispatch();
   const errordatafromstore = useSelector((store) => store.errorDatafromStore);
-  const userLoginDatafromstore = useSelector(
-    (store) => store.userDataFromStore
-  );
+  const userDataFromStore = useSelector((store) => store.userDataFromStore);
   const adminDataFromStore = useSelector((store) => store.adminDataFromStore);
 
   useEffect(() => {
-    console.log("ErrorDataFromNotifier =====>>>>  ", errordatafromstore);
+    console.log(" * ErrorDataFromNotifier =====>>>>  ", errordatafromstore);
+    console.log(" * AdminDataFromNotifier =====>>>>  ", adminDataFromStore);
+    console.log(" * UserDataFromNotifier =====>>>>  ", userDataFromStore);
 
-    console.log("AdminDataFromNotifier =====>>>>  ", adminDataFromStore);
-    console.log("UserDataFromNotifier =====>>>>  ", userLoginDatafromstore);
+    // if (
+    //   Object.keys(errordatafromstore).length > 0 ||
+    //   Object.keys(userDataFromStore).length > 0 ||
+    //   Object.keys(adminDataFromStore).length > 0
+    // ) {
+    //   setTimeout(() => {
+    //     dispatch(userRegisterErrorAction({}));
+    //   }, 6000);
+    // }
   });
 
   return (
     <>
-      {Object.keys(errordatafromstore.loginErrors).length > 0 ||
-      Object.keys(userLoginDatafromstore.loginsuccess).length > 0 ? (
+      {Object.keys(errordatafromstore.error).length > 0 ||
+      Object.keys(userDataFromStore.loginsuccess).length > 0 ||
+      Object.keys(adminDataFromStore.adminloginsuccess).length > 0 ? (
         <div
           id='notify_message'
-          className='alert-danger'
           style={{
             display: "block",
             overflow: "hidden",
             height: "50px",
             paddingTop: "10px",
             marginTop: " 0px",
+            background: "#fffa65",
           }}>
-          {Object.keys(errordatafromstore.loginErrors).length === 0 ? (
+          {/* ====================== error for all components ================== */}
+
+          {Object.keys(errordatafromstore.error).length === 0 ? (
             <></>
           ) : (
             <h6 style={{ color: "red" }}>
-              {JSON.stringify(errordatafromstore.loginErrors.error)}
+              {JSON.stringify(errordatafromstore.error)}
             </h6>
           )}
-          {Object.keys(userLoginDatafromstore.loginsuccess).length === 0 ? (
+
+          {/* ====================== user related ================== */}
+
+          {Object.keys(userDataFromStore.loginsuccess).length === 0 ? (
             <></>
           ) : (
             <h6 style={{ color: "green" }}>
-              {JSON.stringify(userLoginDatafromstore.loginsuccess.success)}
+              {JSON.stringify(userDataFromStore.loginsuccess.success)}
+            </h6>
+          )}
+
+          {/* ====================== admin related ================== */}
+
+          {Object.keys(adminDataFromStore.adminloginsuccess).length === 0 ? (
+            <></>
+          ) : (
+            <h6 style={{ color: "green" }}>
+              {JSON.stringify(userDataFromStore.adminloginsuccess.success)}
             </h6>
           )}
         </div>
@@ -52,4 +78,4 @@ function Notifier() {
   );
 }
 
-export default Notifier;
+export default React.memo(Notifier);

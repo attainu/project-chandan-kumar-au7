@@ -1,10 +1,5 @@
 const initialState = {
-  registerErrors: {},
-  loginErrors: {},
-  passwordChangingErrors: {},
-  userForgotPassOtpVarifyErrors: {},
-
-  adminEmailSendingErrors: {},
+  error: {},
 };
 
 const errorReducer = (state = initialState, action) => {
@@ -12,32 +7,43 @@ const errorReducer = (state = initialState, action) => {
     case "SET_REGISTER_ERRORS":
       return {
         ...state,
-        registerErrors: action.payload,
+        error: action.payload,
       };
     case "SET_LOGIN_ERRORS":
       return {
         ...state,
-        loginErrors: action.payload,
-      };
-    case "SET_ADMIN_LOGIN_ERRORS":
-      return {
-        ...state,
-        loginErrors: action.payload,
-      };
-    case "SET_ADMIN_EMAIL_SENDING_ERRORS":
-      return {
-        ...state,
-        adminEmailSendingErrors: action.payload,
+        error: action.payload,
       };
     case "SET_CHANGE_PASSWORD_ERRORS":
       return {
         ...state,
-        passwordChangingErrors: action.payload,
+        error: action.payload,
       };
     case "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS":
       return {
         ...state,
-        userForgotPassOtpVarifyErrors: action.payload,
+        error: action.payload,
+      };
+    // ============== <<<<>>>> =================== //
+    case "SET_ADMIN_REGISTER_ERRORS":
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case "SET_ADMIN_LOGIN_ERRORS":
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case "SET_ADMIN_CHANGE_PASSWORD_ERRORS":
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case "SET_ADMIN_FORGOTPASSWORD_OTP_VARIFY_ERRORS":
+      return {
+        ...state,
+        error: action.payload,
       };
 
     default:
