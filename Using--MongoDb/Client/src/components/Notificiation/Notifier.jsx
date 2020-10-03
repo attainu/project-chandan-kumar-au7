@@ -30,6 +30,7 @@ function Notifier() {
     <>
       {Object.keys(errordatafromstore.error).length > 0 ||
       Object.keys(userDataFromStore.loginsuccess).length > 0 ||
+      Object.keys(userDataFromStore.registersuccess).length > 0 ||
       Object.keys(adminDataFromStore.adminloginsuccess).length > 0 ? (
         <div
           id='notify_message'
@@ -60,6 +61,13 @@ function Notifier() {
               {JSON.stringify(userDataFromStore.loginsuccess.success)}
             </h6>
           )}
+          {Object.keys(userDataFromStore.registersuccess).length === 0 ? (
+            <></>
+          ) : (
+            <h6 style={{ color: "green" }}>
+              {JSON.stringify(userDataFromStore.registersuccess.success)}
+            </h6>
+          )}
 
           {/* ====================== admin related ================== */}
 
@@ -67,7 +75,7 @@ function Notifier() {
             <></>
           ) : (
             <h6 style={{ color: "green" }}>
-              {JSON.stringify(userDataFromStore.adminloginsuccess.success)}
+              {JSON.stringify(adminDataFromStore.adminloginsuccess.success)}
             </h6>
           )}
         </div>
@@ -78,4 +86,4 @@ function Notifier() {
   );
 }
 
-export default React.memo(Notifier);
+export default Notifier;

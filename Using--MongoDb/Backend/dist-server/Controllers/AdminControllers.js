@@ -76,7 +76,7 @@ var Register = function Register(req, res, next) {
             } else {
               userDetails.save().then(function (doc) {
                 res.status(201).json({
-                  success: "User Registered Successfully",
+                  success: "Admin Registered Successfully",
                   results: doc
                 });
               })["catch"](function (err) {

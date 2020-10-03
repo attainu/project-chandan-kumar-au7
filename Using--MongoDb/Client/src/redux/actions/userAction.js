@@ -77,6 +77,9 @@ export const userRegisterFuncFromUserAction = (
         });
 
         history.push("/login");
+        setTimeout(() => {
+          dispatch(userRegisterAction({}));
+        }, 6000);
       } else {
         dispatch({
           type: "SET_REGISTER_ERRORS",
@@ -85,6 +88,13 @@ export const userRegisterFuncFromUserAction = (
         dispatch({
           type: "HAVE_TO_STOP_SPINNER",
         });
+
+        setTimeout(() => {
+          dispatch({
+            type: "SET_REGISTER_ERRORS",
+            payload: {},
+          });
+        }, 6000);
       }
     } catch (err) {
       // console.log("from catch block");

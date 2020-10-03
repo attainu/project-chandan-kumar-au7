@@ -3,6 +3,7 @@ import isEmpty from "../validation/is-empty";
 const initialState = {
   user: {},
   loginsuccess: {},
+  registersuccess: {},
   isAuthenticated: false,
 };
 
@@ -11,7 +12,7 @@ const userReducer = (state = initialState, action) => {
     case "REGISTER_DATA_INTO_REDUX_STORE":
       return {
         ...state,
-        user: action.payload,
+        registersuccess: action.payload,
       };
     case "LOGIN_DATA_INTO_REDUX_STORE":
       return {

@@ -64,7 +64,7 @@ export const Register = (req, res, next) => {
                   .save()
                   .then((doc) => {
                     res.status(201).json({
-                      success: "User Registered Successfully",
+                      success: "Admin Registered Successfully",
                       results: doc,
                     });
                   })

@@ -36,6 +36,11 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         adminloginsuccess: action.payload,
       };
+    case "ADMIN_ALREADY_VARIFIED_ASSIGN_DATA_INTO_REDUX_STORE":
+      return {
+        ...state,
+        adminloginsuccess: action.payload,
+      };
     case "ADMIN_SECRETTOKEN_VARIFY_DATA_INTO_REDUX_STORE":
       return {
         ...state,

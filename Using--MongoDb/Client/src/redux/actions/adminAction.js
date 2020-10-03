@@ -41,6 +41,13 @@ export const adminAssignSecretTokenAction = (data) => {
   };
 };
 // =========== It will be imported inside the { PAGES folder } where ever we will be needing {  admin adminAssignSecretToken [ BACKEND ] DATA } =========//
+export const adminAlreadyVarifiedAction = (data) => {
+  return {
+    type: "ADMIN_ALREADY_VARIFIED_ASSIGN_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+// =========== It will be imported inside the { PAGES folder } where ever we will be needing {  admin adminAssignSecretToken [ BACKEND ] DATA } =========//
 export const adminAssignSecretTokenVarifyAction = (data) => {
   return {
     type: "ADMIN_SECRETTOKEN_VARIFY_DATA_INTO_REDUX_STORE",
@@ -92,6 +99,10 @@ export const adminRegisterFuncFromadminAction = (
         });
 
         history.push("/login");
+
+        setTimeout(() => {
+          dispatch(adminRegisterAction({}));
+        }, 6000);
       } else {
         dispatch({
           type: "SET_ADMIN_REGISTER_ERRORS",
@@ -100,6 +111,13 @@ export const adminRegisterFuncFromadminAction = (
         dispatch({
           type: "HAVE_TO_STOP_SPINNER",
         });
+
+        setTimeout(() => {
+          dispatch({
+            type: "SET_ADMIN_REGISTER_ERRORS",
+            payload: {},
+          });
+        }, 6000);
       }
     } catch (err) {
       // console.log("from catch block of admin func register");
@@ -122,20 +140,28 @@ export const adminAssignSecretTokenFuncFromadminAction = (email) => {
         //   "https://robin--project-mern-backend.herokuapp.com/admins/assignsecrettoken",
         data: email,
       });
-      // console.log("assigned secretToken : ", data);
+      // console.log("assigned secretToken from AdminAction FILE :::: : ", data);
       if (data.success) {
-        dispatch(adminLoginForMessageAction(data));
+        // console.log("success part run : ");
         dispatch({
           type: "HAVE_TO_STOP_SPINNER",
         });
+        dispatch(adminAlreadyVarifiedAction(data));
+        setTimeout(() => {
+          dispatch(adminAlreadyVarifiedAction({}));
+        }, 6000);
       } else {
-        console.log(" from else block assigned secretToken : ", data);
+        // console.log(" from else block assigned secretToken : ", data);
         if (data.EMAILSENDsuccess) {
-          console.log(" else than if block assigned secretToken : ", data);
+          // console.log(" else than if block assigned secretToken : ", data);
           dispatch(adminAssignSecretTokenAction(data));
           dispatch({
             type: "HAVE_TO_STOP_SPINNER",
           });
+
+          setTimeout(() => {
+            dispatch(adminAssignSecretTokenAction({}));
+          }, 6000);
         } else {
           dispatch({
             type: "SET_ADMIN_EMAIL_SENDING_ERRORS",
@@ -145,6 +171,13 @@ export const adminAssignSecretTokenFuncFromadminAction = (email) => {
           dispatch({
             type: "HAVE_TO_STOP_SPINNER",
           });
+
+          setTimeout(() => {
+            dispatch({
+              type: "SET_ADMIN_EMAIL_SENDING_ERRORS",
+              payload: {},
+            });
+          }, 6000);
         }
       }
     } catch (err) {
@@ -219,7 +252,7 @@ export const adminLoginFuncFromadminAction = (
       });
       console.log("data from admin action FILE : ", data);
       if (data.success) {
-        dispatch(adminLoginForMessageAction(data));
+        // dispatch(adminLoginForMessageAction(data));
         dispatch({
           type: "HAVE_TO_STOP_SPINNER",
         });
@@ -235,7 +268,9 @@ export const adminLoginFuncFromadminAction = (
 
         history.push("/");
 
-        setTimeout(() => {}, 6000);
+        setTimeout(() => {
+          dispatch(adminLoginForMessageAction({}));
+        }, 6000);
       } else {
         dispatch({
           type: "HAVE_TO_STOP_SPINNER",

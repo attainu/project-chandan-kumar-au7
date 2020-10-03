@@ -139,7 +139,10 @@ const Login = () => {
   // =========================== End of form submit handler ================================= //
 
   useEffect(() => {
-    console.log("ADMINSTORE : =====> : ", admindatafromstore);
+    // console.log(
+    //   "ADMINSTORE_FROM_LOGIN.JS__USE_EFFECT : =====> : ",
+    //   admindatafromstore
+    // );
     if (admindatafromstore.adminloginsuccess.success) {
       setisSentEmail(true);
       setisVarifiedOTP(true);
@@ -367,6 +370,37 @@ const Login = () => {
               )}
 
               <br />
+
+              <div className='social-auth-links text-center'>
+                {Object.keys(errordatafromstore.error).length === 0 ? (
+                  <></>
+                ) : (
+                  <h6 style={{ color: "red" }}>
+                    {JSON.stringify(errordatafromstore.error.error)}
+                  </h6>
+                )}
+                {Object.keys(admindatafromstore.adminloginsuccess).length ===
+                0 ? (
+                  <></>
+                ) : (
+                  <h6 style={{ color: "red" }}>
+                    {JSON.stringify(
+                      admindatafromstore.adminloginsuccess.EMAILSENDsuccess
+                    )}
+                  </h6>
+                )}
+                {Object.keys(admindatafromstore.adminloginsuccess).length ===
+                0 ? (
+                  <></>
+                ) : (
+                  <h6 style={{ color: "red" }}>
+                    {JSON.stringify(
+                      admindatafromstore.adminloginsuccess.OTPVARIFYsuccess
+                    )}
+                  </h6>
+                )}
+              </div>
+
               <p className='mb-1'>
                 <Link to='/forgot'>I Have forgot my password</Link>
               </p>
