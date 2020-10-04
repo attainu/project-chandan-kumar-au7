@@ -30,7 +30,6 @@ function Notifier() {
     <>
       {Object.keys(errordatafromstore.error).length > 0 ||
       Object.keys(userDataFromStore.loginsuccess).length > 0 ||
-      Object.keys(userDataFromStore.loginsuccess).length > 0 ||
       Object.keys(userDataFromStore.user).length > 0 ||
       Object.keys(adminDataFromStore.adminloginsuccess).length > 0 ? (
         <div

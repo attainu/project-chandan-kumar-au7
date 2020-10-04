@@ -1,8 +1,11 @@
 import React from "react";
 import Logo from "../../favicon.ico";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function RightAsideBar() {
+  const userDataFromStore = useSelector((store) => store.userDataFromStore);
+
   return (
     <>
       <aside className='main-sidebar sidebar-dark-primary elevation-4'>
@@ -11,8 +14,7 @@ function RightAsideBar() {
           <img
             src={Logo}
             alt='AdminLTE Logo'
-            className='brand-image img-circle elevation-3'
-            style={{ opacity: ".8" }}
+            style={{ opacity: ".8", height: "100px" }}
           />
 
           <span className='brand-text font-weight-light'>USER PANEL</span>
@@ -30,9 +32,13 @@ function RightAsideBar() {
               />
             </div>
             <div className='info'>
-              <Link to='!#' className='d-block'>
-                chandan
-              </Link>
+              {Object.keys(userDataFromStore) ? (
+                <Link to='#!' className='d-block'>
+                  Welcome : {JSON.stringify(userDataFromStore.user.username)}
+                </Link>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 

@@ -1,8 +1,11 @@
 import React from "react";
 import Logo from "../../favicon.ico";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Asidebar() {
+  const adminDataFromStore = useSelector((store) => store.adminDataFromStore);
+
   return (
     <>
       {/* ---------------------------Starts of Main Sidebar Container -------------------------- */}
@@ -12,9 +15,8 @@ function Asidebar() {
         <Link to='/' className='brand-link'>
           <img
             src={Logo}
-            alt='AdminLTE Logo'
-            className='brand-image img-circle elevation-3'
-            style={{ opacity: ".8" }}
+            alt='Logo'
+            style={{ opacity: ".8", height: "100px" }}
           />
 
           <span className='brand-text font-weight-light'>ADMIN PANNEL</span>
@@ -32,9 +34,13 @@ function Asidebar() {
               />
             </div>
             <div className='info'>
-              <Link to='!#' className='d-block'>
-                chandan
-              </Link>
+              {Object.keys(adminDataFromStore.admin.username).length ? (
+                <Link to='#!' className='d-block'>
+                  Welcome : {JSON.stringify(adminDataFromStore.admin.username)}
+                </Link>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 
