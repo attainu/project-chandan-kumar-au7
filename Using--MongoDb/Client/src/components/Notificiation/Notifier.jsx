@@ -30,7 +30,8 @@ function Notifier() {
     <>
       {Object.keys(errordatafromstore.error).length > 0 ||
       Object.keys(userDataFromStore.loginsuccess).length > 0 ||
-      Object.keys(userDataFromStore.registersuccess).length > 0 ||
+      Object.keys(userDataFromStore.loginsuccess).length > 0 ||
+      Object.keys(userDataFromStore.user).length > 0 ||
       Object.keys(adminDataFromStore.adminloginsuccess).length > 0 ? (
         <div
           id='notify_message'
@@ -66,6 +67,13 @@ function Notifier() {
           ) : (
             <h6 style={{ color: "green" }}>
               {JSON.stringify(userDataFromStore.registersuccess.success)}
+            </h6>
+          )}
+          {Object.keys(userDataFromStore.user).length === 0 ? (
+            <></>
+          ) : (
+            <h6 style={{ color: "green" }}>
+              {JSON.stringify(userDataFromStore.user.success)}
             </h6>
           )}
 

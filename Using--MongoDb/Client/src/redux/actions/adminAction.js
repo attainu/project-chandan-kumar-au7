@@ -208,7 +208,7 @@ export const adminSecretTokenVarifyFuncFromAdminAction = (
           "https://robin--project-mern-backend.herokuapp.com/admins/varifytoken",
         data: Email_And_SecretToken,
       });
-      console.log("OTPVarify data from user action FILE : ", data);
+      // console.log("OTPVarify data from user action FILE : ", data);
       if (data.OTPVARIFYsuccess) {
         dispatch(adminAssignSecretTokenVarifyAction(data));
         dispatch({
@@ -224,12 +224,12 @@ export const adminSecretTokenVarifyFuncFromAdminAction = (
         });
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
         payload: err.message,
       });
-      console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
+      // console.log("Error in USERPASSWORD OTP varify Action file ", err.message);
     }
   };
 };
@@ -250,7 +250,7 @@ export const adminLoginFuncFromadminAction = (
         url: "https://robin--project-mern-backend.herokuapp.com/admins/login",
         data: adminLoginCredentials,
       });
-      console.log("data from admin action FILE : ", data);
+      // console.log("data from admin action FILE : ", data);
       if (data.success) {
         // dispatch(adminLoginForMessageAction(data));
         dispatch({
@@ -372,15 +372,15 @@ export const adminForgotPassOtpVarifyFuncFromadminAction = (
         });
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
         payload: err.message,
       });
-      console.log(
-        "Error in adminPASSWORD OTP varify Action file ",
-        err.message
-      );
+      // console.log(
+      //   "Error in adminPASSWORD OTP varify Action file ",
+      //   err.message
+      // );
     }
   };
 };
@@ -425,15 +425,15 @@ export const adminForgotPassNEWCredentialsFromadminAction = (
         });
       }
     } catch (err) {
-      console.log("from catch block");
+      // console.log("from catch block");
       dispatch({
         type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
         payload: err.message,
       });
-      console.log(
-        "Error in adminPASSWORD OTP varify Action file ",
-        err.message
-      );
+      // console.log(
+      //   "Error in adminPASSWORD OTP varify Action file ",
+      //   err.message
+      // );
     }
   };
 };

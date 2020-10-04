@@ -47,8 +47,7 @@ function Forgot() {
     if (email) {
       if (
         Object.keys(SuccessOfforgotPasswordDataFromStore.user).length !== 0 ||
-        Object.keys(ErrorOfforgotPasswordDataFromStore.passwordChangingErrors)
-          .length !== 0
+        Object.keys(ErrorOfforgotPasswordDataFromStore.error).length !== 0
       ) {
         dispatch(userForgotPassAction({}));
         dispatch(userForgotPassErrorAction({}));
@@ -74,9 +73,7 @@ function Forgot() {
     if (otp) {
       if (
         Object.keys(SuccessOfforgotPasswordDataFromStore.user).length !== 0 ||
-        Object.keys(
-          ErrorOfforgotPasswordDataFromStore.userForgotPassOtpVarifyErrors
-        ).length !== 0
+        Object.keys(ErrorOfforgotPasswordDataFromStore.error).length !== 0
       ) {
         dispatch(userForgotPassAction({}));
         dispatch(userForgotPassOtpVarifyErrorAction({}));
@@ -283,30 +280,15 @@ function Forgot() {
                 <></>
               )}
             </form>
-            {Object.keys(
-              ErrorOfforgotPasswordDataFromStore.passwordChangingErrors
-            ).length === 0 ? (
+            {Object.keys(ErrorOfforgotPasswordDataFromStore.error).length ===
+            0 ? (
               <></>
             ) : (
               <h6 style={{ color: "red" }}>
-                {JSON.stringify(
-                  ErrorOfforgotPasswordDataFromStore.passwordChangingErrors
-                    .error
-                )}
+                {JSON.stringify(ErrorOfforgotPasswordDataFromStore.error)}
               </h6>
             )}
-            {Object.keys(
-              ErrorOfforgotPasswordDataFromStore.userForgotPassOtpVarifyErrors
-            ).length === 0 ? (
-              <></>
-            ) : (
-              <h6 style={{ color: "red" }}>
-                {JSON.stringify(
-                  ErrorOfforgotPasswordDataFromStore
-                    .userForgotPassOtpVarifyErrors.error
-                )}
-              </h6>
-            )}
+
             {Object.keys(SuccessOfforgotPasswordDataFromStore.user).length ===
             0 ? (
               <></>
