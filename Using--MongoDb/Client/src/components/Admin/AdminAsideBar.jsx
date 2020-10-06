@@ -10,9 +10,15 @@ function Asidebar() {
     <>
       {/* ---------------------------Starts of Main Sidebar Container -------------------------- */}
 
-      <aside className='main-sidebar sidebar-dark-primary elevation-4'>
+      <aside
+        className='main-sidebar sidebar-dark-primary elevation-4'
+        style={{
+          position: "fixed",
+          color: "#2ecc71",
+          textAlign: "left",
+        }}>
         {/* <!-- Brand Logo --> */}
-        <Link to='/' className='brand-link'>
+        <Link to='/' style={{ color: "hotpink" }} className='brand-link'>
           <img
             src={Logo}
             alt='Logo'
@@ -34,18 +40,21 @@ function Asidebar() {
               />
             </div>
             <div className='info'>
-              {Object.keys(adminDataFromStore.admin.username).length ? (
-                <Link to='#!' className='d-block'>
-                  Welcome : {JSON.stringify(adminDataFromStore.admin.username)}
-                </Link>
-              ) : (
-                <></>
-              )}
+              Welcome : {adminDataFromStore.adminnameforasidebar}
             </div>
           </div>
 
           {/* <!-- Sidebar Menu --> */}
+
           <nav className='mt-2'>
+            <Link className='brand-link coustomlink' to='/allusers'>
+              All_Users
+            </Link>
+
+            <Link className='brand-link coustomlink' to='/allinvesters'>
+              All_investors
+            </Link>
+
             <ul
               className='nav nav-pills nav-sidebar flex-column'
               data-widget='treeview'
@@ -55,29 +64,22 @@ function Asidebar() {
                with font-awesome or any other icon font library --> */}
               <li className='nav-item has-treeview'>
                 <Link to='!#' className='nav-link'>
-                  <i className='nav-icon fas fa-tachometer-alt'></i>
                   <p>
-                    Dashboard
+                    Admin_Cont ...
                     <i className='right fas fa-angle-left'></i>
                   </p>
                 </Link>
                 <ul className='nav nav-treeview'>
                   <li className='nav-item'>
-                    <Link to='../index.html' className='nav-link'>
+                    <Link className=' coustomlink' to='/allinvesters'>
                       <i className='far fa-circle nav-icon'></i>
-                      <p>example 1</p>
+                      All_Admins
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='../index2.html' className='nav-link'>
+                    <Link className=' coustomlink' to='/allinvesters'>
                       <i className='far fa-circle nav-icon'></i>
-                      <p>example 2</p>
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    <Link to='../index3.html' className='nav-link'>
-                      <i className='far fa-circle nav-icon'></i>
-                      <p>example 3</p>
+                      All_Admins_pendings
                     </Link>
                   </li>
                 </ul>

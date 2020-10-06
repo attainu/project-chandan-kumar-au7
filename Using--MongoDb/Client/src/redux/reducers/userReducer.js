@@ -4,6 +4,7 @@ const initialState = {
   user: {},
   loginsuccess: {},
   registersuccess: {},
+  usernameforasidebar: "USER",
   isAuthenticated: false,
 };
 
@@ -30,6 +31,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loginsuccess: action.payload,
+      };
+    case "USERNAME_FOR_ASIDEBAR_DATA_INTO_REDUX_STORE":
+      return {
+        ...state,
+        usernameforasidebar: action.payload,
       };
     case "FORGOTPASSWORD_DATA_INTO_REDUX_STORE":
       return {

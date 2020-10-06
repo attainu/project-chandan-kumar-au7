@@ -134,6 +134,7 @@ export const userLoginFuncFromUserAction = (userLoginCredentials, history) => {
 
         dispatch(userLoginAction(decoded.user));
         dispatch(userLoginSuccessAction(data));
+        // console.log("decoded :::: ", decoded.username);
         history.push("/");
 
         setTimeout(() => {
@@ -305,10 +306,18 @@ export const setUserLoggedIn = (data) => {
   };
 };
 
+export const setUserNameInsideAsidebar = (data) => {
+  return {
+    type: "USERNAME_FOR_ASIDEBAR_DATA_INTO_REDUX_STORE",
+    payload: data,
+  };
+};
+
 export const userLogout = () => {
   return (dispatch) => {
     localStorage.removeItem("userJwtToken");
     setAuthToken(false);
     dispatch(userLogoutAction({}));
+    dispatch(setUserNameInsideAsidebar("USER"));
   };
 };

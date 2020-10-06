@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import AdminAsideBar from "../components/Admin/AdminAsideBar";
 import NavBarCompo from "../components/User/UserNavbar";
 import UserAsideBar from "../components/User/UserAsideBar";
+import { useSelector } from "react-redux";
 
 function NavBar() {
+  const loggedInByFromStore = useSelector((store) => store.LoggedInByFromStore);
+  // console.log(" from NavBar.jsx ", loggedInByFromStore);
   const [loggedInBy, setloggedInBy] = useState("");
 
   useEffect(() => {
-    for (let [key] of Object.entries(localStorage)) {
-      // console.log(typeof key);
-      // console.log(key);
-      setloggedInBy(key);
-    }
-  }, []);
+    setloggedInBy(loggedInByFromStore);
+  }, [setloggedInBy, loggedInByFromStore]);
 
   return (
     <>

@@ -11,10 +11,9 @@ function Notifier() {
   const adminDataFromStore = useSelector((store) => store.adminDataFromStore);
 
   useEffect(() => {
-    console.log(" * ErrorDataFromNotifier =====>>>>  ", errordatafromstore);
-    console.log(" * AdminDataFromNotifier =====>>>>  ", adminDataFromStore);
-    console.log(" * UserDataFromNotifier =====>>>>  ", userDataFromStore);
-
+    // console.log(" * ErrorDataFromNotifier =====>>>>  ", errordatafromstore);
+    // console.log(" * AdminDataFromNotifier =====>>>>  ", adminDataFromStore);
+    // console.log(" * UserDataFromNotifier =====>>>>  ", userDataFromStore);
     // if (
     //   Object.keys(errordatafromstore).length > 0 ||
     //   Object.keys(userDataFromStore).length > 0 ||
@@ -30,7 +29,6 @@ function Notifier() {
     <>
       {Object.keys(errordatafromstore.error).length > 0 ||
       Object.keys(userDataFromStore.loginsuccess).length > 0 ||
-      Object.keys(userDataFromStore.user).length > 0 ||
       Object.keys(adminDataFromStore.adminloginsuccess).length > 0 ? (
         <div
           id='notify_message'
@@ -66,13 +64,6 @@ function Notifier() {
           ) : (
             <h6 style={{ color: "green" }}>
               {JSON.stringify(userDataFromStore.registersuccess.success)}
-            </h6>
-          )}
-          {Object.keys(userDataFromStore.user).length === 0 ? (
-            <></>
-          ) : (
-            <h6 style={{ color: "green" }}>
-              {JSON.stringify(userDataFromStore.user.success)}
             </h6>
           )}
 

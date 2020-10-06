@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../../redux/actions/userAction";
-import { adminLogout } from "../../redux/actions/adminAction";
+import { adminLogout, removeLoggedInBy } from "../../redux/actions/adminAction";
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -19,13 +19,15 @@ function NavBar() {
   const UserlogoutHandler = () => {
     dispatch(userLogout());
     dispatch(adminLogout());
+    dispatch(removeLoggedInBy());
+
     history.push("/");
   };
 
   return (
     <>
       {/* <!-- Navbar --> */}
-      <nav className=' main-header navbar navbar-expand navbar-white navbar-light'>
+      <nav className='fixed-top main-header navbar navbar-expand navbar-white navbar-light'>
         {/* <!-- Left navbar links --> */}
         <ul className='navbar-nav'>
           <li className='nav-item'>
@@ -63,4 +65,4 @@ function NavBar() {
   );
 }
 
-export default React.memo(NavBar);
+export default NavBar;

@@ -4,6 +4,7 @@ const initialState = {
   admin: {},
   adminloginsuccess: {},
   isAuthenticated: false,
+  adminnameforasidebar: "ADMIN",
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -29,6 +30,11 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         admin: action.payload,
+      };
+    case "ADMINNAME_FOR_ASIDEBAR_DATA_INTO_REDUX_STORE":
+      return {
+        ...state,
+        adminnameforasidebar: action.payload,
       };
 
     case "ADMIN_SECRETTOKEN_ASSIGN_DATA_INTO_REDUX_STORE":

@@ -1,7 +1,12 @@
 import axios from "axios";
 import setAuthToken from "../helper/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { SET_ADMIN_LOGGED_IN } from "../actionType";
+import {
+  SET_ADMIN_LOGGED_IN,
+  ADD_LOGGED_IN_BY,
+  ADMINNAME_FOR_ASIDEBAR_DATA_INTO_REDUX_STORE,
+  REMOVE_LOGGED_IN_BY,
+} from "../actionType";
 
 // =========== It will be imported inside the { PAGES folder } where ever we will be needing {  admin REGISTERATION [ BACKEND ] DATA } =========//
 export const adminRegisterAction = (data) => {
@@ -445,10 +450,29 @@ export const setadminLoggedIn = (data) => {
   };
 };
 
+export const setAdminNameInsideAsidebar = (data) => {
+  return {
+    type: ADMINNAME_FOR_ASIDEBAR_DATA_INTO_REDUX_STORE,
+    payload: data,
+  };
+};
+
+export const loggedInBy = () => {
+  return {
+    type: ADD_LOGGED_IN_BY,
+  };
+};
+export const removeLoggedInBy = () => {
+  return {
+    type: REMOVE_LOGGED_IN_BY,
+  };
+};
+
 export const adminLogout = () => {
   return (dispatch) => {
     localStorage.removeItem("adminJwtToken");
     setAuthToken(false);
     dispatch(adminLogoutAction({}));
+    dispatch(setAdminNameInsideAsidebar(""));
   };
 };

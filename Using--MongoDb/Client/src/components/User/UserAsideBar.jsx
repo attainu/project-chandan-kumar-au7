@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../../favicon.ico";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./User.css";
 
 function RightAsideBar() {
+  const [userName, setuserName] = useState("");
   const userDataFromStore = useSelector((store) => store.userDataFromStore);
 
+  useEffect(() => {
+    setuserName(userDataFromStore.usernameforasidebar);
+  }, [userDataFromStore.usernameforasidebar]);
   return (
     <>
-      <aside className='main-sidebar sidebar-dark-primary elevation-4'>
+      <aside
+        className='main-sidebar sidebar-dark '
+        style={{
+          position: "fixed",
+          background: "#d1ccc0",
+          color: "red",
+          textAlign: "left",
+        }}>
         {/* <!-- Brand Logo --> */}
-        <Link to='/' className='brand-link'>
+        <Link to='/' style={{ color: "hotpink" }} className='brand-link '>
           <img
             src={Logo}
             alt='AdminLTE Logo'
@@ -31,18 +43,23 @@ function RightAsideBar() {
                 alt='UserImg'
               />
             </div>
-            <div className='info'>
-              {Object.keys(userDataFromStore) ? (
-                <Link to='#!' className='d-block'>
-                  Welcome : {JSON.stringify(userDataFromStore.user.username)}
-                </Link>
-              ) : (
-                <></>
-              )}
-            </div>
+            <div className='info'>Welcome : {userName}</div>
           </div>
 
           {/* <!-- Sidebar Menu --> */}
+
+          <Link className='brand-link coustomlink' to='/getloan'>
+            Get_Loan
+          </Link>
+
+          <Link className='brand-link coustomlink' to='/Invest'>
+            Invest
+          </Link>
+
+          <Link className='brand-link coustomlink' to='/calcemi'>
+            Calculate_your_EMI
+          </Link>
+
           <nav className='mt-2'>
             <ul
               className='nav nav-pills nav-sidebar flex-column'

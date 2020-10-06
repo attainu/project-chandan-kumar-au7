@@ -6,8 +6,19 @@ import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./redux/helper/setAuthToken";
 
-import { setUserLoggedIn, userLogout } from "./redux/actions/userAction";
-import { setadminLoggedIn, adminLogout } from "./redux/actions/adminAction";
+import {
+  setUserLoggedIn,
+  setUserNameInsideAsidebar,
+  userLogout,
+} from "./redux/actions/userAction";
+
+import {
+  setadminLoggedIn,
+  adminLogout,
+  setAdminNameInsideAsidebar,
+  loggedInBy,
+  removeLoggedInBy,
+} from "./redux/actions/adminAction";
 
 import store from "./redux/store";
 
@@ -19,6 +30,9 @@ import NavBar from "./Pages/NavBar";
 import Error from "./Pages/Error";
 import Footer from "./Pages/Footer";
 import Invest from "./Pages/Invest";
+
+import Calculator from "./components/Calculator/EmiCalculator";
+
 import Notifier from "./components/Notificiation/Notifier";
 import { css } from "@emotion/core";
 
@@ -37,39 +51,45 @@ const override = css`
 
 // =============== End Spinner ============ //
 
-if (window.localStorage.userJwtToken) {
-  setAuthToken(localStorage.userJwtToken);
-  const decoded = jwt_decode(localStorage.userJwtToken);
-
-  store.dispatch(setUserLoggedIn(decoded));
-
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    store.dispatch(userLogout());
-    window.location.href = "/";
-  }
-} else if (window.localStorage.adminJwtToken) {
-  setAuthToken(localStorage.adminJwtToken);
-  const decoded = jwt_decode(localStorage.adminJwtToken);
-
-  store.dispatch(setadminLoggedIn(decoded));
-
-  // Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    store.dispatch(adminLogout());
-    window.location.href = "/";
-  }
-}
-
 function App() {
   const HaveToLoad = useSelector((store) => store.haveToLoadDataFromStore);
+
   useEffect(() => {
-    // console.log(HaveToLoad);
+    if (window.localStorage.userJwtToken) {
+      setAuthToken(localStorage.userJwtToken);
+      const decoded = jwt_decode(localStorage.userJwtToken);
+
+      store.dispatch(setUserLoggedIn(decoded));
+      store.dispatch(setUserNameInsideAsidebar(decoded.username));
+
+      // Check for expired token
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        store.dispatch(userLogout());
+        window.location.href = "/";
+      }
+    } else if (window.localStorage.adminJwtToken) {
+      // console.log("admin jwt finder called inside app.js");
+      setAuthToken(localStorage.adminJwtToken);
+      const decoded = jwt_decode(localStorage.adminJwtToken);
+
+      // console.log(" ADMIN Decoded from applicationCache.js ", decoded);
+      store.dispatch(setadminLoggedIn(decoded));
+      store.dispatch(loggedInBy());
+
+      store.dispatch(setAdminNameInsideAsidebar(decoded.username));
+
+      // Check for expired token
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        store.dispatch(adminLogout());
+        store.dispatch(removeLoggedInBy());
+        window.location.href = "/";
+      }
+    }
   });
   return (
-    <div className='App'>
+    <div className='App' style={{ marginTop: "5rem" }}>
       <BrowserRouter>
         <NavBar />
         <Notifier />
@@ -85,6 +105,7 @@ function App() {
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
           <Route exact path='/forgot' component={Forgot} />
+          <Route exact path='/calcemi' component={Calculator} />
           <Route exact path='/Invest' component={Invest} />
           <Route exact path='/getloan' component={Getloan} />
           <Route to='/error' component={Error} />
