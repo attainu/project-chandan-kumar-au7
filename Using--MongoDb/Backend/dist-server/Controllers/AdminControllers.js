@@ -1,9 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.VarifyAdminSecretToken = exports.ApproveAdmin = exports.Register = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _AdminModels = _interopRequireDefault(require("../Models/AdminModels"));
 
@@ -17,10 +21,7 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _secureRandomString = _interopRequireDefault(require("secure-random-string"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+// @ts-nocheck
 var SecretTokenForRegister = process.env.SECRETTOKENFORREGISTER; //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
 
 var Register = function Register(req, res, next) {
@@ -50,7 +51,7 @@ var Register = function Register(req, res, next) {
   } else {
     _bcrypt["default"].hash(password, 10, function (err, hash) {
       if (err) {
-        return res.json(_defineProperty({
+        return res.json((0, _defineProperty2["default"])({
           error: "Something Wrong, Try Later!"
         }, "error", err));
       } else {
@@ -230,12 +231,12 @@ var Login = function Login(req, res) {
             var token = _jsonwebtoken["default"].sign({
               username: user.username,
               userid: user._id
-            }, "userToPagalhaibhai", {
+            }, "adminisking", {
               expiresIn: "1h"
             });
 
             return res.status(201).json({
-              success: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
+              success: "Admin SuccessFully LOGGED in For 1 HOUR  , congratulations",
               token: token
             });
           } else {
@@ -391,7 +392,7 @@ var ChangePassword = function ChangePassword(req, res, next) {
 
       _bcrypt["default"].hash(NewPassword, 10, function (err, hash) {
         if (err) {
-          return res.json(_defineProperty({
+          return res.json((0, _defineProperty2["default"])({
             error: "Something Wrong, Try Later!"
           }, "error", err));
         } else {

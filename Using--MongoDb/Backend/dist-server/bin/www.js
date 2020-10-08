@@ -5,11 +5,11 @@
  */
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 var _app = _interopRequireDefault(require("../app"));
 
 var _http = _interopRequireDefault(require("http"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var debug = require("debug")("Backend:server");
 

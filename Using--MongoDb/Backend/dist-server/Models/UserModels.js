@@ -30,7 +30,7 @@ var schema = new Schema({
   }
 });
 
-var _default = (0, _mongoose.model)("UserModel", schema); //accessing a model
+var _default = (0, _mongoose.model)("usermodel", schema); //accessing a model
 
 
 exports["default"] = _default;

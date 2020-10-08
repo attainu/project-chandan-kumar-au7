@@ -20,4 +20,4 @@ const schema = new Schema({
   },
 });
 
-export default model("UserModel", schema); //accessing a model
+export default model("usermodel", schema); //accessing a model

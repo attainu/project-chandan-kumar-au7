@@ -1,9 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.Register = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _UserModels = _interopRequireDefault(require("../Models/UserModels"));
 
@@ -15,10 +19,7 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+// @ts-nocheck
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
 var Register = function Register(req, res, next) {
   var _req$body = req.body,
@@ -42,7 +43,7 @@ var Register = function Register(req, res, next) {
   } else {
     _bcrypt["default"].hash(password, 10, function (err, hash) {
       if (err) {
-        return res.json(_defineProperty({
+        return res.json((0, _defineProperty2["default"])({
           error: "Something Wrong, Try Later!"
         }, "error", err));
       } else {
@@ -284,7 +285,7 @@ var ChangePassword = function ChangePassword(req, res, next) {
 
       _bcrypt["default"].hash(NewPassword, 10, function (err, hash) {
         if (err) {
-          return res.json(_defineProperty({
+          return res.json((0, _defineProperty2["default"])({
             error: "Something Wrong, Try Later!"
           }, "error", err));
         } else {

@@ -34,7 +34,7 @@ var schema = new Schema({
   }
 });
 
-var _default = (0, _mongoose.model)("AdminModel", schema); //accessing a model
+var _default = (0, _mongoose.model)("adminmodel", schema); //accessing a model
 
 
 exports["default"] = _default;

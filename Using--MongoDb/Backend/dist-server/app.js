@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -21,7 +23,7 @@ var _UserRoutes = _interopRequireDefault(require("./Routes/UserRoutes"));
 
 var _AdminRoutes = _interopRequireDefault(require("./Routes/AdminRoutes"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _GetLoanRoutes = _interopRequireDefault(require("./Routes/GetLoanRoutes"));
 
 var cors = require("cors"); // -----------------Secret File -------------|
 
@@ -35,6 +37,7 @@ require("./Dbconnectors/database"); // ------------------------All Routes Import
 var app = (0, _express["default"])();
 app.use((0, _morgan["default"])("dev"));
 app.use(_express["default"].json());
+app.use("/uploads", _express["default"]["static"]("uploads"));
 app.use(_express["default"].urlencoded({
   extended: false
 }));
@@ -52,6 +55,7 @@ app.use(function (req, res, next) {
 
 app.use("/", _IndexRoutes["default"]);
 app.use("/users", _UserRoutes["default"]);
+app.use("/users", _GetLoanRoutes["default"]);
 app.use("/admins", _AdminRoutes["default"]); // unknown error handling
 
 app.use(function (req, res, next) {

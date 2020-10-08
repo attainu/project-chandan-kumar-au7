@@ -37,6 +37,7 @@ import Notifier from "./components/Notificiation/Notifier";
 import { css } from "@emotion/core";
 
 import Getloan from "./components/User/Getloan/Getloan";
+import demofile from "./components/User/demo";
 
 // =============== Spinner ============ //
 // Can be a string as well. Need to ensure each key-value pair ends with ;
@@ -108,6 +109,7 @@ function App() {
           <Route exact path='/calcemi' component={Calculator} />
           <Route exact path='/Invest' component={Invest} />
           <Route exact path='/getloan' component={Getloan} />
+          <Route exact path='/demo' component={demofile} />
           <Route to='/error' component={Error} />
 
           <Redirect to='/error' />

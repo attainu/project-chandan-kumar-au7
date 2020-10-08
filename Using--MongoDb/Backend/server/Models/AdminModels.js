@@ -18,4 +18,4 @@ const schema = new Schema({
   },
 });
 
-export default model("AdminModel", schema); //accessing a model
+export default model("adminmodel", schema); //accessing a model

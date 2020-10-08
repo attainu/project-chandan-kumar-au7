@@ -211,14 +211,15 @@ export const Login = (req, res) => {
                   username: user.username,
                   userid: user._id,
                 },
-                "userToPagalhaibhai",
+                "adminisking",
                 {
                   expiresIn: "1h",
                 }
               );
 
               return res.status(201).json({
-                success: "SuccessFully LOGGED in For 1 HOUR  , congratulations",
+                success:
+                  "Admin SuccessFully LOGGED in For 1 HOUR  , congratulations",
                 token: token,
               });
             } else {
