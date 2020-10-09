@@ -10,6 +10,7 @@ const {
   VarifyOTP,
   ChangePassword,
   VarifyAdminSecretToken,
+  GetAllAdminPendingRequests,
 } = require("../Controllers/AdminControllers");
 
 // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
@@ -27,5 +28,7 @@ router.post("/forgotpassword", ForgotPassword);
 router.post("/varifyotp", VarifyOTP);
 
 router.post("/changepassword", ChangePassword);
+
+router.get("/getallpendingadmimnrequest", GetAllAdminPendingRequests);
 
 export default router;

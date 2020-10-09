@@ -15,7 +15,7 @@ var storage = (0, _multer.diskStorage)({
     cb(null, "public/images/uploads");
   },
   filename: function filename(req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, file.fieldname + "-" + Date.now());
   }
 }); // file validation
 

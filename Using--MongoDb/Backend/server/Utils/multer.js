@@ -7,7 +7,7 @@ const storage = diskStorage({
     cb(null, "public/images/uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, file.fieldname + "-" + Date.now());
   },
 });
 

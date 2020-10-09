@@ -23,28 +23,8 @@ export const GetLoan = async (req, res) => {
   } = req.body;
 
   const files = req.files;
-  console.log("files ====>>>> ", files);
   const urls = [];
-  // ======= image saving and receiving url ================ //
 
-  const uploader = async (path) => await cloudinary.uploads(path, "images");
-  if (req.method === "POST") {
-    for (const file of files) {
-      const { path } = file;
-      const newPath = await uploader(path);
-
-      urls.push(newPath);
-      fs.unlinkSync(path);
-    }
-    res.status(200).json({
-      message: "images uploded successfully",
-      data: urls,
-    });
-  } else {
-    res.status(405).json({
-      message: "Failed to images uploding",
-    });
-  }
   // ========= code for showing user about his REST LOAN AMOUNT TO PAY. ======= //
 
   const LoanA = Number(totalloanamount);
@@ -97,34 +77,63 @@ export const GetLoan = async (req, res) => {
     // console.log("imgUrl  ", imgUrl);
     // console.log("Pan   ", Pan);
     // console.log("file   ", files);
-    // console.log("LoanApplierDetails   ", LoanApplierDetails);
 
-    GETLOANMODEL.findOne({ email: email })
+    await GETLOANMODEL.findOne({ email: email })
       .exec()
-      .then((LoanApplier) => {
-        // console.log(user);
-
+      .then(async (LoanApplier) => {
         // console.log("LoanApplier ", LoanApplier);
         if (LoanApplier) {
           return res.json({
             error: `hey user you are still in loan , pay first to get more loan ... you have [ ${LoanApplier.restloantopay} ] rest to pay`,
           });
         } else {
-          // LoanApplierDetails.save()
-          //   .then((LoanApplierDetails) => {
-          //     SEND_EMAIL_FOR_LOAN_PENDING(email, "success", fullname, mobileno);
-          //     return res.status(201).json({
-          //       success: "Loan Applied Successfully",
-          //       results: LoanApplierDetails,
-          //     });
-          //   })
-          //   .catch((err) => {
-          //     return res.status(500).json({
-          //       error: err.message,
-          //       errormsg:
-          //         "You cant Apply for now , try again with vaild  and required documents  ",
-          //     });
-          //   });
+          // ======= image saving and receiving url ================ //
+          const uploader = async (path, fieldname) =>
+            await cloudinary.uploads(
+              path,
+              `${fieldname} Robin_Project--easy-money`
+            );
+          if (req.method === "POST") {
+            // ================{{{{{{{{ Looping through Nested OBJECT }}}}}}}}============= //
+            for (const key in files) {
+              let value = files[key];
+              // console.log("Value ", value[0].path);
+              // resObj[key] = value[0].path;
+              const resByCloudinary = await uploader(
+                value[0].path,
+                value[0].fieldname
+              );
+              urls.push(resByCloudinary);
+              fs.unlinkSync(value[0].path);
+            }
+
+            // ================{{{{{{{{ End Of Looping through Nested OBJECT }}}}}}}}============= //
+          }
+
+          // ==== code for image saving inside mongodb schema ======= //
+          urls.map((allImages) => {
+            const words = allImages.id.split(" ");
+            // console.log(words[0]);
+            LoanApplierDetails[words[0]] = allImages.url;
+          });
+          // ==== End Of code for image saving inside mongodb schema ======= //
+          console.log("LoanApplierDetails   ", LoanApplierDetails);
+
+          LoanApplierDetails.save()
+            .then((LoanApplierDetails) => {
+              SEND_EMAIL_FOR_LOAN_PENDING(email, "success", fullname, mobileno);
+              return res.status(201).json({
+                success: "Loan Applied Successfully",
+                results: LoanApplierDetails,
+              });
+            })
+            .catch((err) => {
+              return res.status(500).json({
+                error: err.message,
+                errormsg:
+                  "You cant Apply for now , try again with vaild  and required documents  ",
+              });
+            });
         }
       });
 

@@ -18,7 +18,8 @@ var _require = require("../Controllers/AdminControllers"),
     ForgotPassword = _require.ForgotPassword,
     VarifyOTP = _require.VarifyOTP,
     ChangePassword = _require.ChangePassword,
-    VarifyAdminSecretToken = _require.VarifyAdminSecretToken; // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
+    VarifyAdminSecretToken = _require.VarifyAdminSecretToken,
+    GetAllAdminPendingRequests = _require.GetAllAdminPendingRequests; // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
 
 
 router.post("/register", Register);
@@ -28,5 +29,6 @@ router.post("/varifytoken", VarifyAdminSecretToken);
 router.post("/forgotpassword", ForgotPassword);
 router.post("/varifyotp", VarifyOTP);
 router.post("/changepassword", ChangePassword);
+router.get("/getallpendingadmimnrequest", GetAllAdminPendingRequests);
 var _default = router;
 exports["default"] = _default;

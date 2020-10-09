@@ -385,4 +385,10 @@ export const ChangePassword = (req, res, next) => {
     return res.json({ error: `Error in postOTP${err.message}` });
   }
 };
+
+export const GetAllAdminPendingRequests = async (req, res) => {
+  const alladminwithpendingapproval = await ADMINMODEL.find({});
+  console.log(alladminwithpendingapproval);
+  res.json({ alladminwithpendingapproval });
+};
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

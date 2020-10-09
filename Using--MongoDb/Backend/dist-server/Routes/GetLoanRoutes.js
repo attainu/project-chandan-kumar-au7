@@ -16,6 +16,14 @@ var _require = require("../Utils/multer"),
 
 var router = (0, _express.Router)(); //  ------------ All Routes -------------- |
 
-router.post("/getloan", _auth.middlewarefunc, upload.array(["image"]), _GetLoanControllers.GetLoan);
+router.post("/getloan", _auth.middlewarefunc, upload.fields([{
+  name: "bankaccountimage"
+}, {
+  name: "pancardimage"
+}, {
+  name: "aadharcardimage"
+}, {
+  name: "usercurrentimage"
+}]), _GetLoanControllers.GetLoan);
 var _default = router;
 exports["default"] = _default;
