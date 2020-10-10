@@ -29,7 +29,7 @@ import Forgot from "./Pages/Forgot";
 import NavBar from "./Pages/NavBar";
 import Error from "./Pages/Error";
 import Footer from "./Pages/Footer";
-import Invest from "./Pages/Invest";
+import { Investment } from "./Pages/Invest";
 
 import Calculator from "./components/Calculator/EmiCalculator";
 
@@ -107,7 +107,7 @@ function App() {
           <Route exact path='/register' component={Register} />
           <Route exact path='/forgot' component={Forgot} />
           <Route exact path='/calcemi' component={Calculator} />
-          <Route exact path='/Invest' component={Invest} />
+          <Route exact path='/Invest' component={Investment} />
           <Route exact path='/getloan' component={Getloan} />
           <Route exact path='/demo' component={demofile} />
           <Route to='/error' component={Error} />

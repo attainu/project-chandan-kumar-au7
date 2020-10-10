@@ -1,4 +1,5 @@
 import React from "react";
+import { LoanApplyForm } from "./LoanApplyForm";
 // import { Link } from "react-router-dom";
 
 function Getloan() {
@@ -8,7 +9,8 @@ function Getloan() {
         <div className='container-fluid'>
           <div className='bd-example container-fluid'>
             <div>
-              Your Loan Will Be Approved In Just <h1> 3 </h1>Simple Step:
+              Your Loan Will Be Approved In Just <br /> 3 <br />
+              Simple Step:
             </div>
             {/* ========= carousel stats =========== */}
             <div
@@ -41,7 +43,7 @@ function Getloan() {
                       position: "absolute",
                       margin: "10vh 0",
                     }}>
-                    <h6
+                    <div
                       style={{
                         position: "relative",
                         borderRadius: "30%",
@@ -56,7 +58,7 @@ function Getloan() {
                         }}>
                         1
                       </h1>
-                    </h6>
+                    </div>
                     <div>
                       Just Decide How Much Do You Want And You Will Be Good To
                       Have Loan.
@@ -82,7 +84,7 @@ function Getloan() {
                       position: "absolute",
                       margin: "10vh 0",
                     }}>
-                    <h6
+                    <div
                       style={{
                         position: "relative",
                         borderRadius: "30%",
@@ -97,7 +99,7 @@ function Getloan() {
                         }}>
                         2
                       </h1>
-                    </h6>
+                    </div>
                     <div>
                       Keep your documents handy to set-up your limit or reach
                       out for help to complete the process.
@@ -119,7 +121,7 @@ function Getloan() {
                       position: "absolute",
                       margin: "10vh 0",
                     }}>
-                    <h6
+                    <div
                       style={{
                         position: "relative",
                         borderRadius: "30%",
@@ -134,7 +136,7 @@ function Getloan() {
                         }}>
                         3
                       </h1>
-                    </h6>
+                    </div>
                     <div>
                       Finish your auto-repayment & withdraw upto The Limit
                       <br />
@@ -178,6 +180,7 @@ function Getloan() {
             </div>
             {/*  =========== The get loan div starts from here ==========  */}
           </div>
+          <LoanApplyForm />
         </div>
       </div>
     </>
