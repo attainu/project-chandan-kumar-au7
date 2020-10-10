@@ -1,4 +1,6 @@
 import Router from "express";
+import { AdminAuth } from "../Middleware/auth";
+
 const router = Router();
 
 // -------------- required Instences -------------------|
@@ -8,6 +10,8 @@ const {
   ForgotPassword,
   VarifyOTP,
   ChangePassword,
+  GetAllUsers,
+  GetAllInvesters,
 } = require("../Controllers/UserControllers");
 
 // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
@@ -22,11 +26,8 @@ router.post("/varifyotp", VarifyOTP);
 
 router.post("/changepassword", ChangePassword);
 
-router.get('/:id/delete', function(req, res){
-  UserModel.remove({id: req.params.id}, function(err){
-    if(err) res.json(err);
-    else res.redirect('/').json("successfuly deleted")
-  })
-})
+router.get("/getallusers", AdminAuth, GetAllUsers);
+
+router.get("/getallinvesters", AdminAuth, GetAllInvesters);
 
 export default router;

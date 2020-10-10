@@ -386,9 +386,32 @@ export const ChangePassword = (req, res, next) => {
   }
 };
 
-export const GetAllAdminPendingRequests = async (req, res) => {
-  const alladminwithpendingapproval = await ADMINMODEL.find({});
-  console.log(alladminwithpendingapproval);
-  res.json({ alladminwithpendingapproval });
+export const GetAllApprovedAdmin = async (req, res) => {
+  try {
+    const AllApprovedAdmin = await ADMINMODEL.find({ status: "approved" });
+    if (AllApprovedAdmin.length > 0) {
+      return res.status(200).json({ message: AllApprovedAdmin });
+    } else {
+      return res.json({ error: "No Admins Yet ..." });
+    }
+  } catch (err) {
+    console.log("Error in getAllApprovedAdmin", err.message);
+    return res.json({ message: `Error in getAllApprovedAdmin ${err.message}` });
+  }
 };
+
+export const GetAllPendingAdmin = async (req, res) => {
+  try {
+    const allPendingAdmin = await ADMINMODEL.find({ status: "pending" });
+    if (allPendingAdmin.length > 0) {
+      return res.status(200).json({ message: allPendingAdmin });
+    } else {
+      return res.json({ error: "No Admins Yet ..." });
+    }
+  } catch (err) {
+    console.log("Error in getallPendingAdmin", err.message);
+    return res.json({ message: `Error in getallPendingAdmin ${err.message}` });
+  }
+};
+
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

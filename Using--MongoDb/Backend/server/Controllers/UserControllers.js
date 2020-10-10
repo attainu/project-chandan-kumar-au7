@@ -1,5 +1,6 @@
 // @ts-nocheck
 import USERMODEL from "../Models/UserModels";
+import INVESTERMODEL from "../Models/InvestModels";
 import { SEND_EMAIL_FOR_FORGOT_PASSWORD } from "../Utils/generateEmail";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
@@ -281,6 +282,34 @@ export const ChangePassword = (req, res, next) => {
   } catch (err) {
     // console.log("Error in submitting otp", err.message);
     return res.json({ error: `Error in postOTP${err.message}` });
+  }
+};
+
+export const GetAllUsers = async (req, res) => {
+  try {
+    const allUsers = await USERMODEL.find({});
+    if (allUsers.length > 0) {
+      return res.status(200).json({ message: allUsers });
+    } else {
+      return res.json({ error: "No Users Yet ..." });
+    }
+  } catch (err) {
+    console.log("Error in gettingAllUsers", err.message);
+    return res.json({ message: `Error in gettingAllUsers ${err.message}` });
+  }
+};
+
+export const GetAllInvesters = async (req, res) => {
+  try {
+    const allInvesters = await INVESTERMODEL.find({});
+    if (allInvesters.length > 0) {
+      return res.status(200).json({ message: allInvesters });
+    } else {
+      return res.json({ error: "No Users Yet ..." });
+    }
+  } catch (err) {
+    console.log("Error in gettingallInvesters", err.message);
+    return res.json({ message: `Error in gettingallInvesters ${err.message}` });
   }
 };
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

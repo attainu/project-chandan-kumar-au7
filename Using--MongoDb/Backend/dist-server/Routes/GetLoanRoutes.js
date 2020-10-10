@@ -25,5 +25,7 @@ router.post("/getloan", _auth.middlewarefunc, upload.fields([{
 }, {
   name: "usercurrentimage"
 }]), _GetLoanControllers.GetLoan);
+router.get("/getallloanapproveduser", _auth.middlewarefunc, _GetLoanControllers.GetAllLoanApprovedUser);
+router.get("/getallloanpendinguser", _auth.middlewarefunc, _GetLoanControllers.GetAllLoanPendingUser);
 var _default = router;
 exports["default"] = _default;

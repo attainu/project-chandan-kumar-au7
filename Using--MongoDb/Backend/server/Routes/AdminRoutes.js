@@ -1,4 +1,6 @@
 import Router from "express";
+import { AdminAuth } from "../Middleware/auth";
+
 const router = Router();
 
 // -------------- required Instences -------------------|
@@ -10,7 +12,8 @@ const {
   VarifyOTP,
   ChangePassword,
   VarifyAdminSecretToken,
-  GetAllAdminPendingRequests,
+  GetAllApprovedAdmin,
+  GetAllPendingAdmin,
 } = require("../Controllers/AdminControllers");
 
 // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
@@ -29,6 +32,8 @@ router.post("/varifyotp", VarifyOTP);
 
 router.post("/changepassword", ChangePassword);
 
-router.get("/getallpendingadmimnrequest", GetAllAdminPendingRequests);
+router.get("/getalladmims", AdminAuth, GetAllApprovedAdmin);
+
+router.get("/getallpendingadmimn", AdminAuth, GetAllPendingAdmin);
 
 export default router;

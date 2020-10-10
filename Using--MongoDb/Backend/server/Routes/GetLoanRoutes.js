@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { middlewarefunc } from "../Middleware/auth";
-import { GetLoan } from "../Controllers/GetLoanControllers";
+import {
+  GetLoan,
+  GetAllLoanApprovedUser,
+  GetAllLoanPendingUser,
+} from "../Controllers/GetLoanControllers";
 const { upload } = require("../Utils/multer");
 
 const router = Router();
@@ -25,5 +29,9 @@ router.post(
   ]),
   GetLoan
 );
+
+router.get("/getallloanapproveduser", middlewarefunc, GetAllLoanApprovedUser);
+
+router.get("/getallloanpendinguser", middlewarefunc, GetAllLoanPendingUser);
 
 export default router;

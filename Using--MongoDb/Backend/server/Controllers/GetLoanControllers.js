@@ -141,4 +141,40 @@ export const GetLoan = async (req, res) => {
   }
 };
 
+export const GetAllLoanApprovedUser = async (req, res) => {
+  try {
+    const allLoanApprovedUser = await GETLOANMODEL.find({
+      approval: "approved",
+    });
+    if (allLoanApprovedUser.length > 0) {
+      return res.status(200).json({ message: allLoanApprovedUser });
+    } else {
+      return res.json({ error: "No Users Yet ..." });
+    }
+  } catch (err) {
+    // console.log("Error in gettingallLoanApprovedUser", err.message);
+    return res.json({
+      message: `Error in gettingallLoanApprovedUser ${err.message}`,
+    });
+  }
+};
+
+export const GetAllLoanPendingUser = async (req, res) => {
+  try {
+    const allLoanPendingUser = await GETLOANMODEL.find({
+      approval: "pending",
+    });
+    if (allLoanPendingUser.length > 0) {
+      return res.status(200).json({ message: allLoanPendingUser });
+    } else {
+      return res.json({ error: "No Users Yet ..." });
+    }
+  } catch (err) {
+    // console.log("Error in gettingallLoanPendingUser", err.message);
+    return res.json({
+      message: `Error in gettingallLoanPendingUser ${err.message}`,
+    });
+  }
+};
+
 //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\

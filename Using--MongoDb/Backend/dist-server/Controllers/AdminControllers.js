@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GetAllAdminPendingRequests = exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.VarifyAdminSecretToken = exports.ApproveAdmin = exports.Register = void 0;
+exports.GetAllPendingAdmin = exports.GetAllApprovedAdmin = exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.VarifyAdminSecretToken = exports.ApproveAdmin = exports.Register = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -426,35 +426,117 @@ var ChangePassword = function ChangePassword(req, res, next) {
 
 exports.ChangePassword = ChangePassword;
 
-var GetAllAdminPendingRequests = /*#__PURE__*/function () {
+var GetAllApprovedAdmin = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-    var alladminwithpendingapproval;
+    var AllApprovedAdmin;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
-            return _AdminModels["default"].find({});
-
-          case 2:
-            alladminwithpendingapproval = _context.sent;
-            console.log(alladminwithpendingapproval);
-            res.json({
-              alladminwithpendingapproval: alladminwithpendingapproval
+            _context.prev = 0;
+            _context.next = 3;
+            return _AdminModels["default"].find({
+              status: "approved"
             });
 
-          case 5:
+          case 3:
+            AllApprovedAdmin = _context.sent;
+
+            if (!(AllApprovedAdmin.length > 0)) {
+              _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(200).json({
+              message: AllApprovedAdmin
+            }));
+
+          case 8:
+            return _context.abrupt("return", res.json({
+              error: "No Admins Yet ..."
+            }));
+
+          case 9:
+            _context.next = 15;
+            break;
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](0);
+            console.log("Error in getAllApprovedAdmin", _context.t0.message);
+            return _context.abrupt("return", res.json({
+              message: "Error in getAllApprovedAdmin ".concat(_context.t0.message)
+            }));
+
+          case 15:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee);
+    }, _callee, null, [[0, 11]]);
   }));
 
-  return function GetAllAdminPendingRequests(_x, _x2) {
+  return function GetAllApprovedAdmin(_x, _x2) {
     return _ref.apply(this, arguments);
+  };
+}();
+
+exports.GetAllApprovedAdmin = GetAllApprovedAdmin;
+
+var GetAllPendingAdmin = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res) {
+    var allPendingAdmin;
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _AdminModels["default"].find({
+              status: "pending"
+            });
+
+          case 3:
+            allPendingAdmin = _context2.sent;
+
+            if (!(allPendingAdmin.length > 0)) {
+              _context2.next = 8;
+              break;
+            }
+
+            return _context2.abrupt("return", res.status(200).json({
+              message: allPendingAdmin
+            }));
+
+          case 8:
+            return _context2.abrupt("return", res.json({
+              error: "No Admins Yet ..."
+            }));
+
+          case 9:
+            _context2.next = 15;
+            break;
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](0);
+            console.log("Error in getallPendingAdmin", _context2.t0.message);
+            return _context2.abrupt("return", res.json({
+              message: "Error in getallPendingAdmin ".concat(_context2.t0.message)
+            }));
+
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 11]]);
+  }));
+
+  return function GetAllPendingAdmin(_x3, _x4) {
+    return _ref2.apply(this, arguments);
   };
 }(); //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
 
 
-exports.GetAllAdminPendingRequests = GetAllAdminPendingRequests;
+exports.GetAllPendingAdmin = GetAllPendingAdmin;

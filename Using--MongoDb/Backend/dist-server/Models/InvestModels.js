@@ -7,6 +7,7 @@ exports["default"] = void 0;
 
 var _mongoose = require("mongoose");
 
+var Schema = _mongoose.Schema;
 var schema = new Schema({
   username: {
     type: Schema.Types.ObjectId,

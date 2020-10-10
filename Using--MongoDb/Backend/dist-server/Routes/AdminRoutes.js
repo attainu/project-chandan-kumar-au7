@@ -9,6 +9,8 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
+var _auth = require("../Middleware/auth");
+
 var router = (0, _express["default"])(); // -------------- required Instences -------------------|
 
 var _require = require("../Controllers/AdminControllers"),
@@ -19,7 +21,8 @@ var _require = require("../Controllers/AdminControllers"),
     VarifyOTP = _require.VarifyOTP,
     ChangePassword = _require.ChangePassword,
     VarifyAdminSecretToken = _require.VarifyAdminSecretToken,
-    GetAllAdminPendingRequests = _require.GetAllAdminPendingRequests; // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
+    GetAllApprovedAdmin = _require.GetAllApprovedAdmin,
+    GetAllPendingAdmin = _require.GetAllPendingAdmin; // -------------- Used That Instances As VARIOUS REQUESTED ROUTES---------------|
 
 
 router.post("/register", Register);
@@ -29,6 +32,7 @@ router.post("/varifytoken", VarifyAdminSecretToken);
 router.post("/forgotpassword", ForgotPassword);
 router.post("/varifyotp", VarifyOTP);
 router.post("/changepassword", ChangePassword);
-router.get("/getallpendingadmimnrequest", GetAllAdminPendingRequests);
+router.get("/getalladmims", _auth.AdminAuth, GetAllApprovedAdmin);
+router.get("/getallpendingadmimn", _auth.AdminAuth, GetAllPendingAdmin);
 var _default = router;
 exports["default"] = _default;

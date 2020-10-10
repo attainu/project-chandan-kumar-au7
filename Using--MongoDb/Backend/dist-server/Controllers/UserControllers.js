@@ -5,11 +5,17 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.Register = void 0;
+exports.GetAllInvesters = exports.GetAllUsers = exports.ChangePassword = exports.VarifyOTP = exports.ForgotPassword = exports.Login = exports.Register = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _UserModels = _interopRequireDefault(require("../Models/UserModels"));
+
+var _InvestModels = _interopRequireDefault(require("../Models/InvestModels"));
 
 var _generateEmail = require("../Utils/generateEmail");
 
@@ -311,7 +317,117 @@ var ChangePassword = function ChangePassword(req, res, next) {
       error: "Error in postOTP".concat(err.message)
     });
   }
-}; //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
-
+};
 
 exports.ChangePassword = ChangePassword;
+
+var GetAllUsers = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
+    var allUsers;
+    return _regenerator["default"].wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return _UserModels["default"].find({});
+
+          case 3:
+            allUsers = _context.sent;
+
+            if (!(allUsers.length > 0)) {
+              _context.next = 8;
+              break;
+            }
+
+            return _context.abrupt("return", res.status(200).json({
+              message: allUsers
+            }));
+
+          case 8:
+            return _context.abrupt("return", res.json({
+              error: "No Users Yet ..."
+            }));
+
+          case 9:
+            _context.next = 15;
+            break;
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](0);
+            console.log("Error in gettingAllUsers", _context.t0.message);
+            return _context.abrupt("return", res.json({
+              message: "Error in gettingAllUsers ".concat(_context.t0.message)
+            }));
+
+          case 15:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 11]]);
+  }));
+
+  return function GetAllUsers(_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.GetAllUsers = GetAllUsers;
+
+var GetAllInvesters = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res) {
+    var allInvesters;
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return _InvestModels["default"].find({});
+
+          case 3:
+            allInvesters = _context2.sent;
+
+            if (!(allInvesters.length > 0)) {
+              _context2.next = 8;
+              break;
+            }
+
+            return _context2.abrupt("return", res.status(200).json({
+              message: allInvesters
+            }));
+
+          case 8:
+            return _context2.abrupt("return", res.json({
+              error: "No Users Yet ..."
+            }));
+
+          case 9:
+            _context2.next = 15;
+            break;
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](0);
+            console.log("Error in gettingallInvesters", _context2.t0.message);
+            return _context2.abrupt("return", res.json({
+              message: "Error in gettingallInvesters ".concat(_context2.t0.message)
+            }));
+
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 11]]);
+  }));
+
+  return function GetAllInvesters(_x3, _x4) {
+    return _ref2.apply(this, arguments);
+  };
+}(); //====================>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<=================\\
+
+
+exports.GetAllInvesters = GetAllInvesters;
