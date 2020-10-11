@@ -7,6 +7,8 @@ import haveToLoadReducer from "../redux/reducers/haveToLoadReducer";
 import HaveToDisplyNotifierReducer from "./reducers/HaveToDisplyNotifierReducer";
 import loggedInByReducer from "./reducers/loggedInByReducer";
 
+import GetLoanReducer from "./reducers/getLoanReducer";
+
 export default combineReducers({
   userDataFromStore: userReducer,
   adminDataFromStore: adminReducer,
@@ -14,4 +16,6 @@ export default combineReducers({
   haveToLoadDataFromStore: haveToLoadReducer,
   HaveToDisplyNotifier: HaveToDisplyNotifierReducer,
   LoggedInByFromStore: loggedInByReducer,
+
+  GetLoanDataResponseFromStore: GetLoanReducer,
 });

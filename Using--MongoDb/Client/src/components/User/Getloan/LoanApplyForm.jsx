@@ -1,4 +1,7 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+// import { Link, useHistory } from "react-router-dom";
+
 import clsx from "clsx";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -16,6 +19,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import Icon from "@material-ui/core/Icon";
+
+import { GetLoanFunctionFromGetLoanAction } from "../../../redux/actions/getLoanAction";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function LoanApplyForm() {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const [pannumberValues, setpannumberValues] = React.useState({
     pannumber: "",
@@ -63,6 +70,118 @@ export function LoanApplyForm() {
     event.preventDefault();
   };
 
+  const [email, setemail] = useState("");
+  const [fullname, setfullname] = useState("");
+  const [city, setcity] = useState("");
+  const [mobileno, setmobileno] = useState("");
+  const [pincode, setpincode] = useState("");
+  const [address, setaddress] = useState("");
+  const [age, setage] = useState("");
+  const [totalloanamount, settotalloanamount] = useState("");
+  const [tenor, settenor] = useState("");
+  const [interestrate, setinterestrate] = useState("");
+
+  const [pancardimage, setpancardimage] = useState("");
+  const [aadharcardimage, setaadharcardimage] = useState("");
+  const [bankaccountimage, setbankaccountimage] = useState("");
+  const [usercurrentimage, setusercurrentimage] = useState("");
+
+  const setaadharcardimageHandler = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      setaadharcardimage(img);
+      // console.log("aadharcardimage ", aadharcardimage);
+      console.log("e.target.files ", e);
+    }
+  };
+  const setpancardimageHandler = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      setpancardimage(img);
+      // console.log("pancardimage ", pancardimage);
+      // console.log("e.target.files ", e.target.files[0]);
+    }
+  };
+  const setbankaccountimageHandler = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      setbankaccountimage(img);
+      // console.log("e.target.files ", e.target.files[0]);
+      // console.log("bankaccountimage ", bankaccountimage);
+    }
+  };
+  const setusercurrentimageHandler = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      let img = e.target.files[0];
+      setusercurrentimage(img);
+      // console.log("e.target.files ", e.target.files[0]);
+      // console.log("usercurrentimage ", usercurrentimage);
+    }
+  };
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    // const formData = new FormData();
+    // formData.append("email", email);
+    // formData.append("fullname", fullname);
+    // formData.append("city", city);
+    // formData.append("mobileno", mobileno);
+    // formData.append("pannumber", pannumber);
+    // formData.append("pincode", pincode);
+    // formData.append("address", address);
+    // formData.append("age", age);
+    // formData.append("totalloanamount", totalloanamount);
+    // formData.append("tenor", tenor);
+    // formData.append("interestrate", interestrate);
+
+    // formData.append("pancardimage", pancardimage);
+    // formData.append("aadharcardimage", aadharcardimage);
+    // formData.append("bankaccountimage", bankaccountimage);
+    // formData.append("usercurrentimage", usercurrentimage);
+
+    // console.log(
+    //   "formData ====>>>> ",
+    //   email,
+    //   fullname,
+    //   city,
+    //   mobileno,
+    //   pannumberValues.pannumber,
+    //   pincode,
+    //   address,
+    //   age,
+    //   totalloanamount,
+    //   tenor,
+    //   interestrate,
+    //   pancardimage,
+    //   aadharcardimage,
+    //   bankaccountimage,
+    //   usercurrentimage
+    // );
+
+    const pannumber = pannumberValues.pannumber;
+
+    dispatch(
+      GetLoanFunctionFromGetLoanAction({
+        email,
+        fullname,
+        city,
+        mobileno,
+        pannumber,
+        pincode,
+        address,
+        age,
+        totalloanamount,
+        tenor,
+        interestrate,
+        pancardimage,
+        aadharcardimage,
+        bankaccountimage,
+        usercurrentimage,
+      })
+    );
+    // setIsLoading(true)
+  };
+
   return (
     <Grid container component='main'>
       <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
@@ -73,7 +192,10 @@ export function LoanApplyForm() {
           <Typography component='h1' variant='h5'>
             Apply For Your Loan
           </Typography>
-          <form className={classes.form} noValidate>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={formSubmitHandler}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 {/* ========{{{{}}}}======= 1st input field ========{{{{{}}}}}===== */}
@@ -84,7 +206,8 @@ export function LoanApplyForm() {
                   fullWidth
                   id='email'
                   label='Email Address'
-                  name='email'
+                  onChange={(e) => setemail(e.target.value)}
+                  // name='email'
                   autoComplete='email'
                 />
               </Grid>
@@ -94,7 +217,8 @@ export function LoanApplyForm() {
                   margin='normal'
                   required
                   fullWidth
-                  name='fullname'
+                  onChange={(e) => setfullname(e.target.value)}
+                  // name='fullname'
                   label='FullName'
                   type='text'
                   id='fullname'
@@ -118,7 +242,7 @@ export function LoanApplyForm() {
                     id='outlined-adornment-password'
                     type={pannumberValues.showpannumber ? "text" : "password"}
                     value={pannumberValues.pannumber}
-                    name='pannumber'
+                    // name='pannumber'
                     onChange={handleChange("pannumber")}
                     endAdornment={
                       <InputAdornment>
@@ -146,7 +270,8 @@ export function LoanApplyForm() {
                   margin='normal'
                   required
                   fullWidth
-                  name='mobileno'
+                  onChange={(e) => setmobileno(e.target.value)}
+                  // name='mobileno'
                   label='MobileNo'
                   type='number'
                   id='mobileno'
@@ -163,7 +288,8 @@ export function LoanApplyForm() {
                   fullWidth
                   id='address'
                   label='Address'
-                  name='address'
+                  onChange={(e) => setaddress(e.target.value)}
+                  // name='address'
                   autoComplete='address'
                 />
               </Grid>
@@ -175,7 +301,8 @@ export function LoanApplyForm() {
                   fullWidth
                   id='city'
                   label='City'
-                  name='city'
+                  onChange={(e) => setcity(e.target.value)}
+                  // name='city'
                   autoComplete='city'
                 />
               </Grid>
@@ -186,7 +313,8 @@ export function LoanApplyForm() {
                   variant='outlined'
                   margin='normal'
                   required
-                  name='pincode'
+                  onChange={(e) => setpincode(e.target.value)}
+                  // name='pincode'
                   label='AreaPinCode'
                   type='number'
                   id='pincode'
@@ -200,7 +328,8 @@ export function LoanApplyForm() {
                   variant='outlined'
                   margin='normal'
                   required
-                  name='age'
+                  onChange={(e) => setage(e.target.value)}
+                  // name='age'
                   label='Age'
                   type='number'
                   id='age'
@@ -217,7 +346,8 @@ export function LoanApplyForm() {
                   fullWidth
                   id='totalloanamount'
                   label='TotalLoanAmount'
-                  name='totalloanamount'
+                  onChange={(e) => settotalloanamount(e.target.value)}
+                  // name='totalloanamount'
                   autoComplete='totalloanamount'
                 />
               </Grid>
@@ -227,7 +357,8 @@ export function LoanApplyForm() {
                   margin='normal'
                   required
                   fullWidth
-                  name='tenor'
+                  onChange={(e) => settenor(e.target.value)}
+                  // name='tenor'
                   label='Tenor'
                   type='tenor'
                   id='tenor'
@@ -244,7 +375,8 @@ export function LoanApplyForm() {
                   fullWidth
                   id='interestrate'
                   label='Interestrate'
-                  name='interestrate'
+                  onChange={(e) => setinterestrate(e.target.value)}
+                  // name='interestrate'
                   autoComplete='interestrate'
                 />
               </Grid>
@@ -254,7 +386,8 @@ export function LoanApplyForm() {
                   margin='normal'
                   required
                   fullWidth
-                  name='aadharnumber'
+                  // onChange={(e) => setDescription(e.target.value)}
+                  // name='aadharnumber'
                   label='AadharNumber'
                   type='aadharnumber'
                   id='aadharnumber'
@@ -269,46 +402,64 @@ export function LoanApplyForm() {
                   variant='outlined'
                   margin='normal'
                   required
+                  accept='.jpg,.png,.jpeg'
+                  onChange={
+                    setaadharcardimageHandler
+                    // console.log("aadharcardimage ", aadharcardimage);
+                  }
                   label='Aadhar_Card'
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  name='aadharcardimage'
+                  // name='aadharcardimage'
                   type='file'
                 />
-
                 <TextField
                   variant='outlined'
                   margin='normal'
                   label='Pan_Card'
+                  accept='.jpg,.png,.jpeg'
+                  onChange={
+                    setpancardimageHandler
+                    // console.log("pancardimage ", pancardimage);
+                  }
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  name='pancardimage'
+                  // name='pancardimage'
                   type='file'
                 />
-
                 <TextField
                   variant='outlined'
                   margin='normal'
                   required
                   label='Bank_Passbook'
+                  accept='.jpg,.png,.jpeg'
+                  onChange={
+                    setbankaccountimageHandler
+                    // console.log("e ", e); //
+                    // console.log("bankaccountimage ", bankaccountimage); //
+                  }
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  name='bankaccountimage'
+                  // name='bankaccountimage'
                   type='file'
                 />
-
                 <TextField
                   variant='outlined'
                   margin='normal'
                   required
                   label='Current_Image'
+                  accept='.jpg,.png,.jpeg'
+                  onChange={
+                    setusercurrentimageHandler
+                    // console.log("usercurrentimage ", usercurrentimage);
+                  }
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  name='usercurrentimage'
+                  // name='usercurrentimage'
                   type='file'
                 />
               </Grid>

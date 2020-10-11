@@ -25,6 +25,9 @@ export const GetLoan = async (req, res) => {
   const files = req.files;
   const urls = [];
 
+  console.log("req.body ", req.body);
+  console.log("req.files ", req.files);
+
   // ========= code for showing user about his REST LOAN AMOUNT TO PAY. ======= //
 
   const LoanA = Number(totalloanamount);
@@ -128,7 +131,7 @@ export const GetLoan = async (req, res) => {
               });
             })
             .catch((err) => {
-              return res.status(500).json({
+              return res.json({
                 error: err.message,
                 errormsg:
                   "You cant Apply for now , try again with vaild  and required documents  ",

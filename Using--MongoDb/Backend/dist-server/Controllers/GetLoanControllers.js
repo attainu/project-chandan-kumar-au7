@@ -31,7 +31,9 @@ var GetLoan = /*#__PURE__*/function () {
           case 0:
             _req$body = req.body, email = _req$body.email, fullname = _req$body.fullname, city = _req$body.city, mobileno = _req$body.mobileno, pannumber = _req$body.pannumber, pincode = _req$body.pincode, address = _req$body.address, age = _req$body.age, totalloanamount = _req$body.totalloanamount, tenor = _req$body.tenor, interestrate = _req$body.interestrate;
             files = req.files;
-            urls = []; // ========= code for showing user about his REST LOAN AMOUNT TO PAY. ======= //
+            urls = [];
+            console.log("req.body ", req.body);
+            console.log("req.files ", req.files); // ========= code for showing user about his REST LOAN AMOUNT TO PAY. ======= //
 
             LoanA = Number(totalloanamount);
             Ten = Number(tenor);
@@ -41,17 +43,17 @@ var GetLoan = /*#__PURE__*/function () {
             restloantopay = Ten * EMIamount; // ========= END OF code for showing user about his REST LOAN AMOUNT TO PAY. ======= //
 
             if (!(!email && !fullname && !city && !mobileno && !pannumber && !pincode && !address && !age && !totalloanamount && !tenor && !interestrate)) {
-              _context3.next = 13;
+              _context3.next = 15;
               break;
             }
 
             res.json({
               error: "PLease provide all input fields..."
             });
-            _context3.next = 16;
+            _context3.next = 18;
             break;
 
-          case 13:
+          case 15:
             LoanApplierDetails = new _GetLoanModals["default"]({
               email: email,
               fullname: fullname,
@@ -71,7 +73,7 @@ var GetLoan = /*#__PURE__*/function () {
             // console.log("Pan   ", Pan);
             // console.log("file   ", files);
 
-            _context3.next = 16;
+            _context3.next = 18;
             return _GetLoanModals["default"].findOne({
               email: email
             }).exec().then( /*#__PURE__*/function () {
@@ -162,7 +164,7 @@ var GetLoan = /*#__PURE__*/function () {
                             results: LoanApplierDetails
                           });
                         })["catch"](function (err) {
-                          return res.status(500).json({
+                          return res.json({
                             error: err.message,
                             errormsg: "You cant Apply for now , try again with vaild  and required documents  "
                           });
@@ -181,7 +183,7 @@ var GetLoan = /*#__PURE__*/function () {
               };
             }());
 
-          case 16:
+          case 18:
           case "end":
             return _context3.stop();
         }

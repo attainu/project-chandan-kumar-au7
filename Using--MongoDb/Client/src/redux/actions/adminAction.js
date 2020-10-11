@@ -443,6 +443,26 @@ export const adminForgotPassNEWCredentialsFromadminAction = (
   };
 };
 
+export const getAllInvesters = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "Get",
+        url: "localhost:5000/admins/getalladmims",
+      });
+      dispatch({
+        type: "SET_ALL_ADMINS",
+        payload: data.message,
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+        payload: err,
+      });
+    }
+  };
+};
+
 export const setadminLoggedIn = (data) => {
   return {
     type: SET_ADMIN_LOGGED_IN,

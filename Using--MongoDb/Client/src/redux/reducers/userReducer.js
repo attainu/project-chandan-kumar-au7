@@ -6,6 +6,7 @@ const initialState = {
   registersuccess: {},
   usernameforasidebar: "USER",
   isAuthenticated: false,
+  allUsers: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -51,6 +52,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case "SET_ALL_USERS":
+      return {
+        ...state,
+        allUsers: action.payload,
       };
 
     default:

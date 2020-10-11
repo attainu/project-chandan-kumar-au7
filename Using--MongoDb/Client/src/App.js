@@ -30,6 +30,8 @@ import NavBar from "./Pages/NavBar";
 import Error from "./Pages/Error";
 import Footer from "./Pages/Footer";
 import { Investment } from "./Pages/Invest";
+import { AllUsers } from "./Pages/AllUsers";
+import { AllInvesters } from "./Pages/AllInvesters";
 
 import Calculator from "./components/Calculator/EmiCalculator";
 
@@ -110,6 +112,8 @@ function App() {
           <Route exact path='/Invest' component={Investment} />
           <Route exact path='/getloan' component={Getloan} />
           <Route exact path='/demo' component={demofile} />
+          <Route exact path='/allusers' component={AllUsers} />
+          <Route exact path='/allinvesters' component={AllInvesters} />
           <Route to='/error' component={Error} />
 
           <Redirect to='/error' />

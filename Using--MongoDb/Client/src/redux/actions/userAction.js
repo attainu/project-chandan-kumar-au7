@@ -249,6 +249,46 @@ export const userForgotPassOtpVarifyFuncFromUserAction = (
   };
 };
 
+export const getAllUsers = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "Get",
+        url: "http://localhost:5000/users/getAllUsers",
+      });
+      dispatch({
+        type: "SET_ALL_USERS",
+        payload: data.message,
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+        payload: err,
+      });
+    }
+  };
+};
+
+export const getAllInvesters = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios({
+        method: "Get",
+        url: "http://localhost:5000/users/getallinvesters",
+      });
+      dispatch({
+        type: "SET_ALL_INVESTERS",
+        payload: data.message,
+      });
+    } catch (err) {
+      dispatch({
+        type: "SET_FORGOTPASSWORD_OTP_VARIFY_ERRORS",
+        payload: err,
+      });
+    }
+  };
+};
+
 // =========================================== [ NEW CREDIENTIALS ] This is for HITTING [BACKEND] end point =====================================//
 export const userForgotPassNEWCredentialsFromUserAction = (
   userForgotpassNEWCredentials,
