@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import clsx from "clsx";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function LoanApplyForm() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const GetLoanDataResponseFromStore = useSelector(
     (store) => store.GetLoanDataResponseFromStore
@@ -169,25 +170,33 @@ export function LoanApplyForm() {
     const pannumber = pannumberValues.pannumber;
 
     dispatch(
-      GetLoanFunctionFromGetLoanAction({
-        email,
-        fullname,
-        city,
-        mobileno,
-        pannumber,
-        pincode,
-        address,
-        age,
-        totalloanamount,
-        tenor,
-        interestrate,
-        pancardimage,
-        aadharcardimage,
-        bankaccountimage,
-        usercurrentimage,
-      })
+      GetLoanFunctionFromGetLoanAction(
+        {
+          email,
+          fullname,
+          city,
+          mobileno,
+          pannumber,
+          pincode,
+          address,
+          age,
+          totalloanamount,
+          tenor,
+          interestrate,
+          pancardimage,
+          aadharcardimage,
+          bankaccountimage,
+          usercurrentimage,
+        },
+        history
+      )
     );
-    // setIsLoading(true)
+    dispatch({
+      type: "HAVE_TO_LOAD_SPINNER",
+    });
+    dispatch({
+      type: "SET_HAVE_TO_DSPLAY_NOTIFIER",
+    });
   };
 
   useEffect(() => {

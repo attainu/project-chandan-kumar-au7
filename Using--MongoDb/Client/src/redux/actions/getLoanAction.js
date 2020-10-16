@@ -10,7 +10,7 @@ export const GetLoanCrediantialsAction = (data) => {
 };
 
 export const loanAmountAndTenor = (data) => {
-  console.log("loanAmount_And_Tenor ", data);
+  // console.log("loanAmount_And_Tenor ", data);
   return {
     type: "LOANAMOUNT_AND_TENOR",
     payload: data,
@@ -24,7 +24,7 @@ export const GetLoanFunctionFromGetLoanAction = (
 ) => {
   console.log("fetching GetLoan ...");
 
-  console.log("GetLoanDataFromForm ", GetLoanDataFromForm);
+  // console.log("GetLoanDataFromForm ", GetLoanDataFromForm);
 
   return async (dispatch) => {
     try {
@@ -37,8 +37,28 @@ export const GetLoanFunctionFromGetLoanAction = (
       });
       // history.push(`/usersPost/${userId}`)
       dispatch(GetLoanCrediantialsAction(data));
-      console.log("dataAsResponseFromGetLoanAction.js ", data);
+      dispatch({
+        type: "HAVE_TO_STOP_SPINNER",
+      });
+      // console.log("dataAsResponseFromGetLoanAction.js ", data);
+
+      dispatch({
+        type: "SET_LOGIN_ERRORS",
+        payload: data.msg,
+      });
+
+      history.push("/login");
+
+      setTimeout(() => {
+        dispatch({
+          type: "SET_LOGIN_ERRORS",
+          payload: {},
+        });
+      }, 6000);
     } catch (err) {
+      dispatch({
+        type: "HAVE_TO_STOP_SPINNER",
+      });
       console.log("Error in dataAsResponseFromGetLoanAction", err.message);
     }
   };
