@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+
+import { loanAmountAndTenor } from "../../redux/actions/getLoanAction";
 
 function EmiCalculator() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [EMIamount, setEMIamount] = useState("0");
 
   const [LoanAmount, setLoanAmount] = useState("0");
   const [Tenor, setTenor] = useState("0");
-  const [InterestRate, setInterestRate] = useState("0");
 
   const [AllfieldError, setAllfieldError] = useState("");
 
@@ -13,16 +19,15 @@ function EmiCalculator() {
   const [TenorError, setTenorError] = useState("");
   const [InterestRateError, setInterestRateError] = useState("");
 
+  const LoanA = Number(LoanAmount);
+  const Ten = Number(Tenor);
   // ========== calculator =========== //
   const calculateEmi = (e) => {
     e.preventDefault();
 
     // console.log(LoanAmount, Tenor, InterestRate);
-    const LoanA = Number(LoanAmount);
-    const Ten = Number(Tenor);
-    const IntRate = Number(InterestRate);
 
-    if (!LoanA || !Ten || !IntRate) {
+    if (!LoanA || !Ten) {
       setAllfieldError("provide all fields");
     } else if (LoanA < 1000) {
       setLoanAmountError("Loan Amount Should Be Minumum 1000");
@@ -30,13 +35,8 @@ function EmiCalculator() {
     } else if (Ten > 36 || Ten < 12) {
       setTenorError("Loan Period Must Be Within 1 to 3 year in * MONTHS ONLY");
       setEMIamount("");
-    } else if (IntRate > 18 || IntRate < 3) {
-      setInterestRateError(
-        "Currently We are Dealing Withing 3 To 18 % of Loan % only"
-      );
-      setEMIamount("");
     } else {
-      const intr = IntRate / 1200;
+      const intr = 8 / 1200;
       setEMIamount(
         Math.floor((LoanA * intr) / (1 - Math.pow(1 / (1 + intr), Ten)))
       );
@@ -46,7 +46,8 @@ function EmiCalculator() {
   //  ====================== apply now ==============//
 
   const ApplyNow = () => {
-    console.log(Number(LoanAmount));
+    dispatch(loanAmountAndTenor({ LoanA, Ten }));
+    history.push("/getloan");
   };
 
   return (
@@ -142,6 +143,8 @@ function EmiCalculator() {
                                     className='infild floatnumberVD'
                                     id='interstDate'
                                     placeholder='e.g. 10'
+                                    value='8'
+                                    readOnly
                                     type='number'
                                     style={{
                                       padding: "15px 0 15px 30px",
@@ -151,7 +154,6 @@ function EmiCalculator() {
                                       width: "200px",
                                     }}
                                     onChange={(e) => {
-                                      setInterestRate(e.target.value);
                                       setAllfieldError("");
                                       setInterestRateError("");
                                     }}

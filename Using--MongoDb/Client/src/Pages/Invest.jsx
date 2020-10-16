@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { LoanApplyForm } from "../components/User/Getloan/LoanApplyForm";
+import { InvestMoney } from "../components/User/InvestMoney/investMoney";
 import "../Style/investStyle.css";
 
 export const Investment = () => {
@@ -32,12 +31,12 @@ export const Investment = () => {
                 investment.
               </p>
 
-              <Link
+              <a
                 className='btn btn-primary btn-lg'
                 href='#investFormred'
                 role='button'>
                 Invest
-              </Link>
+              </a>
             </div>
             <div className='card bg-dark text-white'>
               <img
@@ -116,7 +115,9 @@ export const Investment = () => {
               </div>
             </div>
             {/* ===================={{{{{{{{{{{ Investement Form }}}}}}}}}}}===================== */}
-            <LoanApplyForm />
+            <div id='investFormred'>
+              <InvestMoney />
+            </div>
           </div>
         </div>
       </div>

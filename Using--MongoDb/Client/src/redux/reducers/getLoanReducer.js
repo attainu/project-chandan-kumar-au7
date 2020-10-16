@@ -1,5 +1,6 @@
 const initialState = {
   GetLoanData: {},
+  loanAmountAndTenor: null,
 };
 
 const GetLoanReducer = (state = initialState, action) => {
@@ -8,6 +9,12 @@ const GetLoanReducer = (state = initialState, action) => {
       return {
         ...state,
         GetLoanData: action.payload,
+      };
+    case "LOANAMOUNT_AND_TENOR":
+      console.log("loanAmount_And_Tenor ", action.payload);
+      return {
+        ...state,
+        loanAmountAndTenor: action.payload,
       };
     default:
       return state;

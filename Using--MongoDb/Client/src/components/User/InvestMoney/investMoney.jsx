@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 // import { Link, useHistory } from "react-router-dom";
 
 import clsx from "clsx";
@@ -46,17 +46,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function LoanApplyForm() {
+export function InvestMoney() {
   const dispatch = useDispatch();
-
-  const GetLoanDataResponseFromStore = useSelector(
-    (store) => store.GetLoanDataResponseFromStore
-  );
-
-  // console.log(
-  //   "GetLoanDataResponseFromStore ======> >>>>>> ",
-  //   GetLoanDataResponseFromStore.settotalloanamount
-  // );
 
   const classes = useStyles();
   const [pannumberValues, setpannumberValues] = React.useState({
@@ -88,7 +79,7 @@ export function LoanApplyForm() {
   const [age, setage] = useState("");
   const [totalloanamount, settotalloanamount] = useState("");
   const [tenor, settenor] = useState("");
-  const [interestrate] = useState(8);
+  const [interestrate, setinterestrate] = useState("");
 
   const [pancardimage, setpancardimage] = useState("");
   const [aadharcardimage, setaadharcardimage] = useState("");
@@ -100,7 +91,7 @@ export function LoanApplyForm() {
       let img = e.target.files[0];
       setaadharcardimage(img);
       // console.log("aadharcardimage ", aadharcardimage);
-      // console.log("e.target.files ", e);
+      console.log("e.target.files ", e);
     }
   };
   const setpancardimageHandler = (e) => {
@@ -127,6 +118,7 @@ export function LoanApplyForm() {
       // console.log("usercurrentimage ", usercurrentimage);
     }
   };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     // const formData = new FormData();
@@ -190,21 +182,6 @@ export function LoanApplyForm() {
     // setIsLoading(true)
   };
 
-  useEffect(() => {
-    if (GetLoanDataResponseFromStore.loanAmountAndTenor != null) {
-      settotalloanamount(
-        Number(
-          JSON.stringify(GetLoanDataResponseFromStore.loanAmountAndTenor.LoanA)
-        )
-      );
-      settenor(
-        Number(
-          JSON.stringify(GetLoanDataResponseFromStore.loanAmountAndTenor.Ten)
-        )
-      );
-    }
-  }, [GetLoanDataResponseFromStore]);
-
   return (
     <Grid container component='main'>
       <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
@@ -213,7 +190,7 @@ export function LoanApplyForm() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Apply For Your Loan
+            Invest And Get Groth
           </Typography>
           <form
             className={classes.form}
@@ -366,12 +343,9 @@ export function LoanApplyForm() {
                   variant='outlined'
                   margin='normal'
                   required
-                  type='number'
                   fullWidth
                   id='totalloanamount'
-                  label='TotalLoanAmount'
-                  name='totalloanamoun'
-                  value={totalloanamount}
+                  label='TotalInvestAmount'
                   onChange={(e) => settotalloanamount(e.target.value)}
                   // name='totalloanamount'
                   autoComplete='totalloanamount'
@@ -381,14 +355,12 @@ export function LoanApplyForm() {
                 <TextField
                   variant='outlined'
                   margin='normal'
-                  type='number'
                   required
                   fullWidth
-                  value={tenor}
                   onChange={(e) => settenor(e.target.value)}
                   // name='tenor'
                   label='Tenor'
-                  name='tenor'
+                  type='tenor'
                   id='tenor'
                   autoComplete='tenor'
                 />
@@ -401,11 +373,11 @@ export function LoanApplyForm() {
                   margin='normal'
                   required
                   fullWidth
-                  value='8'
+                  value='5'
                   readOnly
                   id='interestrate'
                   label='Interestrate'
-                  // onChange={(e) => setinterestrate(e.target.value)}
+                  onChange={(e) => setinterestrate(e.target.value)}
                   // name='interestrate'
                   autoComplete='interestrate'
                 />
@@ -503,7 +475,7 @@ export function LoanApplyForm() {
               endIcon={<Icon>send</Icon>}
               color='primary'
               variant='outlined'>
-              Apply_For_Loan
+              Start_Investing
             </Button>
           </form>
         </div>

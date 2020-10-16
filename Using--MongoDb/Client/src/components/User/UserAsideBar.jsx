@@ -80,19 +80,19 @@ function RightAsideBar() {
                   <li className='nav-item'>
                     <Link to='../index.html' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
-                      <p>example 1</p>
+                      <p>User All Loans Details</p>
                     </Link>
                   </li>
                   <li className='nav-item'>
                     <Link to='../index2.html' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
-                      <p>example 2</p>
+                      <p>User All Invest Details</p>
                     </Link>
                   </li>
                   <li className='nav-item'>
                     <Link to='../index3.html' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
-                      <p>example 3</p>
+                      <p>Any Offers</p>
                     </Link>
                   </li>
                 </ul>

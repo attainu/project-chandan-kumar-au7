@@ -9,6 +9,14 @@ export const GetLoanCrediantialsAction = (data) => {
   };
 };
 
+export const loanAmountAndTenor = (data) => {
+  console.log("loanAmount_And_Tenor ", data);
+  return {
+    type: "LOANAMOUNT_AND_TENOR",
+    payload: data,
+  };
+};
+
 export const GetLoanFunctionFromGetLoanAction = (
   GetLoanDataFromForm,
   history,
@@ -23,8 +31,8 @@ export const GetLoanFunctionFromGetLoanAction = (
       // dispatch(postUploadLoaderFlagHelper(true))
       const { data } = await axios({
         method: "Post",
-        url: "http://localhost:5000/users/getloan",
-        // url: "https://robin--project-mern-backend.herokuapp.com/users/getloan",
+        // url: "http://localhost:5000/users/getloan",
+        url: "https://robin--project-mern-backend.herokuapp.com/users/getloan",
         data: GetLoanDataFromForm,
       });
       // history.push(`/usersPost/${userId}`)
