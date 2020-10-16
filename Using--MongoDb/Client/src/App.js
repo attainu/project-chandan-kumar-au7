@@ -91,6 +91,26 @@ function App() {
       }
     }
   });
+
+  const StillWorking = () => {
+    return (
+      <div>
+        <h3>* Work In "Progress" For This Feature...</h3>
+        <p>Very Soon You Will Be Having This Feature Also</p>
+        <p>Use Others Features For Now</p>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h6>Thank You For Being With Us</h6>
+      </div>
+    );
+  };
+
   return (
     <div className='App' style={{ marginTop: "5rem" }}>
       <BrowserRouter>
@@ -114,6 +134,11 @@ function App() {
           <Route exact path='/demo' component={demofile} />
           <Route exact path='/allusers' component={AllUsers} />
           <Route exact path='/allinvesters' component={AllInvesters} />
+
+          <Route exact path='/loandetails' component={StillWorking} />
+          <Route exact path='/investdetails' component={StillWorking} />
+          <Route exact path='/offers' component={StillWorking} />
+
           <Route to='/error' component={Error} />
 
           <Redirect to='/error' />

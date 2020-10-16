@@ -78,19 +78,19 @@ function RightAsideBar() {
                 </Link>
                 <ul className='nav nav-treeview'>
                   <li className='nav-item'>
-                    <Link to='../index.html' className='nav-link'>
+                    <Link to='/loandetails' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
                       <p>User All Loans Details</p>
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='../index2.html' className='nav-link'>
+                    <Link to='/investdetails' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
                       <p>User All Invest Details</p>
                     </Link>
                   </li>
                   <li className='nav-item'>
-                    <Link to='../index3.html' className='nav-link'>
+                    <Link to='/offers' className='nav-link'>
                       <i className='far fa-circle nav-icon'></i>
                       <p>Any Offers</p>
                     </Link>
